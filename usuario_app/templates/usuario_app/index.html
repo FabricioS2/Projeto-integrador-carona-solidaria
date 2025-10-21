@@ -1,0 +1,793 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFRN Carona Solidária - Demonstração de Telas</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1183d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101a22",
+                        "foreground-light": "#0d161b",
+                        "foreground-dark": "#e8eef3",
+                        "subtle-light": "#cfdde7",
+                        "subtle-dark": "#2a3b47",
+                        "muted-light": "#4c799a",
+                        "muted-dark": "#9cb0c1",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            /* Remove a altura mínima da viewport para permitir o scroll em todas as telas */
+            min-height: auto;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* REMOVIDA A LÓGICA DE ESCONDER TELAS (.screen e .active-screen) */
+        
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%234c799a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .dark .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239cb0c1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        }
+        @media (min-width: 768px) {
+            .container-desktop {
+                /* Define uma largura máxima para o conteúdo da tela em desktop */
+                max-width: 480px; 
+                margin: 0 auto;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+                /* Removido min-height: 100vh para permitir o empilhamento */
+            }
+        }
+
+        /* Estilo para separar e identificar as telas na demonstração */
+        .screen-container {
+            border: 2px solid var(--primary); 
+            margin-bottom: 40px; 
+            padding-bottom: 60px; /* Espaço para o footer flutuante não cobrir o conteúdo */
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .screen-title {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+    <div class="container-desktop py-8">
+        
+        <div class="screen-container">
+            <h2 class="screen-title">1. Tela de Login</h2>
+            <div id="login-screen">
+                <div class="flex flex-col items-center justify-center min-h-[500px] p-4"> <div class="w-full max-w-sm mx-auto">
+                        <header class="text-center mb-8">
+                            <h1 class="text-2xl font-bold text-black dark:text-white">IFRN Carona Solidária</h1>
+                        </header>
+                        <main class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-black/70 dark:text-white/70" for="email">Email ou ID Institucional</label>
+                                <input class="w-full h-12 px-4 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" id="email" placeholder="Seu email ou ID institucional" type="email"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-black/70 dark:text-white/70" for="password">Senha</label>
+                                <div class="relative">
+                                    <input class="w-full h-12 px-4 pr-12 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" id="password" placeholder="Sua senha" type="password"/>
+                                    <button class="absolute inset-y-0 right-0 flex items-center px-4 text-black/60 dark:text-white/60">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input class="h-4 w-4 rounded border-black/20 dark:border-white/30 text-primary focus:ring-primary bg-white/50 dark:bg-white/10" id="remember-me" type="checkbox"/>
+                                    <label class="ml-2 block text-sm text-black/80 dark:text-white/80" for="remember-me">Lembrar-me</label>
+                                </div>
+                                <a class="text-sm font-medium text-primary hover:underline" href="#">Esqueceu a senha?</a>
+                            </div>
+                            <div class="bg-red-500/10 dark:bg-red-500/20 border border-red-500/20 dark:border-red-500/30 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm hidden">
+                                <p>Credenciais inválidas. Por favor, tente novamente.</p>
+                            </div>
+                            <button class="w-full h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                                Entrar (Demo)
+                            </button>
+                            <p class="text-center text-sm text-black/60 dark:text-white/60">
+                                Não tem uma conta? <a class="font-medium text-primary hover:underline" href="#">Cadastre-se aqui (Demo)</a>
+                            </p>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">2. Tela de Registro</h2>
+            <div id="registration-screen">
+                <div class="container mx-auto px-4 max-w-md">
+                    <header class="flex items-center justify-between py-6">
+                        <button class="text-gray-800 dark:text-gray-200">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Criar Conta</h1>
+                        <div class="w-8"></div> 
+                    </header>
+                    <div class="flex justify-center items-center space-x-2 my-4">
+                        <div class="w-10 h-1 bg-primary rounded-full"></div>
+                        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+                        <div class="w-10 h-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+                    </div>
+                    <main class="space-y-6">
+                        <section>
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Informações Pessoais</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="full-name">Nome Completo</label>
+                                    <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="full-name" placeholder="Digite seu nome completo" type="text"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="email-reg">Email Institucional</label>
+                                    <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="email-reg" placeholder="Digite seu email do IFRN" type="email"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="phone">Telefone</label>
+                                    <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="phone" placeholder="Digite seu telefone" type="tel"/>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus IFRN</label>
+                                    <select class="w-full h-12 px-4 rounded-lg border-none appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary bg-no-repeat bg-right form-select" id="campus">
+                                        <option>Selecione seu campus</option>
+                                        <option>Campus Natal-Central</option>
+                                        <option>Campus Mossoró</option>
+                                        <option>Campus Parnamirim</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tipo de Conta</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <label class="flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
+                                    <input class="sr-only" name="account-type" type="radio" value="driver"/>
+                                    <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">directions_car</span>
+                                    <span class="font-medium text-gray-900 dark:text-white mt-2">Motorista</span>
+                                </label>
+                                <label class="flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
+                                    <input checked="" class="sr-only" name="account-type" type="radio" value="passenger"/>
+                                    <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">hail</span>
+                                    <span class="font-medium text-gray-900 dark:text-white mt-2">Passageiro</span>
+                                </label>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Senha</h2>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password-reg">Criar Senha</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="password-reg" placeholder="Crie uma senha" type="password"/>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-2">
+                                <div class="h-1 flex-1 bg-red-500 rounded-full"></div>
+                                <div class="h-1 flex-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+                                <div class="h-1 flex-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+                                <p class="text-xs text-red-500 font-medium">Fraca</p>
+                            </div>
+                        </section>
+                        <div class="flex items-center space-x-3">
+                            <input class="h-5 w-5 rounded border-2 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 bg-transparent" id="terms" type="checkbox"/>
+                            <label class="text-sm text-gray-700 dark:text-gray-300" for="terms">
+                                Concordo com os <a class="font-medium text-primary hover:underline" href="#">Termos e Condições</a>
+                            </label>
+                        </div>
+                        <div class="pt-4 pb-8">
+                            <button class="w-full h-12 px-6 text-white bg-primary rounded-lg font-bold text-lg tracking-wide">
+                                Criar Conta (Demo)
+                            </button>
+                            <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                                Já tem uma conta? <a class="font-medium text-primary hover:underline" href="#">Fazer login (Demo)</a>
+                            </p>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">3. Tela Principal (Home)</h2>
+            <div id="home-screen">
+                <div class="max-w-md mx-auto">
+                    <header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+                        <div class="flex items-center justify-between p-4">
+                            <button class="p-2 -m-2">
+                                <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">menu</span>
+                            </button>
+                            <h1 class="text-lg font-bold">IFRN Carona Solidária</h1>
+                            <div class="flex items-center gap-2">
+                                <button class="p-2 -m-2">
+                                    <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">notifications</span>
+                                </button>
+                                <button class="p-2 -m-2">
+                                    <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">person</span>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    <main class="p-4 space-y-6 pb-32">
+                        <section class="text-center">
+                            <h2 class="text-xl font-bold mb-4">Encontre Caronas</h2>
+                            <div class="space-y-4">
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">trip_origin</span>
+                                    <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Origem" type="text"/>
+                                </div>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">location_on</span>
+                                    <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Destino" type="text"/>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="relative">
+                                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">calendar_today</span>
+                                        <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Data" type="text"/>
+                                    </div>
+                                    <div class="relative">
+                                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">schedule</span>
+                                        <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Horário" type="text"/>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-primary text-white font-bold py-3 px-5 rounded-lg shadow-md hover:bg-primary/90 transition-colors">
+                                    Buscar Caronas (Demo)
+                                </button>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="text-lg font-bold mb-4">Caronas Disponíveis</h2>
+                            <div class="space-y-4">
+                                <div class="bg-background-light dark:bg-subtle-dark p-4 rounded-lg border border-subtle-light dark:border-subtle-dark">
+                                    <div class="flex gap-4">
+                                        <div class="flex-1 space-y-1">
+                                            <p class="text-sm text-subtle-light dark:text-subtle-dark">Hoje, 10:00</p>
+                                            <p class="font-bold">IFRN Campus Central → Shopping Midway</p>
+                                            <div class="flex items-center gap-2 text-sm text-subtle-light dark:text-subtle-dark pt-1">
+                                                <span class="material-symbols-outlined text-base">person</span>
+                                                <span>Lucas Oliveira</span>
+                                            </div>
+                                        </div>
+                                        <div class="w-24 h-24 rounded-lg bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCO-cV03b8F2BYjmY-eqeVLnIXAwSe_RoPptzbHRQIvKrk-WnUHQbIbzu7GRkj32dtj1tv6OzGdob39yLrlkV4RcMQhK7xHIrUlsByDfDz0JqVpIIJc6cRi-R1EJYbaAS7nt8MwkmnA1fkMGeDY_UGJtQL9CtJRlbNd6sE5S1XEPlz22bWkoUTgMkTJL-gzGT3A2TmTgzqvvlYBJDUjhJ9D57-f9RHwkoAqBp84Z9qaYPll8zOYcuhvDeKiTNcUTT6ydBakifEp4A");'></div>
+                                    </div>
+                                    <div class="flex gap-2 mt-4">
+                                        <button class="flex-1 h-10 px-4 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary text-sm font-bold">Detalhes (Demo)</button>
+                                        <button class="flex-1 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold">Solicitar (Demo)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <footer class="sticky bottom-0 z-10 bg-background-light dark:bg-background-dark border-t border-subtle-light dark:border-subtle-dark"> <nav class="flex justify-around py-2">
+                            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-xs font-medium">Home</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="text-xs font-medium">Minhas Caronas</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">add_circle</span>
+                                <span class="text-xs font-medium">Oferecer</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">chat_bubble</span>
+                                <span class="text-xs font-medium">Mensagens</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="text-xs font-medium">Perfil</span>
+                            </a>
+                        </nav>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">4. Tela de Perfil</h2>
+            <div id="profile-screen">
+                <div class="max-w-md mx-auto">
+                    <header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+                        <div class="flex items-center justify-between p-4">
+                            <button class="p-2 -m-2">
+                                <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">arrow_back</span>
+                            </button>
+                            <h1 class="text-lg font-bold">Perfil de Reputação</h1>
+                            <div class="w-8"></div>
+                        </div>
+                    </header>
+                    <main class="p-4 space-y-8 pb-32">
+                        <section class="text-center">
+                            <img alt="User profile picture" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuepsJZFk2tfDGbr2_XOIH2YgU-ddCndRlrhA3gj6YzbvubdlMutSU0iHzJyyhjwr6cVPEDs8dDjdVKkrom7_Uj06yMkT_BEEvzaFDVoXPy0HvhVWInhB4gX7ylWeJsgmVK-WEci4Lv_kwM41rkHaBjmODXt8S3nuR_eFGHYt7IfnxD6_sm7ei9EUrnpMSqlbL21Bi2VVcABX_Nm2XKauSlbHdr7UuoicH2yNYo0Ej0U6YUtKTTCvsJjMD3OhGCxdMAKwHavVJYQ"/>
+                            <h2 class="text-xl font-bold">Ana Costa</h2>
+                            <div class="flex items-center justify-center mt-2">
+                                <span class="text-3xl font-bold text-primary mr-2">4.8</span>
+                                <div class="flex text-primary">
+                                    <span class="material-symbols-outlined">star</span>
+                                    <span class="material-symbols-outlined">star</span>
+                                    <span class="material-symbols-outlined">star</span>
+                                    <span class="material-symbols-outlined">star</span>
+                                    <span class="material-symbols-outlined text-subtle-light dark:text-subtle-dark">star</span>
+                                </div>
+                                <span class="text-muted-light dark:text-muted-dark ml-2">(124 avaliações)</span>
+                            </div>
+                        </section>
+                        <section>
+                            <h3 class="text-lg font-bold mb-4">Detalhes das Avaliações</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-subtle-light/30 dark:bg-subtle-dark/30 p-4 rounded-lg text-center">
+                                    <p class="text-sm text-muted-light dark:text-muted-dark mb-1">Como Motorista</p>
+                                    <div class="flex items-center justify-center">
+                                        <span class="text-lg font-bold text-primary">4.9</span>
+                                        <span class="material-symbols-outlined text-primary text-lg ml-1">star</span>
+                                    </div>
+                                </div>
+                                <div class="bg-subtle-light/30 dark:bg-subtle-dark/30 p-4 rounded-lg text-center">
+                                    <p class="text-sm text-muted-light dark:text-muted-dark mb-1">Como Passageira</p>
+                                    <div class="flex items-center justify-center">
+                                        <span class="text-lg font-bold text-primary">4.7</span>
+                                        <span class="material-symbols-outlined text-primary text-lg ml-1">star</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <h3 class="text-lg font-bold mb-4">Avaliações Recentes</h3>
+                            <div class="relative">
+                                <div class="flex overflow-x-auto space-x-4 snap-x snap-mandatory pb-4">
+                                    <div class="snap-center w-full flex-shrink-0 bg-background-light dark:bg-subtle-dark p-4 rounded-lg border border-subtle-light dark:border-subtle-dark">
+                                        <div class="flex items-start mb-2">
+                                            <img alt="Reviewer profile picture" class="w-10 h-10 rounded-full mr-3 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIcCP9yS67EWXVXb463CzXAFTWY5-GUTbuxJZBSitXVkbu1GfVitj8ZfkkS9OHgU8B3_Wyw-XjPllCNvbEWf1rZjCnxgnniXVKT7gEjwtRFLbuiEtjE1OpmxUC_efM5rZr0g54-k6-BuoPrukUlU6boRy5SVJsrCSg7In90gMgs5_1y8o39FlPlp2sgYlNlqN_742O5Fhf2JixEKooIh2z7T4A_DpBZnZdX8v9bTRJQMlxCiik1cV7VNUYBlqkwLs3_aGxujZBTw"/>
+                                            <div>
+                                                <p class="font-semibold">Carlos Silva</p>
+                                                <div class="flex text-primary text-sm">
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-muted-light dark:text-muted-dark">"Excelente motorista! Muito pontual e simpática. O carro estava limpo e a viagem foi tranquila. Recomendo!"</p>
+                                        <p class="text-xs text-muted-light dark:text-muted-dark mt-2">2 dias atrás</p>
+                                    </div>
+                                    <div class="snap-center w-full flex-shrink-0 bg-background-light dark:bg-subtle-dark p-4 rounded-lg border border-subtle-light dark:border-subtle-dark">
+                                        <div class="flex items-start mb-2">
+                                            <img alt="Reviewer profile picture" class="w-10 h-10 rounded-full mr-3 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOlAJHBrYxb4eMjvt087WH1lKwhgNZohway2B0MlmCMm83MN0EQ02z1TA33QRxpgDC9xItmPOujm3VBJtu4xdpW6dGWiVLFzEwsG5-2BBKYdIib0cEmPITSC6NwvrZS7L1xz4mHlmAh3Mcrw7N1YIatUu5PKwVciJleKVrmjJ4cz4_AA3upe7Gi8rvkV1VFlMQaN_ybbBOWHwBhe8zSAcYWHMDrhRp55_b0KVhM8Jm99PRoQLvaCG2_PTLHAuF7mIyTwAD2s4g4g"/>
+                                            <div>
+                                                <p class="font-semibold">Mariana Lima</p>
+                                                <div class="flex text-primary text-sm">
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                    <span class="material-symbols-outlined text-sm">star</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-sm text-muted-light dark:text-muted-dark line-clamp-3">"A Ana é uma pessoa incrível. Tivemos uma ótima conversa durante a viagem. Ela me ofereceu água e até tinha um carregador de celular. Me senti muito segura."</p>
+                                        <button class="text-primary text-sm font-semibold mt-1">Ler mais</button>
+                                    </div>
+                                </div>
+                                <div class="absolute inset-y-0 left-0 flex items-center">
+                                    <button class="bg-background-light/50 dark:bg-background-dark/50 p-1 rounded-full -ml-2">
+                                        <span class="material-symbols-outlined">chevron_left</span>
+                                    </button>
+                                </div>
+                                <div class="absolute inset-y-0 right-0 flex items-center">
+                                    <button class="bg-background-light/50 dark:bg-background-dark/50 p-1 rounded-full -mr-2">
+                                        <span class="material-symbols-outlined">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <h3 class="text-lg font-bold mb-4">Conquistas</h3>
+                            <div class="grid grid-cols-3 gap-4 text-center">
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">local_gas_station</span>
+                                    <p class="text-xs font-medium mt-1">Eco-Motorista</p>
+                                </div>
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">military_tech</span>
+                                    <p class="text-xs font-medium mt-1">Melhor Avaliado</p>
+                                </div>
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">verified_user</span>
+                                    <p class="text-xs font-medium mt-1">Membro Verificado</p>
+                                </div>
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-primary text-4xl">schedule</span>
+                                    <p class="text-xs font-medium mt-1">Pontual</p>
+                                </div>
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-muted-light dark:text-muted-dark text-4xl opacity-50">forum</span>
+                                    <p class="text-xs font-medium mt-1 text-muted-light dark:text-muted-dark">Boa Conversa</p>
+                                </div>
+                                <div class="p-2 bg-subtle-light/30 dark:bg-subtle-dark/30 rounded-lg flex flex-col items-center justify-center">
+                                    <span class="material-symbols-outlined text-muted-light dark:text-muted-dark text-4xl opacity-50">music_note</span>
+                                    <p class="text-xs font-medium mt-1 text-muted-light dark:text-muted-dark">DJ ao Volante</p>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <footer class="sticky bottom-0 z-10 bg-background-light dark:bg-background-dark border-t border-subtle-light dark:border-subtle-dark"> <nav class="flex justify-around py-2">
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-xs font-medium">Home</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="text-xs font-medium">Minhas Caronas</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">chat_bubble</span>
+                                <span class="text-xs font-medium">Mensagens</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="text-xs font-medium">Perfil</span>
+                            </a>
+                        </nav>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">5. Tela de Lista de Conversas</h2>
+            <div id="chat-list-screen">
+                <div class="max-w-md mx-auto">
+                    <header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+                        <div class="flex items-center justify-between p-4">
+                            <button class="p-2 -m-2">
+                                <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">arrow_back</span>
+                            </button>
+                            <h1 class="text-lg font-bold">Mensagens</h1>
+                            <div class="w-8"></div>
+                        </div>
+                    </header>
+                    <main class="p-4 pb-32">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark cursor-pointer">
+                                <img alt="User profile picture" class="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO-cV03b8F2BYjmY-eqeVLnIXAwSe_RoPptzbHRQIvKrk-WnUHQbIbzu7GRkj32dtj1tv6OzGdob39yLrlkV4RcMQhK7xHIrUlsByDfDz0JqVpIIJc6cRi-R1EJYbaAS7nt8MwkmnA1fkMGeDY_UGJtQL9CtJRlbNd6sE5S1XEPlz22bWkoUTgMkTJL-gzGT3A2TmTgzqvvlYBJDUjhJ9D57-f9RHwkoAqBp84Z9qaYPll8zOYcuhvDeKiTNcUTT6ydBakifEp4A"/>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-bold">Lucas Oliveira</h3>
+                                        <span class="text-xs text-muted-light dark:text-muted-dark">10:30</span>
+                                    </div>
+                                    <p class="text-sm text-muted-light dark:text-muted-dark">Ei, ainda vamos nos encontrar às 14h?</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-background-light dark:bg-subtle-dark rounded-lg border border-subtle-light dark:border-subtle-dark cursor-pointer">
+                                <img alt="User profile picture" class="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOlAJHBrYxb4eMjvt087WH1lKwhgNZohway2B0MlmCMm83MN0EQ02z1TA33QRxpgDC9xItmPOujm3VBJtu4xdpW6dGWiVLFzEwsG5-2BBKYdIib0cEmPITSC6NwvrZS7L1xz4mHlmAh3Mcrw7N1YIatUu5PKwVciJleKVrmjJ4cz4_AA3upe7Gi8rvkV1VFlMQaN_ybbBOWHwBhe8zSAcYWHMDrhRp55_b0KVhM8Jm99PRoQLvaCG2_PTLHAuF7mIyTwAD2s4g4g"/>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-bold">Mariana Lima</h3>
+                                        <span class="text-xs text-muted-light dark:text-muted-dark">Ontem</span>
+                                    </div>
+                                    <p class="text-sm text-muted-light dark:text-muted-dark">Obrigada pela carona de ontem!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <footer class="sticky bottom-0 z-10 bg-background-light dark:bg-background-dark border-t border-subtle-light dark:border-subtle-dark"> <nav class="flex justify-around py-2">
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-xs font-medium">Home</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="text-xs font-medium">Minhas Caronas</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                                <span class="material-symbols-outlined">chat_bubble</span>
+                                <span class="text-xs font-medium">Mensagens</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="text-xs font-medium">Perfil</span>
+                            </a>
+                        </nav>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">6. Tela de Chat Individual</h2>
+            <div id="chat-screen">
+                <div class="flex flex-col h-[600px] justify-between"> <div class="flex-1 overflow-y-auto">
+                        <header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 flex items-center shadow-sm">
+                            <button class="text-neutral-800 dark:text-neutral-200">
+                                <span class="material-symbols-outlined">arrow_back</span>
+                            </button>
+                            <div class="flex-1 text-center">
+                                <h1 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">Carona para IFRN</h1>
+                                <p class="text-sm text-neutral-500 dark:text-neutral-400">Chat em Grupo</p>
+                            </div>
+                            <button class="text-neutral-800 dark:text-neutral-200">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </header>
+                        <main class="p-4 space-y-6">
+                            <div>
+                                <h2 class="text-sm font-bold text-neutral-800 dark:text-neutral-200 mb-2 px-2">Participantes (3)</h2>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-4 p-2 rounded-lg hover:bg-primary/10">
+                                        <div class="relative">
+                                            <img alt="Lucas's avatar" class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFWE5kn9GNAX9yslMVpUPpUBTXoXCwJT39-Z3xlwPtAVygzik7zhRE1QwsCTCOunPbKaQY1-b0rPkifCLAb_X8IGGTLkJBd-VqIEnYWBUAzXuufzVFuS3GtmoCw-ALRhYRA1e5SUkvx5pETABQl24Dac_DL2Y6XYJPWxK2MvrSUhzKjcZUCCwm4NfWiWjtmYxD-UNZETNJ1jOVAftY4LODIj9TMIM5_m59HdLFhl2SiJFl7BZi-cofLg-w1uLthlpmJPPUBzU2Uw"/>
+                                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-base font-medium text-neutral-900 dark:text-neutral-100">Lucas</p>
+                                            <p class="text-sm text-primary">Motorista</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-2 rounded-lg hover:bg-primary/10">
+                                        <div class="relative">
+                                            <img alt="Sophia's avatar" class="h-10 w-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfJrJgt0TmKDJBAy3QQhEliFA_m5-6fxnq0uvNFPug0dsAiriUE0LalD1ZcmcoIHfO0KKpz6Hsjb0xwi1lOUmawX_1cd59h6s2Og_tp7ayk7JOsN-schEq6xwmGUh_kLBuVuqe8O71rohSkoVAd9kHJQVk03hZEwNvipnSCtEIV_35fIkyuQEmSNmRPvpkAyQ3PvsWqwW6iAVZyVNN6ouTz7Uy5BwDssXv1CHSZB4ZyNKS8UpnDsPasXsT7I0LXUCuAszz8AIFZA"/>
+                                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+                                        </div>
+                                        <p class="text-base font-normal text-neutral-900 dark:text-neutral-100 flex-1">Sophia</p>
+                                    </div>
+                                    <div class="flex items-center gap-4 p-2 rounded-lg hover:bg-primary/10">
+                                        <div class="relative">
+                                            <img alt="Mateus's avatar" class="h-10 w-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCi_C4-p4ZqaUFxtUy7nqcNzIHPhwkof3QRIemBVzAhrKRNL4tFj-vqe_mFB-aL_FWz_KF7nqHqIOawPpXCEiuTXVMvPWynvI0c9LN3IWZzoWgBe9bPdQnibYk6-pGzu837K50t5Hyq5v2msRq5KUnOx6Y500owKGJTDvQjIdXV7AVrF3aLLe_FK_rkgnu30syLtAc1O4WViRg_r7C3odZn5Eqh7wVPlH-gUOBwJkDGBGT5XBqj8D5FapMocD94fD-CrEoERy1Kw"/>
+                                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-neutral-400 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+                                        </div>
+                                        <p class="text-base font-normal text-neutral-900 dark:text-neutral-100 flex-1">Mateus</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-4">
+                                <div class="flex items-end gap-3">
+                                    <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+                                    <div class="flex flex-col gap-1 items-start max-w-[80%]">
+                                        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41</span>
+                                        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">Olá pessoal, estou a caminho. Chego em 15 minutos.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-end gap-3">
+                                    <img alt="Sophia's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn7Nf4rv3VAidAHimFnMtaRmdKbznrgApOaKtKqpA3yD1FKIWnFiwO2KFUbwfxz5kYE7-KsQke45ryljYlYqyvHwoN1vKXLFMRHnyJ8aPuHwkSn86Ew7QUWMcY0RX5LGgBe49676GFguXd0mnrQprLBhlzLsYjnVoEAjms5AgdxLTv2fz0co_jtnXugkLTUQzpK7nrJmIfKHTywoxUc6WzlIRMVrsqgdQITdX81N2OkxBjWvKIbhyCQLhnZXjxG496cNFIGoS9yg"/>
+                                    <div class="flex flex-col gap-1 items-start max-w-[80%]">
+                                        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Sophia · 10:42</span>
+                                        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">Ótimo, te vejo em breve!</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-end gap-3 justify-end">
+                                    <div class="flex flex-col gap-1 items-end max-w-[80%]">
+                                        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Você · 10:45</span>
+                                        <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white">Perfeito, estou pronto.</p>
+                                    </div>
+                                    <img alt="Your avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZAO5JCLzSFE5xD8jMet5c8mJzwDrGVN-7Ed18dC4zvZx-6PSGcxLb9rB0wLvYaetdz6rm7M3fQAhTzCrEtDpfATXpBz0Xp42ixscOHjTOebX2HTaq37T0HOmddJOe4nPH66QzFZv-MSqwTeT4vRsl1SgKnfvK0sf6LIZEKDmS-4g2JdzIcmH3wNx34FnKPrN65O_Y-h1F3yL6WHKQSpmKVTntxkhObsX5i243JmXCvToucKbVdK4FSR8vJf1C1sPntsiqXidvKg"/>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                    <footer class="p-2 border-t border-neutral-200 dark:border-neutral-800 bg-background-light dark:bg-background-dark">
+                        <div class="flex items-center gap-2">
+                            <button class="p-2 rounded-full text-neutral-500 dark:text-neutral-400 hover:bg-primary/10 hover:text-primary">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                            <div class="flex-1 relative">
+                                <input class="w-full bg-neutral-100 dark:bg-neutral-800 border-none rounded-full h-12 px-4 pr-24 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus:ring-2 focus:ring-primary" placeholder="Digite uma mensagem..." type="text"/>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+                                    <button class="p-2 rounded-full text-neutral-500 dark:text-neutral-400 hover:bg-primary/10 hover:text-primary">
+                                        <span class="material-symbols-outlined">sentiment_satisfied</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="p-3 rounded-full bg-primary text-white">
+                                <span class="material-symbols-outlined">send</span>
+                            </button>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">7. Tela de Minhas Caronas</h2>
+            <div id="rides-screen">
+                <div class="max-w-md mx-auto">
+                    <header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+                        <div class="flex items-center justify-between p-4">
+                            <button class="p-2 -m-2">
+                                <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">arrow_back</span>
+                            </button>
+                            <h1 class="text-lg font-bold">Minhas Caronas</h1>
+                            <div class="w-8"></div>
+                        </div>
+                    </header>
+                    <main class="p-4 pb-32">
+                        <div class="space-y-4">
+                            <div class="bg-background-light dark:bg-subtle-dark p-4 rounded-lg border border-subtle-light dark:border-subtle-dark">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <p class="text-sm text-muted-light dark:text-muted-dark">Hoje, 10:00</p>
+                                        <p class="font-bold">IFRN Campus Central → Shopping Midway</p>
+                                    </div>
+                                    <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">Confirmada</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-muted-light dark:text-muted-dark">
+                                    <span class="material-symbols-outlined text-base">person</span>
+                                    <span>Lucas Oliveira</span>
+                                </div>
+                                <div class="flex gap-2 mt-4">
+                                    <button class="flex-1 h-10 px-4 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary text-sm font-bold">Detalhes (Demo)</button>
+                                    <button class="flex-1 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold">Cancelar (Demo)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                    <footer class="sticky bottom-0 z-10 bg-background-light dark:bg-background-dark border-t border-subtle-light dark:border-subtle-dark"> <nav class="flex justify-around py-2">
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-xs font-medium">Home</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="text-xs font-medium">Minhas Caronas</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">chat_bubble</span>
+                                <span class="text-xs font-medium">Mensagens</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="text-xs font-medium">Perfil</span>
+                            </a>
+                        </nav>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-container">
+            <h2 class="screen-title">8. Tela de Oferecer Carona</h2>
+            <div id="create-ride-screen">
+                <div class="max-w-md mx-auto">
+                    <header class="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+                        <div class="flex items-center justify-between p-4">
+                            <button class="p-2 -m-2">
+                                <span class="material-symbols-outlined text-foreground-light dark:text-foreground-dark">arrow_back</span>
+                            </button>
+                            <h1 class="text-lg font-bold">Oferecer Carona</h1>
+                            <div class="w-8"></div>
+                        </div>
+                    </header>
+                    <main class="p-4 pb-32">
+                        <div class="space-y-4">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">trip_origin</span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Origem" type="text"/>
+                            </div>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">location_on</span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Destino" type="text"/>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">calendar_today</span>
+                                    <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Data" type="text"/>
+                                </div>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">schedule</span>
+                                    <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Horário" type="text"/>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">group</span>
+                                <select class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary form-select">
+                                    <option>Número de passageiros</option>
+                                    <option>1 passageiro</option>
+                                    <option>2 passageiros</option>
+                                    <option>3 passageiros</option>
+                                    <option>4 passageiros</option>
+                                </select>
+                            </div>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted-light dark:text-muted-dark">payments</span>
+                                <input class="w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Valor por passageiro (opcional)" type="text"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-muted-light dark:text-muted-dark mb-2">Observações</label>
+                                <textarea class="w-full px-4 py-3 bg-background-light dark:bg-background-dark border border-subtle-light dark:border-subtle-dark rounded-lg focus:ring-primary focus:border-primary placeholder:text-muted-light dark:placeholder:text-muted-dark" placeholder="Adicione informações sobre a carona..." rows="3"></textarea>
+                            </div>
+                            <button class="w-full bg-primary text-white font-bold py-3 px-5 rounded-lg shadow-md hover:bg-primary/90 transition-colors">
+                                Publicar Carona (Demo)
+                            </button>
+                        </div>
+                    </main>
+                    <footer class="sticky bottom-0 z-10 bg-background-light dark:bg-background-dark border-t border-subtle-light dark:border-subtle-dark"> <nav class="flex justify-around py-2">
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">home</span>
+                                <span class="text-xs font-medium">Home</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="text-xs font-medium">Minhas Caronas</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-primary" href="#">
+                                <span class="material-symbols-outlined">add_circle</span>
+                                <span class="text-xs font-medium">Oferecer</span>
+                            </a>
+                            <a class="flex flex-col items-center gap-1 text-muted-light dark:text-muted-dark hover:text-primary transition-colors" href="#">
+                                <span class="material-symbols-outlined">person</span>
+                                <span class="text-xs font-medium">Perfil</span>
+                            </a>
+                        </nav>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Função para alternar modo escuro/claro
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('dark-mode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Inicializar a aplicação
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar preferência de tema do usuário
+            if (localStorage.getItem('dark-mode') === 'true' || 
+                (!localStorage.getItem('dark-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Corrige os links e botões que usavam showScreen() para evitar erros
+            const elements = document.querySelectorAll('[onclick^="showScreen"]');
+            elements.forEach(el => {
+                el.removeAttribute('onclick');
+            });
+        });
+    </script>
+</body>
+</html> 
+
+
