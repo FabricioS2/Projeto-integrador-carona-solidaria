@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>{% block title %}Meu Site{% endblock %}</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1183d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101a22",
+          },
+          fontFamily: {
+            display: ["Work Sans"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+    
+    .notification-item {
+      transition: all 0.2s ease;
+    }
+    
+    .notification-item:hover {
+      background-color: rgba(17, 131, 212, 0.05);
+    }
+    
+    .action-button {
+      transition: all 0.2s ease;
+    }
+    
+    .action-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .status-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark flex flex-col min-h-screen">
+
+  <header class="sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+    <div class="flex items-center justify-between p-4">
+      <div class="w-10"></div>
+      <div class="relative">
+        <button id="notificationButton" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10 relative">
+          <span class="material-symbols-outlined">
+            notifications
+          </span>
+          <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            9
+          </span>
+        </button>
+        
+        <!-- Área de Notificações -->
+        <div id="notificationPanel" class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 hidden z-20">
+          <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between items-center">
+              <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Notificações</h3>
+              <span class="text-sm text-gray-500 dark:text-gray-400">9 novas</span>
+            </div>
+          </div>
+          <div class="max-h-96 overflow-y-auto">
+            <!-- Notificação 1 - Carona Aceita -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-green-500">check_circle</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona aceita!</h4>
+                  <span class="status-badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aceita</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Shopping foi aceita por Maria.</p>
+                <div class="flex space-x-2 mt-2">
+                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="1">
+                    Recusar
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 5 minutos</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 2 - Carona Recusada -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-red-500">cancel</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona recusada</h4>
+                  <span class="status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Recusada</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">João recusou sua solicitação para a carona até o Centro.</p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 15 minutos</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 3 - Carona Pendente -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-yellow-500">pending</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona pendente</h4>
+                  <span class="status-badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pendente</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até a Universidade está pendente.</p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 30 minutos</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 4 - Solicitação de Passageiro (Aguardando resposta) -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-blue-500">person</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
+                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Ana quer participar da sua carona até o Aeroporto.</p>
+                <div class="flex space-x-2 mt-2">
+                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="4">
+                    Aceitar
+                  </button>
+                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="4">
+                    Recusar
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 1 hora</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 5 - Carona Aceita -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-green-500">check_circle</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona aceita!</h4>
+                  <span class="status-badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aceita</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Parque foi aceita por Carlos.</p>
+                <div class="flex space-x-2 mt-2">
+                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="5">
+                    Recusar
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 2 horas</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 6 - Solicitação de Passageiro (Aguardando resposta) -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-blue-500">person</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
+                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Pedro quer participar da sua carona até o Centro.</p>
+                <div class="flex space-x-2 mt-2">
+                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="6">
+                    Aceitar
+                  </button>
+                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="6">
+                    Recusar
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 3 horas</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 7 - Carona Recusada -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-red-500">cancel</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona recusada</h4>
+                  <span class="status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Recusada</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Maria recusou sua solicitação para a carona até a Praia.</p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 5 horas</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 8 - Carona Pendente -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-yellow-500">pending</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona pendente</h4>
+                  <span class="status-badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pendente</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Hospital está pendente.</p>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 1 dia</span>
+              </div>
+            </div>
+            
+            <!-- Notificação 9 - Solicitação de Passageiro (Aguardando resposta) -->
+            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
+              <div class="flex-shrink-0">
+                <span class="material-symbols-outlined text-blue-500">person</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
+                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Julia quer participar da sua carona até a Faculdade.</p>
+                <div class="flex space-x-2 mt-2">
+                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="9">
+                    Aceitar
+                  </button>
+                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="9">
+                    Recusar
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Há 2 dias</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="flex border-b border-border-light dark:border-border-dark px-4"></nav>
+  </header>
+
+
+  {% block content %}
+
+  {% endblock %}
+
+  <footer
+    class="mt-auto sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
+    <nav class="flex justify-around p-2">
+      <a class="flex flex-col items-center gap-1 text-primary w-1/4" href="#">
+        <span class="material-symbols-outlined text-2xl">home</span>
+        <span class="text-xs font-medium">Home</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+        <span class="material-symbols-outlined text-2xl">directions_car</span>
+        <span class="text-xs font-medium">My Rides</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+        <span class="material-symbols-outlined text-2xl">history</span>
+        <span class="text-xs font-medium">Histórico</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+        <span class="material-symbols-outlined text-2xl">chat</span>
+        <span class="text-xs font-medium">Messages</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+        <span class="material-symbols-outlined text-2xl">person</span>
+        <span class="text-xs font-medium">Profile</span>
+      </a>
+    </nav>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const notificationButton = document.getElementById('notificationButton');
+      const notificationPanel = document.getElementById('notificationPanel');
+      const actionButtons = document.querySelectorAll('.action-button');
+      const notificationBadge = document.getElementById('notificationBadge');
+      
+      // Alternar visibilidade do painel de notificações
+      notificationButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        notificationPanel.classList.toggle('hidden');
+      });
+      
+      // Fechar o painel ao clicar fora
+      document.addEventListener('click', function() {
+        notificationPanel.classList.add('hidden');
+      });
+      
+      // Prevenir que cliques dentro do painel fechem o mesmo
+      notificationPanel.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+      
+      // Adicionar funcionalidade aos botões de ação
+      actionButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const notificationId = this.getAttribute('data-notification-id');
+          const notificationItem = this.closest('.notification-item');
+          const action = this.textContent.trim();
+          const buttonsContainer = this.parentElement;
+          const statusBadge = notificationItem.querySelector('.status-badge');
+          
+          if (action === 'Aceitar') {
+            // Atualizar a notificação para mostrar que foi aceita
+            statusBadge.textContent = 'Aceita';
+            statusBadge.className = 'status-badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+            
+            // Atualizar o ícone
+            const icon = notificationItem.querySelector('.material-symbols-outlined');
+            icon.textContent = 'check_circle';
+            icon.className = 'material-symbols-outlined text-green-500';
+            
+            // Atualizar o título
+            const title = notificationItem.querySelector('h4');
+            title.textContent = 'Carona aceita!';
+            
+            // Atualizar botões - manter apenas o botão "Recusar"
+            buttonsContainer.innerHTML = `
+              <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="${notificationId}">
+                Recusar
+              </button>
+            `;
+            
+            // Re-atribuir evento ao novo botão
+            const newButton = buttonsContainer.querySelector('.action-button');
+            newButton.addEventListener('click', arguments.callee);
+            
+            // Mostrar notificação de sucesso
+            showNotification('Passageiro aceito com sucesso!', 'success');
+            
+          } else if (action === 'Recusar') {
+            // Verificar se está recusando uma carona aceita ou uma nova solicitação
+            const currentStatus = statusBadge.textContent;
+            
+            if (currentStatus === 'Aceita') {
+              // Se estava aceita, mudar para recusada
+              statusBadge.textContent = 'Recusada';
+              statusBadge.className = 'status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+              
+              // Atualizar o ícone
+              const icon = notificationItem.querySelector('.material-symbols-outlined');
+              icon.textContent = 'cancel';
+              icon.className = 'material-symbols-outlined text-red-500';
+              
+              // Atualizar o título
+              const title = notificationItem.querySelector('h4');
+              title.textContent = 'Carona recusada';
+              
+              // Remover botões de ação
+              buttonsContainer.remove();
+              
+              // Mostrar notificação de sucesso
+              showNotification('Carona recusada com sucesso!', 'warning');
+              
+            } else {
+              // Se era uma nova solicitação, recusar normalmente
+              statusBadge.textContent = 'Recusada';
+              statusBadge.className = 'status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+              
+              // Atualizar o ícone
+              const icon = notificationItem.querySelector('.material-symbols-outlined');
+              icon.textContent = 'cancel';
+              icon.className = 'material-symbols-outlined text-red-500';
+              
+              // Atualizar o título
+              const title = notificationItem.querySelector('h4');
+              title.textContent = 'Solicitação recusada';
+              
+              // Remover botões de ação
+              buttonsContainer.remove();
+              
+              // Atualizar contador de notificações
+              updateNotificationCount(-1);
+              
+              // Mostrar notificação de sucesso
+              showNotification('Passageiro recusado.', 'info');
+            }
+          }
+        });
+      });
+      
+      // Função para atualizar o contador de notificações
+      function updateNotificationCount(change) {
+        let currentCount = parseInt(notificationBadge.textContent);
+        currentCount += change;
+        notificationBadge.textContent = currentCount;
+        
+        if (currentCount <= 0) {
+          notificationBadge.classList.add('hidden');
+        } else {
+          notificationBadge.classList.remove('hidden');
+        }
+      }
+      
+      // Função para mostrar notificações toast
+      function showNotification(message, type = 'info') {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-0 opacity-100 ${
+          type === 'success' ? 'bg-green-500 text-white' :
+          type === 'warning' ? 'bg-yellow-500 text-white' :
+          type === 'error' ? 'bg-red-500 text-white' :
+          'bg-blue-500 text-white'
+        }`;
+        
+        // Adicionar ícone baseado no tipo
+        const icon = type === 'success' ? 'check_circle' :
+                   type === 'warning' ? 'warning' :
+                   type === 'error' ? 'error' :
+                   'info';
+        
+        notification.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <span class="material-symbols-outlined">${icon}</span>
+            <span class="font-medium">${message}</span>
+          </div>
+        `;
+        
+        // Adicionar ao body
+        document.body.appendChild(notification);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+          notification.style.transform = 'translateX(100%)';
+          notification.style.opacity = '0';
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        }, 3000);
+      }
+      
+      // Exemplo de como usar a função de notificação
+      // showNotification('Operação realizada com sucesso!', 'success');
+      // showNotification('Atenção: ação necessária', 'warning');
+      // showNotification('Erro ao processar solicitação', 'error');
+      // showNotification('Informação importante', 'info');
+    });
+  </script>
+
+</body>
+
+</html>

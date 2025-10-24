@@ -1,0 +1,418 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Design</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#1183d4",
+        "background-light": "#f6f7f8",
+        "background-dark": "#101a22",
+      },
+      fontFamily: {
+        display: ["Work Sans"],
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px",
+      },
+    },
+  },
+};
+</script>
+
+<style>
+  .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+</style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark flex flex-col min-h-screen">
+
+<header class="sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+  <div class="flex items-center justify-between p-4">
+    <div class="w-10"></div>
+    <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10">
+      <span class="material-symbols-outlined">
+        notifications
+      </span>
+    </button>
+  </div>
+  <nav class="flex border-b border-border-light dark:border-border-dark px-4"></nav>
+</header>
+
+<main class="p-4 space-y-6 flex-1">
+
+  <div class="flex flex-col gap-4">
+    <div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-end gap-3">
+      <img alt="Sophia's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn7Nf4rv3VAidAHimFnMtaRmdKbznrgApOaKtKqpA3yD1FKIWnFiwO2KFUbwfxz5kYE7-KsQke45ryljYlYqyvHwoN1vKXLFMRHnyJ8aPuHwkSn86Ew7QUWMcY0RX5LGgBe49676GFguXd0mnrQprLBhlzLsYjnVoEAjms5AgdxLTv2fz0co_jtnXugkLTUQzpK7nrJmIfKHTywoxUc6WzlIRMVrsqgdQITdX81N2OkxBjWvKIbhyCQLhnZXjxG496cNFIGoS9yg"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Sophia · 10:42 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Great, see you soon!
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-end gap-3 justify-end">
+      <div class="flex flex-col gap-1 items-end max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">You · 10:45 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white">
+          Sounds good, I'm ready.
+        </p>
+      </div>
+      <img alt="Your avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZAO5JCLzSFE5xD8jMet5c8mJzwDrGVN-7Ed18dC4zvZx-6PSGcxLb9rB0wLvYaetdz6rm7M3fQAhTzCrEtDpfATXpBz0Xp42ixscOHjTOebX2HTaq37T0HOmddJOe4nPH66QzFZv-MSqwTeT4vRsl1SgKnfvK0sf6LIZEKDmS-4g2JdzIcmH3wNx34FnKPrN65O_Y-h1F3yL6WHKQSpmKVTntxkhObsX5i243JmXCvToucKbVdK4FSR8vJf1C1sPntsiqXidvKg"/>
+    </div>
+  </div>
+</main>
+
+
+    <div class="p-2 border-t border-neutral-200 dark:border-neutral-800 bg-background-light dark:bg-background-dark">
+      <div class="flex items-center gap-2">
+        <div class="flex-1 relative">
+          <input class="w-full bg-neutral-100 dark:bg-neutral-800 border-none rounded-full h-12 px-4 pr-24 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus:ring-2 focus:ring-primary" placeholder="Type a message..." type="text"/>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+          </div>
+        </div>
+        <button class="p-3 aspect-square rounded-full bg-primary text-white flex items-center justify-center">
+          <span class="material-symbols-outlined">send</span>
+        </button>
+      </div>
+    </div>
+
+<footer class="mt-auto sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
+  <nav class="flex justify-around p-2">
+    <a class="flex flex-col items-center gap-1 text-primary w-1/4" href="#">
+      <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"></path>
+      </svg>
+      <span class="text-xs font-medium">Home</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M240,112H229.2L201.42,49.5A16,16,0,0,0,186.8,40H69.2a16,16,0,0,0-14.62,9.5L26.8,112H16a8,8,0,0,0,0,16h8v80a16,16,0,0,0,16,16H64a16,16,0,0,0,16-16V192h96v16a16,16,0,0,0,16,16h24a16,16,0,0,0,16-16V128h8a8,8,0,0,0,0-16ZM69.2,56H186.8l24.89,56H44.31ZM64,208H40V192H64Zm128,0V192h24v16Zm24-32H40V128H216ZM56,152a8,8,0,0,1,8-8H80a8,8,0,0,1,0,16H64A8,8,0,0,1,56,152Zm112,0a8,8,0,0,1,8-8h16a8,8,0,0,1,0,16H176A8,8,0,0,1,168,152Z"></path>
+      </svg>
+      <span class="text-xs font-medium">My Rides</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"></path>
+      </svg>
+      <span class="text-xs font-medium">Messages</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+      </svg>
+      <span class="text-xs font-medium">Profile</span>
+    </a>
+  </nav>
+</footer>
+
+</body>
+</html>  -->
+
+
+{% extends "usuario_app/extende/base.html" %}
+
+{% block title %}chat{% endblock %}
+
+{% block content %}
+
+<main class="p-4 space-y-6 flex-1">
+
+  <div class="flex flex-col gap-4">
+    <div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.         Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.         Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.          Hey everyone, I'm on my way. ETA 15 minutes.         Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div><div class="flex items-end gap-3">
+      <img alt="Lucas's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHf-9RDOvg3YRqqa2baoTFDG_JGY8C7nDlEIHbgmtccN5YS9l7B5uW1CDWUMnCM7lDi3hC1n4OozDk2D3QsZqy7fgPJgASK-dCTqcGkUxTQQKpqTtW3cTQADu4nTQdj3dqHwGSGUtibH3bMKot6DMAZkY9Pg_PMWXPpUHqWhbaeLdYpXf0ve6h2I1WgYl278PxWgdzRTJE4c-8Q9bURUdVnuVBy3IrMuRdDh6pNHh9y2DLtS0ubXL0djsVvVfbvI98relHIXkXA"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Lucas · 10:41 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Hey everyone, I'm on my way. ETA 15 minutes.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-end gap-3">
+      <img alt="Sophia's avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn7Nf4rv3VAidAHimFnMtaRmdKbznrgApOaKtKqpA3yD1FKIWnFiwO2KFUbwfxz5kYE7-KsQke45ryljYlYqyvHwoN1vKXLFMRHnyJ8aPuHwkSn86Ew7QUWMcY0RX5LGgBe49676GFguXd0mnrQprLBhlzLsYjnVoEAjms5AgdxLTv2fz0co_jtnXugkLTUQzpK7nrJmIfKHTywoxUc6WzlIRMVrsqgdQITdX81N2OkxBjWvKIbhyCQLhnZXjxG496cNFIGoS9yg"/>
+      <div class="flex flex-col gap-1 items-start max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Sophia · 10:42 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
+          Great, see you soon!
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-end gap-3 justify-end">
+      <div class="flex flex-col gap-1 items-end max-w-[80%]">
+        <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">You · 10:45 AM</span>
+        <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white">
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+          Sounds good, I'm ready.
+        </p>
+      </div>
+      <img alt="Your avatar" class="h-8 w-8 rounded-full object-cover self-end" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZAO5JCLzSFE5xD8jMet5c8mJzwDrGVN-7Ed18dC4zvZx-6PSGcxLb9rB0wLvYaetdz6rm7M3fQAhTzCrEtDpfATXpBz0Xp42ixscOHjTOebX2HTaq37T0HOmddJOe4nPH66QzFZv-MSqwTeT4vRsl1SgKnfvK0sf6LIZEKDmS-4g2JdzIcmH3wNx34FnKPrN65O_Y-h1F3yL6WHKQSpmKVTntxkhObsX5i243JmXCvToucKbVdK4FSR8vJf1C1sPntsiqXidvKg"/>
+    </div>
+  </div>
+</main>
+
+
+    <div class="p-2 border-t border-neutral-200 dark:border-neutral-800 bg-background-light dark:bg-background-dark">
+      <div class="flex items-center gap-2">
+        <div class="flex-1 relative">
+          <input class="w-full bg-neutral-100 dark:bg-neutral-800 border-none rounded-full h-12 px-4 pr-24 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus:ring-2 focus:ring-primary" placeholder="Type a message..." type="text"/>
+          <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+          </div>
+        </div>
+        <button class="p-3 aspect-square rounded-full bg-primary text-white flex items-center justify-center">
+          <span class="material-symbols-outlined">send</span>
+        </button>
+      </div>
+    </div>
+
+
+{% endblock %}
