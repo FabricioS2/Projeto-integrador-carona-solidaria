@@ -11,3 +11,7 @@ def chat(request):
 
 def perfil(request):
    return render(request, 'usuario_app/perfil.html')
+
+def cadastro(request):
+   return render(request, 'usuario_app/cadastro.html')
+

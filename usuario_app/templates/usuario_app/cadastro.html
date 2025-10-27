@@ -1,0 +1,78 @@
+{% load static %} 
+{% block title %}perfil{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro/cadastro - Carona Solidária</title>
+    
+    <link rel="stylesheet" href="{% static 'usuario_app/css/style.css' %}"> 
+    <script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Novo Cadastro</h1>
+        
+        <form method="POST"> 
+            {% csrf_token %} 
+            
+            <fieldset class="perfil-selector">
+                <legend>Eu sou:</legend>
+                
+                <input type="radio" id="perfilPassageiro" name="perfil" value="passageiro" checked>
+                <label for="perfilPassageiro">Passageiro</label>
+                
+                <input type="radio" id="perfilMotorista" name="perfil" value="motorista">
+                <label for="perfilMotorista">Motorista</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Seus Dados Pessoais</legend>
+                
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" required>
+                
+                <label for="documento">RG/CPF:</label>
+                <input type="text" id="documento" name="documento" required>
+                
+                <label for="email">E-mail Institucional:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+
+                <label for="foto">Foto de Perfil (Opcional):</label>
+                <input type="file" id="foto" name="foto"> 
+            </fieldset>
+
+            <fieldset id="camposVeiculo" style="display: none;">
+                <legend>Dados do Veículo (Apenas Motorista)</legend>
+                
+                <label for="modelo">Modelo do Veículo:</label>
+                <input type="text" id="modelo" name="modelo" required>
+                
+                <label for="placa">Placa:</label>
+                <input type="text" id="placa" name="placa" required>
+                
+                <label for="cor">Cor:</label>
+                <input type="text" id="cor" name="cor">
+                
+                <label for="assentos">Assentos Disponíveis:</label>
+                <input type="number" id="assentos" name="assentos" min="1" max="6" required>
+            </fieldset>
+
+            <button type="submit">Finalizar Cadastro</button>
+            
+            <p class="link-login">
+                Já tem conta?  
+                </p>
+        </form>
+    </div>
+
+    <script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+</body>
+</html>
+{% endblock %}
