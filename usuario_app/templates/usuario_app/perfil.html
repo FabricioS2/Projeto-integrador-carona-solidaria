@@ -4,7 +4,7 @@
 
 {% block content %}
 <main class="flex-1 overflow-y-auto p-4 md:p-6">
-    <div class="max-w-2xl mx-auto"> <!-- limite de largura menor -->
+    <div class="max-w-2xl mx-auto">
         <!-- FOTO E NOME -->
         <div class="flex flex-col items-center space-y-4">
             <div class="relative">
@@ -17,88 +17,97 @@
             </div>
         </div>
 
-        <!-- INFORMAÇÕES PESSOAIS E ACADÊMICAS -->
-        <div class="mt-8 grid grid-cols-1 gap-6">
+        <!-- FORMULÁRIO DE EDIÇÃO -->
+        <form id="profileForm" class="mt-8 grid grid-cols-1 gap-6">
+            <!-- INFORMAÇÕES PESSOAIS E ACADÊMICAS -->
             <div class="bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
                 <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2">
                     Informações Pessoais
                 </h3>
                 <div class="space-y-3">
-                    {% comment %} cada linha mais compacta e alinhada {% endcomment %}
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">badge</span>
                             <span class="font-medium">Matrícula:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">20211014040001</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="matricula">20211014040001</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="matriculaInput" value="20211014040001">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">person</span>
                             <span class="font-medium">Nome Completo:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">João da Silva</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="nome">João da Silva</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="nomeInput" value="João da Silva">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">cake</span>
                             <span class="font-medium">Data de Nascimento:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">12/03/2004</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="nascimento">12/03/2004</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="nascimentoInput" value="12/03/2004">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">mail</span>
                             <span class="font-medium">Email:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">joao.silva@academico.ifrn.edu.br</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="email">joao.silva@academico.ifrn.edu.br</span>
+                        <input type="email" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="emailInput" value="joao.silva@academico.ifrn.edu.br">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">phone</span>
                             <span class="font-medium">Telefone:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">(84) 99999-9999</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="telefone">(84) 99999-9999</span>
+                        <input type="tel" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="telefoneInput" value="(84) 99999-9999">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">location_on</span>
                             <span class="font-medium">Cidade:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">Pau dos Ferros - RN</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cidade">Pau dos Ferros - RN</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cidadeInput" value="Pau dos Ferros - RN">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">school</span>
                             <span class="font-medium">Curso:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">Técnico em Informática</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="curso">Técnico em Informática</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cursoInput" value="Técnico em Informática">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
-                            <span
-                                class="material-symbols-outlined text-black/60 dark:text-white/60">calendar_month</span>
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">calendar_month</span>
                             <span class="font-medium">Ano de Ingresso:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">2021</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="ingresso">2021</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="ingressoInput" value="2021">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
                             <span class="font-medium">É motorista:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">Sim</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="motorista">Sim</span>
+                        <select class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="motoristaInput">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
                     </div>
-
-
                 </div>
             </div>
 
@@ -108,50 +117,108 @@
                     Informações do Veículo
                 </h3>
                 <div class="space-y-3">
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
-                            <span
-                                class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
                             <span class="font-medium">Modelo:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">Fiat Argo</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="modelo">Fiat Argo</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="modeloInput" value="Fiat Argo">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
-                            <span
-                                class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
                             <span class="font-medium">Placa:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">QWX-1234</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="placa">QWX-1234</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="placaInput" value="QWX-1234">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
                             <span class="font-medium">Cor:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">Prata</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cor">Prata</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="corInput" value="Prata">
                     </div>
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
                             <span class="font-medium">Lugares Disponíveis:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80">3</span>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="lugares">3</span>
+                        <input type="number" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="lugaresInput" value="3" min="1" max="10">
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
-        <!-- BOTÃO EDITAR -->
+        <!-- BOTÃO EDITAR/SALVAR -->
         <div class="mt-6 flex justify-center">
-            <button
+            <button id="editButton"
                 class="w-full max-w-sm h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
                 Editar Perfil
             </button>
         </div>
     </div>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editButton = document.getElementById('editButton');
+        let isEditing = false;
+        
+        // Lista de campos para alternar entre visualização e edição
+        const fields = [
+            { display: 'matricula', input: 'matriculaInput' },
+            { display: 'nome', input: 'nomeInput' },
+            { display: 'nascimento', input: 'nascimentoInput' },
+            { display: 'email', input: 'emailInput' },
+            { display: 'telefone', input: 'telefoneInput' },
+            { display: 'cidade', input: 'cidadeInput' },
+            { display: 'curso', input: 'cursoInput' },
+            { display: 'ingresso', input: 'ingressoInput' },
+            { display: 'motorista', input: 'motoristaInput' },
+            { display: 'modelo', input: 'modeloInput' },
+            { display: 'placa', input: 'placaInput' },
+            { display: 'cor', input: 'corInput' },
+            { display: 'lugares', input: 'lugaresInput' }
+        ];
+        
+        editButton.addEventListener('click', function() {
+            if (!isEditing) {
+                // Entrar no modo de edição
+                fields.forEach(field => {
+                    document.getElementById(field.display).classList.add('hidden');
+                    document.getElementById(field.input).classList.remove('hidden');
+                });
+                
+                editButton.textContent = 'Salvar Alterações';
+                isEditing = true;
+            } else {
+                // Salvar alterações
+                fields.forEach(field => {
+                    const inputElement = document.getElementById(field.input);
+                    const displayElement = document.getElementById(field.display);
+                    
+                    // Atualizar o valor exibido com o valor do input
+                    displayElement.textContent = inputElement.value;
+                    
+                    // Alternar visibilidade
+                    displayElement.classList.remove('hidden');
+                    inputElement.classList.add('hidden');
+                });
+                
+                editButton.textContent = 'Editar Perfil';
+                isEditing = false;
+                
+                // Aqui você pode adicionar código para enviar os dados para o servidor
+                // Exemplo: enviarFormulario();
+            }
+        });
+    });
+</script>
 {% endblock %}
