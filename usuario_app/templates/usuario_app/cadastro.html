@@ -1,78 +1,207 @@
-{% load static %} 
-{% block title %}perfil{% endblock %}
-{% block content %}
+{% load static %}
+{% block title %}Cadastro{% endblock %} 
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro/cadastro - Carona Solidária</title>
+    <title>Cadastro</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1183d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101a22",
+          },
+          fontFamily: {
+            display: ["Work Sans"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
     
-    <link rel="stylesheet" href="{% static 'usuario_app/css/style.css' %}"> 
-    <script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+    .notification-item {
+      transition: all 0.2s ease;
+    }
+    
+    .notification-item:hover {
+      background-color: rgba(17, 131, 212, 0.05);
+    }
+    
+    .action-button {
+      transition: all 0.2s ease;
+    }
+    
+    .action-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .status-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 1rem;
+      font-weight: 500;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Novo Cadastro</h1>
-        
-        <form method="POST"> 
-            {% csrf_token %} 
+    <div class="screen-container">
+    <div id="registration-screen">
+        <div class="container mx-auto px-4 max-w-md">
             
-            <fieldset class="perfil-selector">
-                <legend>Eu sou:</legend>
-                
-                <input type="radio" id="perfilPassageiro" name="perfil" value="passageiro" checked>
-                <label for="perfilPassageiro">Passageiro</label>
-                
-                <input type="radio" id="perfilMotorista" name="perfil" value="motorista">
-                <label for="perfilMotorista">Motorista</label>
-            </fieldset>
-
-            <fieldset>
-                <legend>Seus Dados Pessoais</legend>
-                
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" required>
-                
-                <label for="documento">RG/CPF:</label>
-                <input type="text" id="documento" name="documento" required>
-                
-                <label for="email">E-mail Institucional:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-
-                <label for="foto">Foto de Perfil (Opcional):</label>
-                <input type="file" id="foto" name="foto"> 
-            </fieldset>
-
-            <fieldset id="camposVeiculo" style="display: none;">
-                <legend>Dados do Veículo (Apenas Motorista)</legend>
-                
-                <label for="modelo">Modelo do Veículo:</label>
-                <input type="text" id="modelo" name="modelo" required>
-                
-                <label for="placa">Placa:</label>
-                <input type="text" id="placa" name="placa" required>
-                
-                <label for="cor">Cor:</label>
-                <input type="text" id="cor" name="cor">
-                
-                <label for="assentos">Assentos Disponíveis:</label>
-                <input type="number" id="assentos" name="assentos" min="1" max="6" required>
-            </fieldset>
-
-            <button type="submit">Finalizar Cadastro</button>
+            <header class="flex items-center justify-between py-6">
+                <button class="text-gray-800 dark:text-gray-200" onclick="history.back()">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Criar Conta</h1>
+                <div class="w-8"></div> 
+            </header>
             
-            <p class="link-login">
-                Já tem conta?  
-                </p>
-        </form>
+            
+            
+            <form method="POST" id="registration-form">
+                {% csrf_token %} 
+                
+                <main class="space-y-6">
+                    
+                    <section>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Informações Pessoais</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="full-name">Nome Completo</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="full-name" name="nome" placeholder="Digite seu nome completo" type="text" required/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="documento">RG/CPF</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="documento" name="documento" placeholder="Digite seu RG ou CPF" type="text" required/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="email-reg">Email Institucional</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="email-reg" name="email" placeholder="Digite seu email do IFRN" type="email" required/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="phone">Telefone</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="phone" name="telefone" placeholder="Digite seu telefone" type="tel"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus IFRN</label>
+                                <select class="w-full h-12 px-4 rounded-lg border-none appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary bg-no-repeat bg-right form-select" id="campus" name="campus">
+                                    <option value="">Selecione seu campus</option>
+                                    <option value="Natal-Central">Campus Natal-Central</option>
+                                    <option value="Mossoro">Campus Mossoró</option>
+                                    <option value="Parnamirim">Campus Parnamirim</option>
+                                    <option value="Pau dos Ferros"> Campus Pau dos Ferros</option>
+                                    </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="foto">Foto de Perfil (Opcional)</label>
+                                <input class="w-full h-12 px-4 pt-3 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="foto" name="foto" type="file" />
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tipo de Conta</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            
+                            <label class="perfil-radio flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
+                                <input class="sr-only" name="perfil" type="radio" value="motorista" id="perfilMotorista"/>
+                                <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">directions_car</span>
+                                <span class="font-medium text-gray-900 dark:text-white mt-2">Motorista</span>
+                            </label>
+                            
+                            <label class="perfil-radio flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
+                                <input checked="" class="sr-only" name="perfil" type="radio" value="passageiro" id="perfilPassageiro"/>
+                                <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">hail</span>
+                                <span class="font-medium text-gray-900 dark:text-white mt-2">Passageiro</span>
+                            </label>
+                            
+                        </div>
+                    </section>
+                    <section id="camposVeiculo" style="display: none;">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Dados do Veículo (Apenas Motorista)</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="modelo">Modelo do Veículo</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="modelo" name="modelo" placeholder="Ex: Fiat Uno" type="text"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="placa">Placa</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="placa" name="placa" placeholder="Ex: ABC1234" type="text"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="cor">Cor</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="cor" name="cor" placeholder="Ex: Vermelho" type="text"/>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="assentos">Assentos Disponíveis</label>
+                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="assentos" name="assentos" placeholder="Ex: 3" type="number" min="1" max="7"/>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Senha</h2>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password-reg">Criar Senha</label>
+                            <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="password-reg" name="senha" placeholder="Crie uma senha" type="password" required/>
+                        </div>
+                    </section>
+
+
+                    <div class="pt-4 pb-8">
+                        <button type="submit" class="w-full h-12 px-6 text-white bg-primary rounded-lg font-bold text-lg tracking-wide">
+                            Finalizar Cadastro
+                        </button>
+                        <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                            Já tem uma conta? <a class="font-medium text-primary hover:underline" href="{% url 'login' %}">Fazer login</a>
+                        </p>
+                    </div>
+                </main>
+            </form>
+        </div>
     </div>
+</div>
 
-    <script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+<script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
 </body>
 </html>
-{% endblock %}

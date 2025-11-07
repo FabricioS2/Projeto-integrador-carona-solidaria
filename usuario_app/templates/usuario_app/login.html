@@ -1,0 +1,104 @@
+{% extends "usuario_app/extende/base.html" %}
+{% block title %}Login - IFRN Carona Solidária{% endblock %}
+{% block head_extras %}
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script> 
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1183d4",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#101a22",
+                },
+                fontFamily: {
+                    "display": ["Work Sans"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+    }
+</style>
+<style>
+    /* Adaptação do estilo body para garantir a altura mínima da tela */
+    body {
+      min-height: max(884px, 100dvh);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-sm mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-black dark:text-white">IFRN Carona Solidária</h1>
+        </header>
+        <main class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-black/70 dark:text-white/70" for="email">Email ou ID Institucional</label>
+                <input class="w-full h-12 px-4 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" 
+                       id="email" 
+                       placeholder="Seu email ou ID institucional" 
+                       type="email" 
+                       name="email"/> 
+                       </div>
+            
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-black/70 dark:text-white/70" for="password">Senha</label>
+                <div class="relative">
+                    <input class="w-full h-12 px-4 pr-12 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" 
+                           id="password" 
+                           placeholder="Sua senha" 
+                           type="password" 
+                           name="password"/> 
+                           <button type="button" class="absolute inset-y-0 right-0 flex items-center px-4 text-black/60 dark:text-white/60">
+                        <span class="material-symbols-outlined">visibility</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input class="h-4 w-4 rounded border-black/20 dark:border-white/30 text-primary focus:ring-primary bg-white/50 dark:bg-white/10" 
+                           id="remember-me" 
+                           type="checkbox" 
+                           name="remember-me"/>
+                    <label class="ml-2 block text-sm text-black/80 dark:text-white/80" for="remember-me">Lembrar-me</label>
+                </div>
+                </div>
+            
+            <div class="bg-red-500/10 dark:bg-red-500/20 border border-red-500/20 dark:border-red-500/30 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm hidden" id="error-message">
+                <p>Credenciais inválidas. Por favor, tente novamente.</p>
+            </div>
+            
+            <button type="submit" class="w-full h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                Entrar
+            </button>
+            
+            <p class="text-center text-sm text-black/60 dark:text-white/60">
+                Não tem uma conta? <a class="font-medium text-primary hover:underline" href="{% url 'cadastro' %}">Cadastre-se aqui</a>
+                </p>
+        </main>
+    </div>
+</div>
+{% endblock %}
