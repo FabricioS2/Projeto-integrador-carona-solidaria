@@ -1,10 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Histórico</h1>
+{% extends "usuario_app/extende/base.html" %}
+
+{% block title %}perfil{% endblock %}
+
+{% block content %}
+<body
+    class="font-display bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark"
+>
+    <div class="flex flex-col min-h-screen content-center items-center ">
+        <main class="flex-grow p-4 w-full flex justify-center">
+            <div class="w-full max-w-2xl space-y-6"> 
+                <!-- Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md w-full">
+                    <!-- Cabeçalho com horário e status -->
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-semibold">10:00</span>
+                            </div>
+                            <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-base font-medium">
+                                Em Andamento
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações da viagem -->
+                    <div class="p-4">
+                        <div class="mb-2">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Origem</div>
+                            <div class="font-medium dark:text-white">IFRN Pau dos Ferros</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Destino</div>
+                            <div class="font-medium dark:text-white">Shopping</div>
+                        </div>
+                        
+                        <!-- Motorista -->
+                        <div class="flex items-center mt-4">
+                            <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold mr-2">
+                                L
+                            </div>
+                            <div class="font-medium dark:text-white">Lucas Oliveira</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rodapé com botões -->
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                        <button class="bg-blue-600 dark:bg-blue-700 px-3 py-1 rounded-xl text-white dark:text-blue-200 font-medium hover:text-blue-300 dark:hover:text-blue-100 transition-colors flex items-center gap-1">
+                            Detalhes
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="text-red-600 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+                <!--card-->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md w-full">
+                    <!-- Cabeçalho com horário e status -->
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-semibold">10:00</span>
+                            </div>
+                            <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-base font-medium">
+                                Confirmada
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações da viagem -->
+                    <div class="p-4">
+                        <div class="mb-2">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Origem</div>
+                            <div class="font-medium dark:text-white">IFRN Pau dos Ferros</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Destino</div>
+                            <div class="font-medium dark:text-white">Shopping</div>
+                        </div>
+                        
+                        <!-- Motorista -->
+                        <div class="flex items-center mt-4">
+                            <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold mr-2">
+                                L
+                            </div>
+                            <div class="font-medium dark:text-white">Lucas Oliveira</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rodapé com botões -->
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                        <button class="bg-blue-200 dark:bg-blue-700 px-3 py-1 rounded-full text-blue-600 dark:text-blue-200 font-medium hover:text-blue-800 dark:hover:text-blue-100 transition-colors flex items-center gap-1">
+                            Detalhes
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="text-red-600 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+                <!--card-->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md w-full">
+                    <!-- Cabeçalho com horário e status -->
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-lg font-semibold">10:00</span>
+                            </div>
+                            <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-base font-medium">
+                                Confirmada
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações da viagem -->
+                    <div class="p-4">
+                        <div class="mb-2">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Origem</div>
+                            <div class="font-medium dark:text-white">IFRN Pau dos Ferros</div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">Destino</div>
+                            <div class="font-medium dark:text-white">Shopping</div>
+                        </div>
+                        
+                        <!-- Motorista -->
+                        <div class="flex items-center mt-4">
+                            <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold mr-2">
+                                L
+                            </div>
+                            <div class="font-medium dark:text-white">Lucas Oliveira</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rodapé com botões -->
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                        <button class="bg-blue-200 dark:bg-blue-700 px-3 py-1 rounded-full text-blue-600 dark:text-blue-200 font-medium hover:text-blue-800 dark:hover:text-blue-100 transition-colors flex items-center gap-1">
+                            Detalhes
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <button class="text-red-600 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </main>
+    </div>
+
+    
 </body>
-</html>
+{% endblock %}
