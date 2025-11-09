@@ -6,4 +6,5 @@ urlpatterns = [
    path('chat/', views.chat, name="chat"),
    path('perfil/', views.perfil, name="perfil"),
     path('historico', views.historico, name="historico"),
+    path('')
 ]

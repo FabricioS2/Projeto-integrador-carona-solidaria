@@ -14,3 +14,4 @@ def perfil(request):
 
 def historico(request):
     return render(request, 'usuario_app/historico.html')
+
