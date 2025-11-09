@@ -15,3 +15,6 @@ def perfil(request):
 def historico(request):
     return render(request, 'usuario_app/historico.html')
 
+
+def solicitar_carona(request):
+    return render(request, 'usuario_app/solicitar_carona.html')
