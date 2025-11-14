@@ -1,353 +1,376 @@
 {% load static %}
 {% block title %}Solicitar Caronas - IFRN Carona Solidária{% endblock %}
-{% block head_extras %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Carona</title>
 
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script> 
-<script>
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "primary": "#1183d4",
-                    "background-light": "#f6f7f8",
-                    "background-dark": "#101a22",
-                   
-                    "reserved": "#FFC107", 
-                    "accepted": "#4CAF50",
-                    "refused": "#F44336",
-                },
-                fontFamily: {
-                    "display": ["Work Sans"],
-                    "sans": ["Work Sans", "sans-serif"] 
-                },
-                borderRadius: {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1183d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101a22",
+
+                        "reserved": "#FFC107",
+                        "accepted": "#4CAF50",
+                        "refused": "#F44336",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
                 },
             },
-        },
-    }
-</script>
-<style>
-   
-    .material-symbols-outlined {
-        font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 24
-    }
-
-   
-    body {
-        min-height: max(884px, 100dvh);
-        display: flex;
-        flex-direction: column;
-        background-color: #f7f7f7;
-    }
-    
-  
-    .form-select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3csvg%3e");
-        background-position: right 0.5rem center;
-        background-repeat: no-repeat;
-        background-size: 1.5em 1.5em;
-        padding-right: 2.5rem;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-
-    main {
-        flex: 1;
-        padding-bottom: 72px; 
-        max-width: 100%;
-        margin-top: 56px; 
-    }
-
-   
-    @media (min-width: 768px) {
-        main {
-            max-width: 896px; 
-            margin-left: auto;
-            margin-right: auto;
         }
-    }
-    
-    .action-button {
-        transition: all 0.2s ease;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        font-weight: 600;
-    }
-    
-    .action-button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    .ride-card {
-        border-radius: 0.75rem; 
-        background-color: white;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-    }
-</style>
-{% endblock %}
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
 
-{% block content %}
 
-{% endblock %}
+        body {
+            min-height: max(884px, 100dvh);
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f7f7;
+        }
+
+
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3csvg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        main {
+            flex: 1;
+            padding-bottom: 72px;
+            max-width: 100%;
+            margin-top: 56px;
+        }
+
+
+        @media (min-width: 768px) {
+            main {
+                max-width: 896px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .action-button {
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        .action-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .ride-card {
+            border-radius: 0.75rem;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+
 </head>
+
 <body>
     <div class="flex flex-col min-h-screen">
-    
-    
-    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-20 w-full">
-        <div class="max-w-md md:max-w-4xl mx-auto p-4 flex justify-between items-center border-b border-gray-200">
-            <h1 class="text-lg font-bold text-gray-800 font-display">IFRN carona solidária</h1>
-           
-            <button class="text-gray-600 hover:text-primary p-1 rounded-full relative" aria-label="Notificações">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                <span class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-refused"></span>
-            </button>
-        </div>
-    </header>
 
-   
-    <main class="max-w-md md:max-w-4xl mx-auto w-full p-4">
-        
-        <div class="flex items-center space-x-2 mb-4">
-            <div class="relative flex-1">
-                <input type="text" placeholder="Para onde vai?" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" style="padding-left: 2.5rem;">
-                
-                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+        <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-20 w-full">
+            <div class="max-w-md md:max-w-4xl mx-auto p-4 flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-lg font-bold text-gray-800 font-display">Solicitar Caronas</h1>
+
+                <button class="text-gray-600 hover:text-primary p-1 rounded-full relative" aria-label="Notificações">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-refused"></span>
+                </button>
             </div>
-            <button class="bg-primary text-white py-2 px-4 rounded-lg action-button hover:bg-primary/90">
-                Filtros
-            </button>
-        </div>
+        </header>
 
-      
-        <div id="ride-list" class="space-y-4">
+
+        <main class="max-w-md md:max-w-4xl mx-auto w-full p-4">
+
+            <div class="flex items-center space-x-2 mb-4">
+                <div class="relative flex-1">
+                    <input type="text" placeholder="Para onde vai?"
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
+                        style="padding-left: 2.5rem;">
+
+                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <button class="bg-primary text-white py-2 px-4 rounded-lg action-button hover:bg-primary/90">
+                    Filtros
+                </button>
+            </div>
+
+            <div id="ride-list" class="space-y-4">
             
-            <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                <p class="text-sm font-semibold text-gray-500">1:30 AM</p>
-                <div class="flex items-start space-x-3">
-                   
-                    <div class="flex-1 space-y-1">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                        </div>
-                        <div class="flex items-center ml-2 border-l-2 border-gray-300 pl-4">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                        </div>
-                        <p class="text-sm text-gray-600 flex items-center mt-1">
-                            <!-- Ícone de Usuário -->
-                            <svg class="w-4 h-4 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Carlos Silva Costa...
-                        </p>
-                    </div>
-
-                   
-                    <div class="flex space-x-2 text-gray-600">
-                        
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M17 18h-2c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h1c.6 0 1 .4 1 1v2l1-1 1 1v-2c0-.6.4-1 1-1h1c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2h-1c-.6 0-1-.4-1-1v-2l-1 1-1-1v2c0 .6-.4 1-1 1h-1"></path><path d="M16 16.5l-2.8-2.8c-.3-.3-.8-.3-1.1 0l-1.1 1.1c-.3.3-.8.3-1.1 0l-2.8-2.8"></path></svg>
-                    </div>
-                </div>
-
-                
-                <div class="flex justify-end space-x-2">
-                    <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                        Exibir detalhes
-                    </button>
-                    <button id="btn-ride-1" onclick="handleRequest(this, 'ride-1')" class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
-                        Solicitar
-                    </button>
-                </div>
-            </div>
-
-           
-            <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-2">
-                <p class="text-sm font-semibold text-gray-500">2:00 PM</p>
-                <div class="flex items-start space-x-3">
-                    <div class="flex-1 space-y-1">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">IFRN Campus Ceará-Mirim</span>
-                        </div>
-                        <div class="flex items-center ml-2 border-l-2 border-gray-300 pl-4">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">Parque das Dunas</span>
-                        </div>
-                        <p class="text-sm text-gray-600 flex items-center mt-1">
-                            <svg class="w-4 h-4 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Ana Beatriz Vasconcelos
-                        </p>
-                    </div>
-
+                <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
                     
-                    <div class="flex space-x-2 text-gray-600">
-                       
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                    </div>
-                </div>
-
-               
-                <div class="flex justify-end space-x-2">
-                    <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                        Exibir detalhes
-                    </button>
-                    <button id="btn-ride-2" onclick="handleRequest(this, 'ride-2')" class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
-                        Solicitar
-                    </button>
-                </div>
-            </div>
-
-            
-            <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-3">
-                <p class="text-sm font-semibold text-gray-500">7:00 AM</p>
-                <div class="flex items-start space-x-3">
-                    <div class="flex-1 space-y-1">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">Bairro de Lagoa Seca</span>
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Carlos Silva Costa...</span>
                         </div>
-                        <div class="flex items-center ml-2 border-l-2 border-gray-300 pl-4">
-                            <svg class="w-4 h-4 text-primary mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"></circle></svg>
-                            <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                        </div>
-                        <p class="text-sm text-gray-600 flex items-center mt-1">
-                            <svg class="w-4 h-4 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Pedro Alves
-                        </p>
-                    </div>
-
-                  
-                    <div class="flex space-x-2 text-gray-600">
                         
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M17 18h-2c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h1c.6 0 1 .4 1 1v2l1-1 1 1v-2c0-.6.4-1 1-1h1c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2h-1c-.6 0-1-.4-1-1v-2l-1 1-1-1v2c0 .6-.4 1-1 1h-1"></path><path d="M16 16.5l-2.8-2.8c-.3-.3-.8-.3-1.1 0l-1.1 1.1c-.3.3-.8.3-1.1 0l-2.8-2.8"></path></svg>
+                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
+                            <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            </div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                            Exibir detalhes
+                        </button>
+                        <button id="btn-ride-1" onclick="handleRequest(this, 'ride-1')"
+                            class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
+                            Solicitar
+                        </button>
                     </div>
                 </div>
 
-                
-                <div class="flex justify-end space-x-2">
-                    <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                        Exibir detalhes
-                    </button>
-                    <button id="btn-ride-3" class="action-button bg-accepted text-white px-6 py-1 rounded-lg text-sm" disabled>
-                        Aceito
-                    </button>
+                <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-2">
+                    
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Ana Beatriz Vasconcelos</span>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-700">2:00 PM</p>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
+                            <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Ceará-Mirim</span>
+                            </div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">Parque das Dunas</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                            Exibir detalhes
+                        </button>
+                        <button id="btn-ride-2" onclick="handleRequest(this, 'ride-2')" class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
+                            Solicitar
+                        </button>
+                    </div>
                 </div>
+
+                <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-3">
+                    
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Pedro Alves</span>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-700">7:00 AM</p>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
+                            <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">Bairro de Lagoa Seca</span>
+                            </div>
+
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M17 18h-2c-1.1 0-2-.9-2-2v-3c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v3c0 1.1-.9 2-2 2h-1c-.6 0-1-.4-1-1v-2l-1 1-1-1v2c0 .6-.4 1-1 1h-1"></path><path d="M16 16.5l-2.8-2.8c-.3-.3-.8-.3-1.1 0l-1.1 1.1c-.3.3-.8.3-1.1 0l-2.8-2.8"></path></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                            Exibir detalhes
+                        </button>
+                        <button id="btn-ride-3" class="action-button bg-accepted text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Aceito
+                        </button>
+                    </div>
+                </div>
+                
             </div>
-            
-        </div>
-    </main>
+            </main> 
 
-    
-    <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200 shadow-lg z-20 w-full">
-        <div class="max-w-md md:max-w-4xl mx-auto">
-            <nav class="flex justify-around p-2">
-                
-                <a class="flex flex-col items-center gap-1 text-primary w-1/5 py-1" href="#">
-                    <span class="material-symbols-outlined text-2xl">home</span>
-                    <span class="text-xs font-medium">Home</span>
-                </a>
-                
-                <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
-                    <span class="material-symbols-outlined text-2xl">directions_car</span>
-                    <span class="text-xs font-medium">My Rides</span>
-                </a>
-                
-                <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
-                    <span class="material-symbols-outlined text-2xl">history</span>
-                    <span class="text-xs font-medium">Histórico</span>
-                </a>
-                
-                <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
-                    <span class="material-symbols-outlined text-2xl">chat</span>
-                    <span class="text-xs font-medium">Messages</span>
-                </a>
-                
-                <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
-                    <span class="material-symbols-outlined text-2xl">person</span>
-                    <span class="text-xs font-medium">Profile</span>
-                </a>
-            </nav>
-        </div>
-    </footer>
 
-    <script>
-        function showStatusMessage(message, type = 'success') {
-            const container = document.body;
-            let bgColor = 'bg-green-500';
-            
-            if (type === 'reserved') bgColor = 'bg-reserved';
-            if (type === 'accepted') bgColor = 'bg-accepted';
-            if (type === 'refused') bgColor = 'bg-refused';
+        <footer
+            class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200 shadow-lg z-20 w-full">
+            <div class="max-w-md md:max-w-4xl mx-auto">
+                <nav class="flex justify-around p-2">
 
-            const msgElement = document.createElement('div');
-            msgElement.className = `fixed top-16 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-4 py-2 rounded-lg shadow-xl z-50 transition-opacity duration-300 opacity-0`;
-            msgElement.textContent = message;
-            
-            container.appendChild(msgElement);
+                    <a class="flex flex-col items-center gap-1 text-primary w-1/5 py-1" href="#">
+                        <span class="material-symbols-outlined text-2xl">home</span>
+                        <span class="text-xs font-medium">Home</span>
+                    </a>
 
-            setTimeout(() => msgElement.classList.remove('opacity-0'), 10);
+                    <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
+                        <span class="material-symbols-outlined text-2xl">directions_car</span>
+                        <span class="text-xs font-medium">My Rides</span>
+                    </a>
 
-            setTimeout(() => {
-                msgElement.classList.add('opacity-0');
-                setTimeout(() => msgElement.remove(), 300);
-            }, 3000);
-        }
+                    <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
+                        <span class="material-symbols-outlined text-2xl">history</span>
+                        <span class="text-xs font-medium">Histórico</span>
+                    </a>
 
-        function handleRequest(buttonElement, rideId) {
-            if (buttonElement.disabled) return;
+                    <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
+                        <span class="material-symbols-outlined text-2xl">chat</span>
+                        <span class="text-xs font-medium">Messages</span>
+                    </a>
 
-            buttonElement.textContent = 'Reservado';
-            buttonElement.className = 'action-button bg-reserved text-white px-6 py-1 rounded-lg text-sm';
-            buttonElement.disabled = true;
+                    <a class="flex flex-col items-center gap-1 text-gray-500 hover:text-primary w-1/5 py-1" href="#">
+                        <span class="material-symbols-outlined text-2xl">person</span>
+                        <span class="text-xs font-medium">Profile</span>
+                    </a>
+                </nav>
+            </div>
+        </footer>
 
-            showStatusMessage(`Solicitação para carona ${rideId} enviada! Aguardando resposta...`, 'reserved');
+        <script>
+            function showStatusMessage(message, type = 'success') {
+                const container = document.body;
+                let bgColor = 'bg-green-500';
 
-            setTimeout(() => {
-                const isAccepted = Math.random() < 0.6; // 
+                if (type === 'reserved') bgColor = 'bg-reserved';
+                if (type === 'accepted') bgColor = 'bg-accepted';
+                if (type === 'refused') bgColor = 'bg-refused';
 
-                if (isAccepted) {
-                    buttonElement.textContent = 'Aceito';
-                    buttonElement.className = 'action-button bg-accepted text-white px-6 py-1 rounded-lg text-sm';
-                    buttonElement.title = 'Sua solicitação foi aceita.';
-                    showStatusMessage(`Sua solicitação para carona ${rideId} foi ACEITA!`, 'accepted');
-                } else {
-                    buttonElement.textContent = 'Recusado';
-                    buttonElement.className = 'action-button bg-refused text-white px-6 py-1 rounded-lg text-sm';
-                    buttonElement.title = 'Sua solicitação foi recusada.';
-                    showStatusMessage(`Sua solicitação para carona ${rideId} foi RECUSADA.`, 'refused');
-                }
+                const msgElement = document.createElement('div');
+                msgElement.className = `fixed top-16 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-4 py-2 rounded-lg shadow-xl z-50 transition-opacity duration-300 opacity-0`;
+                msgElement.textContent = message;
 
-                buttonElement.disabled = true; 
+                container.appendChild(msgElement);
 
-            }, 3000); 
-        }
+                setTimeout(() => msgElement.classList.remove('opacity-0'), 10);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Tela de Solicitar Caronas carregada com o tema Work Sans.');
-        });
-    </script>
-</div>
+                setTimeout(() => {
+                    msgElement.classList.add('opacity-0');
+                    setTimeout(() => msgElement.remove(), 300);
+                }, 3000);
+            }
+
+            function handleRequest(buttonElement, rideId) {
+                if (buttonElement.disabled) return;
+
+                buttonElement.textContent = 'Reservado';
+                buttonElement.className = 'action-button bg-reserved text-white px-6 py-1 rounded-lg text-sm';
+                buttonElement.disabled = true;
+
+                showStatusMessage(`Solicitação para carona ${rideId} enviada! Aguardando resposta...`, 'reserved');
+
+                setTimeout(() => {
+                    const isAccepted = Math.random() < 0.6; // 
+
+                    if (isAccepted) {
+                        buttonElement.textContent = 'Aceito';
+                        buttonElement.className = 'action-button bg-accepted text-white px-6 py-1 rounded-lg text-sm';
+                        buttonElement.title = 'Sua solicitação foi aceita.';
+                        showStatusMessage(`Sua solicitação para carona ${rideId} foi ACEITA!`, 'accepted');
+                    } else {
+                        buttonElement.textContent = 'Recusado';
+                        buttonElement.className = 'action-button bg-refused text-white px-6 py-1 rounded-lg text-sm';
+                        buttonElement.title = 'Sua solicitação foi recusada.';
+                        showStatusMessage(`Sua solicitação para carona ${rideId} foi RECUSADA.`, 'refused');
+                    }
+
+                    buttonElement.disabled = true;
+
+                }, 3000);
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('Tela de Solicitar Caronas carregada com o tema Work Sans.');
+            });
+        </script>
+    </div>
 </body>
-</html>
 
+</html>
