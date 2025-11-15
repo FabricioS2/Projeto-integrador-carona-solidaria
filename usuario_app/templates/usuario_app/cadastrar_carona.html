@@ -1,4 +1,5 @@
 {% extends "usuario_app/extende/base.html" %}
+{% load static %}
 
 {% block title %}perfil{% endblock %}
 
@@ -6,11 +7,12 @@
 
 <body class="font-sans bg-gray-50 min-h-screen">
     <!-- Main Content -->
-    <main class="w-full max-w-6xl mx-auto px-4 py-6"> <!-- Aumentei max-w para 6xl -->
+    <main class="w-full max-w-6xl mx-auto px-4 py-6">
       <!-- Botão Adicionar Carona -->
       <div class="mb-8 flex justify-center">
-        <div class="w-3/5"> <!-- Container de 60% para o botão -->
+        <div class="w-3/5">
           <button
+            id="btnAdicionarCarona"
             class="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-3 text-lg"
           >
             <svg
@@ -28,6 +30,91 @@
             </svg>
             Adicionar carona
           </button>
+        </div>
+      </div>
+
+      <!-- Pop-up -->
+      <div id="popupOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <!-- Pop-up Form -->
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all">
+          <!-- Cabeçalho -->
+          <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800">Nova Carona</h2>
+            <button
+              id="btnFecharPopup"
+              class="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Formulário -->
+          <form id="caronaForm" class="p-6 space-y-4">
+            <div>
+              <label for="horario" class="block text-sm font-medium text-gray-700 mb-2">Horário</label>
+              <input
+                type="time"
+                id="horario"
+                name="horario"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+            </div>
+            
+            <div>
+              <label for="origem" class="block text-sm font-medium text-gray-700 mb-2">Local de Saída</label>
+              <input
+                type="text"
+                id="origem"
+                name="origem"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Digite o local de saída"
+              >
+            </div>
+            
+            <div>
+              <label for="destino" class="block text-sm font-medium text-gray-700 mb-2">Local de Destino</label>
+              <input
+                type="text"
+                id="destino"
+                name="destino"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Digite o local de destino"
+              >
+            </div>
+
+            <div>
+              <label for="valor" class="block text-sm font-medium text-gray-700 mb-2">Valor</label>
+              <input
+                type="text"
+                id="destino"
+                name="destino"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Informe o valor (opcional)"
+              >
+            </div>
+            
+            <div class="flex gap-4 pt-4">
+              <button
+                type="button"
+                id="btnCancelar"
+                class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
+              >
+                Criar Carona
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -59,15 +146,14 @@
                 </div>
               </div>
 
-              <!-- Locais com "De:" e "Para:" -->
               <div class="mb-6 space-y-3">
-                <div class="flex items-center gap-2">
-                  <p class="text-gray-500 font-medium min-w-12">De:</p>
+                <div class="space-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
                   <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-medium min-w-12">Para:</span>
-                  <span class="text-gray-800">IFRN Campus Central</span>
+                <div class="space-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
+                  <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
               </div>
 
@@ -91,7 +177,7 @@
                   Finalizar
                 </button>
                 <button
-                  class="flex-1 bg-green-500 text-white py-3 px-4 rounded-lg font-medium cursor-default text-base"
+                  class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium cursor-default text-base"
                 >
                   Em andamento
                 </button>
@@ -125,13 +211,13 @@
 
               <!-- Locais com "De:" e "Para:" -->
               <div class="mb-6 space-y-3">
-                <div class="flex items-start gap-2">
-                  <span class="text-gray-500 font-medium min-w-12">De:</span>
-                  <span class="text-gray-800">IFRN Campus Central</span>
+                <div class="space-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
+                  <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gray-500 font-medium min-w-12">Para:</span>
-                  <span class="text-gray-800">IFRN Campus Central</span>
+                <div class="fspace-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
+                  <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
               </div>
 
@@ -189,13 +275,13 @@
 
               <!-- Locais com "De:" e "Para:" -->
               <div class="mb-6 space-y-3">
-                <div class="flex items-start gap-2">
-                  <span class="text-gray-500 font-medium min-w-12">De:</span>
-                  <span class="text-gray-800">IFRN Campus Central</span>
+                <div class="space-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
+                  <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
-                <div class="flex items-start gap-2">
-                  <span class="text-gray-500 font-medium min-w-12">Para:</span>
-                  <span class="text-gray-800">IFRN Campus Central</span>
+                <div class="space-y-1">
+                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
+                  <p class="text-gray-800">IFRN Campus Central</p>
                 </div>
               </div>
 
@@ -229,6 +315,8 @@
         </div>
       </div>
     </main>
+
+    <script src="{% static 'usuario_app/js/cadastrar_carona.js' %}"></script>
   </body>
 
 {% endblock %}
