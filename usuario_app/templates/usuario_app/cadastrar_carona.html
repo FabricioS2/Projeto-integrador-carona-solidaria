@@ -1,7 +1,7 @@
 {% extends "usuario_app/extende/base.html" %}
 {% load static %}
 
-{% block title %}perfil{% endblock %}
+{% block title %}Cadastrar Carona{% endblock %}
 
 {% block content %}
 
@@ -120,198 +120,146 @@
 
       <!-- Lista de Caronas -->
       <div class="flex justify-center">
-        <div class="w-3/5 space-y-6"> <!-- Container principal de 60% -->
+        <div id="listaCaronas" class="w-3/5 space-y-6"> <!-- Container principal -->
           
           <!-- Card 1: Finalizar / Em andamento -->
-          <div class="bg-white rounded-xl shadow-md border border-gray-100">
-            <div class="p-6">
-              <!-- Horário -->
-              <div class="flex items-center justify-between mb-6">
-                <span class="text-xl font-semibold text-gray-800">1:20 AM</span>
-                <!-- Ícone do veículo -->
-                <div class="flex items-center gap-2 text-gray-600">
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+          <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
+                    
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Carlos Silva Costa...</span>
+                        </div>
+                        
+                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+                    </div>
 
-              <div class="mb-6 space-y-3">
-                <div class="space-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-                <div class="space-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-              </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
 
-              <!-- Motorista -->
-              <div class="flex items-center mb-6">
-                <div
-                  class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-4 text-lg"
-                >
-                  C
-                </div>
-                <div class="font-medium text-gray-800 text-lg">
-                  Carlos Silva Costa ...
-                </div>
-              </div>
+                            <p class="text-gray-500 ">De:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            </div>
 
-              <!-- Botões -->
-              <div class="flex gap-4">
-                <button
-                  class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-                >
-                  Finalizar
-                </button>
-                <button
-                  class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium cursor-default text-base"
-                >
-                  Em andamento
-                </button>
-              </div>
-            </div>
-          </div>
+                            <p class="text-gray-500 ">Para:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class=" bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Remover
+                        </button>
+                        <button id="btn-ride-1"
+                            class="action-button bg-primary font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Iniciar
+                        </button>
+                    </div>
+                </div>
 
           <!-- Card 2: Deletar / Iniciar -->
-          <div class="bg-white rounded-xl shadow-md border border-gray-100">
-            <div class="p-6">
-              <!-- Horário -->
-              <div class="flex items-center justify-between mb-6">
-                <span class="text-xl font-semibold text-gray-800">1:30 AM</span>
-                <!-- Ícone do veículo -->
-                <div class="flex items-center gap-2 text-gray-600">
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+                    <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
+                    
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Carlos Silva Costa...</span>
+                        </div>
+                        
+                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+                    </div>
 
-              <!-- Locais com "De:" e "Para:" -->
-              <div class="mb-6 space-y-3">
-                <div class="space-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-                <div class="fspace-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-              </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
 
-              <!-- Motorista -->
-              <div class="flex items-center mb-6">
-                <div
-                  class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-4 text-lg"
-                >
-                  C
-                </div>
-                <div class="font-medium text-gray-800 text-lg">
-                  Carlos Silva Costa ...
-                </div>
-              </div>
+                            <p class="text-gray-500 ">De:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            </div>
 
-              <!-- Botões -->
-              <div class="flex gap-4">
-                <button
-                  class="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-                >
-                  Deletar
-                </button>
-                <button
-                  class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-                >
-                  Iniciar
-                </button>
-              </div>
-            </div>
-          </div>
+                            <p class="text-gray-500 ">Para:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class=" bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Remover
+                        </button>
+                        <button id="btn-ride-1"
+                            class="action-button bg-primary font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Iniciar
+                        </button>
+                    </div>
+                </div>
 
           <!-- Card 3: Deletar / Iniciar -->
-          <div class="bg-white rounded-xl shadow-md border border-gray-100">
-            <div class="p-6">
-              <!-- Horário -->
-              <div class="flex items-center justify-between mb-6">
-                <span class="text-xl font-semibold text-gray-800">1:30 AM</span>
-                <!-- Ícone do veículo -->
-                <div class="flex items-center gap-2 text-gray-600">
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
+                    <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
+                    
+                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>Carlos Silva Costa...</span>
+                        </div>
+                        
+                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+                    </div>
 
-              <!-- Locais com "De:" e "Para:" -->
-              <div class="mb-6 space-y-3">
-                <div class="space-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Origem</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-                <div class="space-y-1">
-                  <p class="text-gray-500 font-medium min-w-12">Destino</p>
-                  <p class="text-gray-800">IFRN Campus Central</p>
-                </div>
-              </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-1 space-y-0 relative">
+                            
 
-              <!-- Motorista -->
-              <div class="flex items-center mb-6">
-                <div
-                  class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold mr-4 text-lg"
-                >
-                  C
-                </div>
-                <div class="font-medium text-gray-800 text-lg">
-                  Carlos Silva Costa ...
-                </div>
-              </div>
+                            <p class="text-gray-500 ">De:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            </div>
 
-              <!-- Botões -->
-              <div class="flex gap-4">
-                <button
-                  class="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-                >
-                  Deletar
-                </button>
-                <button
-                  class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-                >
-                  Iniciar
-                </button>
-              </div>
-            </div>
-          </div>
+                            <p class="text-gray-500 ">Para:</p>
+                            <div class="flex items-center space-x-2 py-2">
+                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="flex space-x-2 text-gray-600 self-start">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                        <button class=" bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Remover
+                        </button>
+                        <button id="btn-ride-1"
+                            class="action-button bg-primary font-medium text-white px-6 py-1 rounded-lg text-sm">
+                            Iniciar
+                        </button>
+                    </div>
+                </div>
+          
         </div>
       </div>
     </main>
