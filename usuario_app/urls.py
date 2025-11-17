@@ -6,5 +6,5 @@ urlpatterns = [
     path('chat/', views.chat, name="chat"),
     path('perfil/', views.perfil, name="perfil"),
     path('historico/', views.historico, name="historico"),
-    path('caronas/cadastrar', views.cadastrar_carona, name="cadastrar_carona"),
+    path('cadastrar_caronas', views.cadastrar_carona, name="cadastrar_caronas"),
 ]
