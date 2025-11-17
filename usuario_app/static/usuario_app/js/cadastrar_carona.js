@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     configurarEventos();
 });
 
-// Pega elementos do DOM
 function inicializarElementos() {
     btnAdicionarCarona = document.getElementById('btnAdicionarCarona');
     popupOverlay = document.getElementById('popupOverlay');
@@ -46,26 +45,6 @@ function fecharPopup() {
     caronaForm.reset();
 }
 
-// Processa dados do formulário
-function processarFormulario() {
-    const horario = document.getElementById('horario').value;
-    const origem = document.getElementById('origem').value;
-    const destino = document.getElementById('destino').value;
-
-    if (horario && origem && destino) {
-        const horaFormatada = formatarHorario(horario);
-
-        const card = criarCardCarona({
-            horario: horaFormatada,
-            origem: origem,
-            destino: destino
-        });
-
-        listaCaronas.prepend(card);
-        fecharPopup();
-        mostrarMensagem("Carona criada com sucesso!", "success");
-    }
-}
 
 // Converte 24h → AM/PM
 function formatarHorario(h) {
@@ -75,7 +54,7 @@ function formatarHorario(h) {
     const hora12 = hNum % 12 || 12;
     return `${hora12}:${mm} ${periodo}`;
 }
-
+/*
 // Cria o card da carona
 function criarCardCarona({ horario, origem, destino }) {
     const card = document.createElement("div");
@@ -140,10 +119,5 @@ function criarCardCarona({ horario, origem, destino }) {
     });
 
     return card;
-}
-
-
-// Mensagem (placeholder)
-function mostrarMensagem(msg, tipo) {
-    console.log(`${tipo.toUpperCase()}: ${msg}`);
-}
+} 
+    */
