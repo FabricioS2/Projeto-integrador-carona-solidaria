@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>{% block title %}Login - IFRN Carona Solidária{% endblock %}</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&amp;display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1183d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101a22",
+          },
+          fontFamily: {
+            display: ["Work Sans"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    .form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+    
+    .notification-item {
+      transition: all 0.2s ease;
+    }
+    
+    .notification-item:hover {
+      background-color: rgba(17, 131, 212, 0.05);
+    }
+    
+    .action-button {
+      transition: all 0.2s ease;
+    }
+    
+    .action-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .status-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-sm mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-black dark:text-white">IFRN Carona Solidária</h1>
+        </header>
+        <main class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-black/70 dark:text-white/70" for="email">Email ou ID Institucional</label>
+                <input class="w-full h-12 px-4 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" 
+                       id="email" 
+                       placeholder="Seu email ou ID institucional" 
+                       type="email" 
+                       name="email"/> 
+                       </div>
+            
+          <div class="space-y-2">
+              <label class="text-sm font-medium text-black/70 dark:text-white/70" for="password">Senha</label>
+              <div class="relative">
+                <input class="w-full h-12 px-4 pr-12 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40" 
+                    id="password" 
+                    placeholder="Sua senha" 
+                    type="password" 
+                    name="password"/> 
+        
+                <button 
+                    type="button" 
+                    class="absolute inset-y-0 right-0 flex items-center px-4 text-black/60 dark:text-white/60 cursor-pointer"
+                    id="toggle-password"
+                    onclick="togglePasswordVisibility()" 
+                >
+                    <span class="material-symbols-outlined">visibility</span>
+                </bu  tton>
+              </div>
+          </div>
+          
+          
+          <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input class="h-4 w-4 rounded border-black/20 dark:border-white/30 text-primary focus:ring-primary bg-white/50 dark:bg-white/10" 
+                           id="remember-me" 
+                           type="checkbox" 
+                           name="remember-me"/>
+                    <label class="ml-2 block text-sm text-black/80 dark:text-white/80" for="remember-me">Lembrar-me</label>
+                </div>
+                </div>
+            
+            <div class="bg-red-500/10 dark:bg-red-500/20 border border-red-500/20 dark:border-red-500/30 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm hidden" id="error-message">
+                <p>Credenciais inválidas. Por favor, tente novamente.</p>
+            </div>
+            
+            <button type="submit" class="w-full h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                Entrar
+            </button>
+            
+            <p class="text-center text-sm text-black/60 dark:text-white/60">
+                Não tem uma conta? <a class="font-medium text-primary hover:underline" href="{% url 'cadastro' %}">Cadastre-se aqui</a>
+                </p>
+        </main>
+    </div>
+</div>
+<script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+</body>
+</html>

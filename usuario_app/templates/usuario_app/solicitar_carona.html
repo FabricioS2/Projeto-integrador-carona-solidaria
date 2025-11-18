@@ -1,0 +1,256 @@
+{% extends "usuario_app/extende/base.html" %}
+
+{% block title %}perfil{% endblock %}
+
+{% block content %}
+
+<main class="max-w-md md:max-w-4xl mx-auto w-full p-4">
+
+    <div class="flex items-center space-x-2 mb-4">
+        <div class="relative flex-1">
+            <input type="text" placeholder="Para onde vai?"
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
+                style="padding-left: 2.5rem;">
+
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+        <button class="bg-primary text-white py-2 px-4 rounded-lg action-button hover:bg-primary/90">
+            Filtros
+        </button>
+    </div>
+
+    <div id="ride-list" class="space-y-4">
+
+        <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
+
+            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Carlos Silva Costa...</span>
+                </div>
+
+                <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+            </div>
+
+            <div class="flex items-start space-x-3">
+                <div class="flex-1 space-y-0 relative">
+
+                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                        <span class="text-gray-800 font-medium">Natal Shopping</span>
+                    </div>
+
+                </div>
+
+                <div class="flex space-x-2 text-gray-600 self-start">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
+                        </path>
+                        <circle cx="7" cy="17" r="2"></circle>
+                        <circle cx="17" cy="17" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                    Exibir detalhes
+                </button>
+                <button id="btn-ride-3"
+                    class="action-button bg-red-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                    Recusado
+                </button>
+            </div>
+        </div>
+
+         <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
+
+            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Carlos Silva Costa...</span>
+                </div>
+
+                <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+            </div>
+
+            <div class="flex items-start space-x-3">
+                <div class="flex-1 space-y-0 relative">
+
+                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                        <span class="text-gray-800 font-medium">Natal Shopping</span>
+                    </div>
+
+                </div>
+
+                <div class="flex space-x-2 text-gray-600 self-start">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
+                        </path>
+                        <circle cx="7" cy="17" r="2"></circle>
+                        <circle cx="17" cy="17" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                    Exibir detalhes
+                </button>
+                <button id="btn-ride-3"
+                    class="action-button bg-yellow-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                    Solicitado
+                </button>
+            </div>
+        </div>
+        <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-2">
+
+            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Ana Beatriz Vasconcelos</span>
+                </div>
+                <p class="text-sm font-semibold text-gray-700">2:00 PM</p>
+            </div>
+
+            <div class="flex items-start space-x-3">
+                <div class="flex-1 space-y-0 relative">
+
+                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                        <span class="text-gray-800 font-medium">IFRN Campus Ceará-Mirim</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                        <span class="text-gray-800 font-medium">Parque das Dunas</span>
+                    </div>
+                </div>
+
+                <div class="flex space-x-2 text-gray-600 self-start">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
+                        </path>
+                        <circle cx="7" cy="17" r="2"></circle>
+                        <circle cx="17" cy="17" r="2"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                    Exibir detalhes
+                </button>
+                <button id="btn-ride-2" onclick="handleRequest(this, 'ride-2')"
+                    class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
+                    Solicitar
+                </button>
+            </div>
+        </div>
+
+        <div class="ride-card p-4 flex flex-col space-y-3" data-id="ride-3">
+
+            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Pedro Alves</span>
+                </div>
+                <p class="text-sm font-semibold text-gray-700">7:00 AM</p>
+            </div>
+
+            <div class="flex items-start space-x-3">
+                <div class="flex-1 space-y-0 relative">
+
+                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                        <span class="text-gray-800 font-medium">Bairro de Lagoa Seca</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2 py-2">
+                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                    </div>
+
+                </div>
+
+                <div class="flex space-x-2 text-gray-600 self-start">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="18" r="3"></circle>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <path
+                            d="M17 18h-2c-1.1 0-2-.9-2-2v-3c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v3c0 1.1-.9 2-2 2h-1c-.6 0-1-.4-1-1v-2l-1 1-1-1v2c0 .6-.4 1-1 1h-1">
+                        </path>
+                        <path d="M16 16.5l-2.8-2.8c-.3-.3-.8-.3-1.1 0l-1.1 1.1c-.3.3-.8.3-1.1 0l-2.8-2.8"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
+                    Exibir detalhes
+                </button>
+                <button id="btn-ride-3" class="action-button bg-green-500 text-white px-6 py-1 rounded-lg text-sm"
+                    disabled>
+                    Aceito
+                </button>
+            </div>
+        </div>
+
+    </div>
+</main>
+{% endblock %}
