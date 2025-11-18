@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
         valor = valor.replace(/^(\d{3})(\d{3})(\d{3})/, "$1.$2.$3");
     } 
     // NNN.NNN
-    else if (valor.length > 3) {
+    else if (valor.length > 3 ) {
         valor = valor.replace(/^(\d{3})(\d{3})/, "$1.$2");
     }
 
@@ -77,19 +77,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function formatarCPF(campo) {
-    let valor = campo.value.replace(/\D/g, "");
+    // 1. Remove TUDO que não é dígito para trabalhar apenas com os 11 números
+    let valor = campo.value.replace(/\D/g, ""); 
+
+    // 2. Limita a string de DÍGITOS a no máximo 11. 
+    // Isso deve ser mantido, pois o CPF tem 11 números.
     if (valor.length > 11) {
         valor = valor.substring(0, 11);
     }
-    if (valor.length === 11) {
-        valor = valor.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-");
+
+    // 3. Aplica a formatação condicionalmente
+
+    // Formato completo 000.000.000-00 (11 dígitos)
+    if (valor.length > 9) {
+        // Usa $1.$2.$3-$4 para capturar os 4 grupos e inserir o hífen
+        valor = valor.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
     } 
+    // Formato 000.000.000 (9 dígitos)
     else if (valor.length > 6) {
-        valor = valor.replace(/^(\d{3})(\d{3})/, "$1.$2.");
+        valor = valor.replace(/^(\d{3})(\d{3})(\d{3})$/, "$1.$2.$3");
     } 
+    // Formato 000.000 (6 dígitos)
     else if (valor.length > 3) {
-        valor = valor.replace(/^(\d{3})/, "$1.");
-    }
+        valor = valor.replace(/^(\d{3})(\d{3})$/, "$1.$2");
+    } 
+    // Se for 3 dígitos ou menos, fica sem formatação (apenas os números)
+
+    // 4. Atribui o valor formatado de volta ao campo
     campo.value = valor;
 }
 
