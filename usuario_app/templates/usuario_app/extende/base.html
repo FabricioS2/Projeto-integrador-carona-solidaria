@@ -290,23 +290,23 @@
   <footer
     class="mt-auto sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
     <nav class="flex justify-around p-2">
-      <a class="flex flex-col items-center gap-1 text-primary w-1/4" href="#">
+      <a class="flex flex-col items-center gap-1 text-primary w-1/4" href="{% url 'solicitar_carona' %}">
         <span class="material-symbols-outlined text-2xl">home</span>
         <span class="text-xs font-medium">Home</span>
       </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'cadastrar_caronas' %}">
         <span class="material-symbols-outlined text-2xl">directions_car</span>
-        <span class="text-xs font-medium">Minhas caronas</span>
+        <span class="text-xs font-medium">Caronas</span>
       </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'historico' %}">
         <span class="material-symbols-outlined text-2xl">history</span>
         <span class="text-xs font-medium">Histórico</span>
       </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'chat' %}">
         <span class="material-symbols-outlined text-2xl">chat</span>
         <span class="text-xs font-medium">Mensages</span>
       </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="#">
+      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'perfil' %}">
         <span class="material-symbols-outlined text-2xl">person</span>
         <span class="text-xs font-medium">Perfil</span>
       </a>
