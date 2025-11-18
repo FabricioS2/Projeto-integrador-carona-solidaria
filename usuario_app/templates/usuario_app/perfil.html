@@ -19,21 +19,12 @@
 
         <!-- FORMULÁRIO DE EDIÇÃO -->
         <form id="profileForm" class="mt-8 grid grid-cols-1 gap-6">
-            <!-- INFORMAÇÕES PESSOAIS E ACADÊMICAS -->
+            <!-- INFORMAÇÕES PESSOAIS -->
             <div class="bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
                 <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2">
                     Informações Pessoais
                 </h3>
                 <div class="space-y-3">
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">badge</span>
-                            <span class="font-medium">Matrícula:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="matricula">20211014040001</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="matriculaInput" value="20211014040001">
-                    </div>
-
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">person</span>
@@ -45,11 +36,11 @@
 
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                         <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">cake</span>
-                            <span class="font-medium">Data de Nascimento:</span>
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">fingerprint</span>
+                            <span class="font-medium">CPF:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="nascimento">12/03/2004</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="nascimentoInput" value="12/03/2004">
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cpf">123.456.789-00</span>
+                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cpfInput" value="123.456.789-00" placeholder="000.000.000-00" maxlength="14">
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
@@ -66,35 +57,8 @@
                             <span class="material-symbols-outlined text-black/60 dark:text-white/60">phone</span>
                             <span class="font-medium">Telefone:</span>
                         </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="telefone">(84) 99999-9999</span>
-                        <input type="tel" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="telefoneInput" value="(84) 99999-9999">
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">location_on</span>
-                            <span class="font-medium">Cidade:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cidade">Pau dos Ferros - RN</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cidadeInput" value="Pau dos Ferros - RN">
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">school</span>
-                            <span class="font-medium">Curso:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="curso">Técnico em Informática</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cursoInput" value="Técnico em Informática">
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">calendar_month</span>
-                            <span class="font-medium">Ano de Ingresso:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="ingresso">2021</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="ingressoInput" value="2021">
+                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="telefone">(84)99999-9999</span>
+                        <input type="tel" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="telefoneInput" value="(84)99999-9999" placeholder="(00)00000-0000" maxlength="14">
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
@@ -111,57 +75,89 @@
                 </div>
             </div>
 
-            <!-- INFORMAÇÕES DO VEÍCULO -->
-            <div class="bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
-                <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2">
-                    Informações do Veículo
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
-                            <span class="font-medium">Modelo:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="modelo">Fiat Argo</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="modeloInput" value="Fiat Argo">
+            <!-- SEÇÃO DE VEÍCULOS -->
+            <div id="veiculosSection">
+                <!-- Veículo Principal -->
+                <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2 veiculo-title">
+                            Fiat Argo
+                        </h3>
+                        <button type="button" class="remove-veiculo hidden items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
+                            <span class="material-symbols-outlined text-sm">delete</span>
+                            <span>Remover</span>
+                        </button>
                     </div>
-
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
-                            <span class="font-medium">Placa:</span>
+                    <div class="space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
+                                <span class="font-medium">Tipo de Veículo:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="tipo">Carro</span>
+                            <select class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="tipo">
+                                <option value="Carro">Carro</option>
+                                <option value="Moto">Moto</option>
+                            </select>
                         </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="placa">QWX-1234</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="placaInput" value="QWX-1234">
-                    </div>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
-                            <span class="font-medium">Cor:</span>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
+                                <span class="font-medium">Modelo:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="modelo">Fiat Argo</span>
+                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="modelo" value="Fiat Argo">
                         </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cor">Prata</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="corInput" value="Prata">
-                    </div>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
-                            <span class="font-medium">Lugares Disponíveis:</span>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
+                                <span class="font-medium">Placa:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="placa">QWX-1234</span>
+                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="placa" value="QWX-1234">
                         </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="lugares">3</span>
-                        <input type="number" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="lugaresInput" value="3" min="1" max="10">
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
+                                <span class="font-medium">Cor:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="cor">Prata</span>
+                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="cor" value="Prata">
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
+                                <span class="font-medium">Lugares Disponíveis:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="lugares">3</span>
+                            <input type="number" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="lugares" value="3" min="1" max="10">
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
 
-        <!-- BOTÃO EDITAR/SALVAR -->
-        <div class="mt-6 flex justify-center">
-            <button id="editButton"
-                class="w-full max-w-sm h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
-                Editar Perfil
-            </button>
+        <!-- BOTÃO ADICIONAR VEÍCULO E EDITAR/SALVAR -->
+        <div class="mt-6 space-y-4">
+            <!-- Botão Adicionar Veículo (visível apenas no modo edição) -->
+            <div id="addVehicleContainer" class="hidden flex justify-center">
+                <button type="button" id="addVehicleButton" class="w-full max-w-sm h-12 flex items-center justify-center space-x-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 transition-colors duration-200">
+                    <span class="material-symbols-outlined">add</span>
+                    <span>Adicionar Novo Veículo</span>
+                </button>
+            </div>
+
+            <!-- Botão Editar/Salvar -->
+            <div class="flex justify-center">
+                <button id="editButton"
+                    class="w-full max-w-sm h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                    Editar Perfil
+                </button>
+            </div>
         </div>
     </div>
 </main>
@@ -169,25 +165,125 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const editButton = document.getElementById('editButton');
+        const addVehicleButton = document.getElementById('addVehicleButton');
+        const addVehicleContainer = document.getElementById('addVehicleContainer');
+        const veiculosSection = document.getElementById('veiculosSection');
         let isEditing = false;
+        let vehicleCount = 1;
         
         // Lista de campos para alternar entre visualização e edição
         const fields = [
-            { display: 'matricula', input: 'matriculaInput' },
             { display: 'nome', input: 'nomeInput' },
-            { display: 'nascimento', input: 'nascimentoInput' },
+            { display: 'cpf', input: 'cpfInput' },
             { display: 'email', input: 'emailInput' },
             { display: 'telefone', input: 'telefoneInput' },
-            { display: 'cidade', input: 'cidadeInput' },
-            { display: 'curso', input: 'cursoInput' },
-            { display: 'ingresso', input: 'ingressoInput' },
-            { display: 'motorista', input: 'motoristaInput' },
-            { display: 'modelo', input: 'modeloInput' },
-            { display: 'placa', input: 'placaInput' },
-            { display: 'cor', input: 'corInput' },
-            { display: 'lugares', input: 'lugaresInput' }
+            { display: 'motorista', input: 'motoristaInput' }
         ];
         
+        // Função para formatar CPF
+        function formatarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            
+            // Limitar a 11 dígitos
+            if (cpf.length > 11) {
+                cpf = cpf.substring(0, 11);
+            }
+            
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            return cpf;
+        }
+
+        // Função para formatar telefone no formato (00)00000-0000
+        function formatarTelefone(telefone) {
+            // Remover tudo que não é número
+            telefone = telefone.replace(/\D/g, '');
+            
+            // Limitar a 11 dígitos
+            if (telefone.length > 11) {
+                telefone = telefone.substring(0, 11);
+            }
+            
+            // Aplicar máscara (00)00000-0000
+            if (telefone.length > 0) {
+                telefone = '(' + telefone;
+            }
+            if (telefone.length > 3) {
+                telefone = telefone.substring(0, 3) + ')' + telefone.substring(3);
+            }
+            if (telefone.length > 9) {
+                telefone = telefone.substring(0, 9) + '-' + telefone.substring(9);
+            }
+            
+            return telefone;
+        }
+
+        // Função para remover a formatação do telefone (apenas números)
+        function removerFormatacaoTelefone(telefone) {
+            return telefone.replace(/\D/g, '');
+        }
+
+        // Função para atualizar o título do veículo
+        function updateVehicleTitle(veiculoItem, modelo) {
+            const title = veiculoItem.querySelector('.veiculo-title');
+            title.textContent = modelo || 'Novo Veículo';
+        }
+
+        // Aplicar formatação de CPF nos inputs
+        document.getElementById('cpfInput').addEventListener('input', function(e) {
+            let valor = e.target.value;
+            valor = formatarCPF(valor);
+            e.target.value = valor;
+        });
+
+        // Aplicar formatação de telefone nos inputs
+        document.getElementById('telefoneInput').addEventListener('input', function(e) {
+            let valor = e.target.value;
+            
+            // Se o usuário estiver apagando, não aplicar formatação
+            if (e.inputType === 'deleteContentBackward') {
+                return;
+            }
+            
+            valor = formatarTelefone(valor);
+            e.target.value = valor;
+        });
+
+        // Validar CPF antes de sair do campo
+        document.getElementById('cpfInput').addEventListener('blur', function(e) {
+            const cpfLimpo = e.target.value.replace(/\D/g, '');
+            if (cpfLimpo.length !== 11 && cpfLimpo.length > 0) {
+                alert('CPF deve conter 11 dígitos');
+                e.target.focus();
+            }
+        });
+
+        // Validar telefone antes de sair do campo
+        document.getElementById('telefoneInput').addEventListener('blur', function(e) {
+            const telefoneLimpo = removerFormatacaoTelefone(e.target.value);
+            if (telefoneLimpo.length < 10 && telefoneLimpo.length > 0) {
+                alert('Telefone deve conter 10 ou 11 dígitos');
+                e.target.focus();
+            }
+        });
+
+        // Permitir apagar caracteres do telefone sem problemas
+        document.getElementById('telefoneInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace') {
+                // Permitir backspace normalmente
+                return;
+            }
+        });
+
+        // Atualizar título quando o modelo é alterado
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('veiculo-input') && e.target.dataset.field === 'modelo') {
+                const veiculoItem = e.target.closest('.veiculo-item');
+                updateVehicleTitle(veiculoItem, e.target.value);
+            }
+        });
+
         editButton.addEventListener('click', function() {
             if (!isEditing) {
                 // Entrar no modo de edição
@@ -196,21 +292,93 @@
                     document.getElementById(field.input).classList.remove('hidden');
                 });
                 
+                // Mostrar campos de edição dos veículos
+                document.querySelectorAll('.veiculo-display').forEach(display => {
+                    display.classList.add('hidden');
+                });
+                document.querySelectorAll('.veiculo-input').forEach(input => {
+                    input.classList.remove('hidden');
+                });
+                
+                // Mostrar botões de remover veículo
+                document.querySelectorAll('.remove-veiculo').forEach(button => {
+                    button.classList.remove('hidden');
+                });
+                
+                // Mostrar botão de adicionar veículo
+                addVehicleContainer.classList.remove('hidden');
+                
                 editButton.textContent = 'Salvar Alterações';
                 isEditing = true;
             } else {
+                // Validar campos antes de salvar
+                const cpfLimpo = document.getElementById('cpfInput').value.replace(/\D/g, '');
+                const telefoneLimpo = removerFormatacaoTelefone(document.getElementById('telefoneInput').value);
+                
+                if (cpfLimpo.length !== 11 && cpfLimpo.length > 0) {
+                    alert('CPF deve conter 11 dígitos');
+                    document.getElementById('cpfInput').focus();
+                    return;
+                }
+                
+                if (telefoneLimpo.length < 10 && telefoneLimpo.length > 0) {
+                    alert('Telefone deve conter 10 ou 11 dígitos');
+                    document.getElementById('telefoneInput').focus();
+                    return;
+                }
+                
                 // Salvar alterações
                 fields.forEach(field => {
                     const inputElement = document.getElementById(field.input);
                     const displayElement = document.getElementById(field.display);
                     
                     // Atualizar o valor exibido com o valor do input
-                    displayElement.textContent = inputElement.value;
+                    if (field.input === 'cpfInput') {
+                        // Formatar CPF antes de exibir
+                        displayElement.textContent = formatarCPF(inputElement.value);
+                    } else if (field.input === 'telefoneInput') {
+                        // Manter a formatação do telefone
+                        displayElement.textContent = inputElement.value;
+                    } else {
+                        displayElement.textContent = inputElement.value;
+                    }
                     
                     // Alternar visibilidade
                     displayElement.classList.remove('hidden');
                     inputElement.classList.add('hidden');
                 });
+                
+                // Atualizar e esconder campos dos veículos
+                document.querySelectorAll('.veiculo-item').forEach(veiculoItem => {
+                    const inputs = veiculoItem.querySelectorAll('.veiculo-input');
+                    inputs.forEach(input => {
+                        const display = veiculoItem.querySelector(`.veiculo-display[data-field="${input.dataset.field}"]`);
+                        
+                        // Para selects, pegar o texto da opção selecionada
+                        if (input.tagName === 'SELECT') {
+                            const selectedOption = input.options[input.selectedIndex];
+                            display.textContent = selectedOption.text;
+                        } else {
+                            display.textContent = input.value;
+                        }
+                        
+                        display.classList.remove('hidden');
+                        input.classList.add('hidden');
+
+                        // Atualizar título se for o campo modelo
+                        if (input.dataset.field === 'modelo') {
+                            updateVehicleTitle(veiculoItem, input.value);
+                        }
+                    });
+                });
+                
+                // Esconder botões de remover veículo
+                document.querySelectorAll('.remove-veiculo').forEach(button => {
+                    button.classList.add('hidden');
+                });
+                
+                // Esconder botão de adicionar veículo
+                addVehicleContainer.classList.add('hidden');
                 
                 editButton.textContent = 'Editar Perfil';
                 isEditing = false;
@@ -218,6 +386,104 @@
                 // Aqui você pode adicionar código para enviar os dados para o servidor
                 // Exemplo: enviarFormulario();
             }
+        });
+
+        // Função para adicionar novo veículo
+        addVehicleButton.addEventListener('click', function() {
+            vehicleCount++;
+            const newVehicleHtml = `
+                <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4 mt-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2 veiculo-title">
+                            Novo Veículo
+                        </h3>
+                        <button type="button" class="remove-veiculo items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
+                            <span class="material-symbols-outlined text-sm">delete</span>
+                            <span>Remover</span>
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
+                                <span class="font-medium">Tipo de Veículo:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="tipo">Carro</span>
+                            <select class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="tipo">
+                                <option value="Carro">Carro</option>
+                                <option value="Moto">Moto</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
+                                <span class="font-medium">Modelo:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="modelo">Novo Veículo</span>
+                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="modelo" placeholder="Ex: Honda Civic" value="">
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
+                                <span class="font-medium">Placa:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="placa"></span>
+                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="placa" placeholder="Ex: ABC-1D23" value="">
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
+                                <span class="font-medium">Cor:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="cor"></span>
+                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="cor" placeholder="Ex: Preto" value="">
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
+                                <span class="font-medium">Lugares Disponíveis:</span>
+                            </div>
+                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="lugares"></span>
+                            <input type="number" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="lugares" value="1" min="1" max="10">
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            veiculosSection.insertAdjacentHTML('beforeend', newVehicleHtml);
+            
+            // Adicionar evento de input para atualizar o título quando o modelo for alterado
+            const newModeloInput = veiculosSection.lastElementChild.querySelector('.veiculo-input[data-field="modelo"]');
+            newModeloInput.addEventListener('input', function() {
+                updateVehicleTitle(this.closest('.veiculo-item'), this.value);
+            });
+            
+            // Adicionar evento de remoção para o novo botão
+            const newRemoveButton = veiculosSection.lastElementChild.querySelector('.remove-veiculo');
+            newRemoveButton.addEventListener('click', function() {
+                // Só permite remover se houver mais de um veículo
+                if (document.querySelectorAll('.veiculo-item').length > 1) {
+                    this.closest('.veiculo-item').remove();
+                } else {
+                    alert('Você deve ter pelo menos um veículo cadastrado!');
+                }
+            });
+        });
+
+        // Adicionar eventos de remoção para os veículos existentes
+        document.querySelectorAll('.remove-veiculo').forEach(button => {
+            button.addEventListener('click', function() {
+                // Só permite remover se houver mais de um veículo
+                if (document.querySelectorAll('.veiculo-item').length > 1) {
+                    this.closest('.veiculo-item').remove();
+                } else {
+                    alert('Você deve ter pelo menos um veículo cadastrado!');
+                }
+            });
         });
     });
 </script>
