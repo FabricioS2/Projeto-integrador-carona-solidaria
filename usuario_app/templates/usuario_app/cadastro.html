@@ -1,11 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&amp;display=swap"
     rel="stylesheet" />
@@ -56,164 +57,360 @@
     main {
       flex: 1;
     }
-    
+
     .notification-item {
       transition: all 0.2s ease;
     }
-    
+
     .notification-item:hover {
       background-color: rgba(17, 131, 212, 0.05);
     }
-    
+
     .action-button {
       transition: all 0.2s ease;
     }
-    
+
     .action-button:hover {
       transform: translateY(-1px);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
+
     .status-badge {
       font-size: 0.7rem;
       padding: 0.2rem 0.5rem;
       border-radius: 1rem;
       font-weight: 500;
     }
+
+    .error-border {
+      border: 2px solid #ef4444 !important;
+    }
   </style>
 </head>
+
 <body>
-    <div class="screen-container">
+  <div class="screen-container">
     <div id="registration-screen">
-        <div class="container mx-auto px-4 max-w-md">
-            
-            <header class="flex items-center justify-between py-6">
-                <h1 class="text-xl font-bold text-gray-900 dark:text-white">Criar Conta</h1>
-                <div class="w-8"></div> 
-            </header>
-            
-            
-            
-            <form method="POST" id="registration-form">
-                {% csrf_token %} 
-                
-                <main class="space-y-6">
-                    
-                    <section>
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Informações Pessoais</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="full-name">Nome Completo</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="full-name" name="nome" placeholder="Digite seu nome completo" type="text" required/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="documento">CPF</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" 
-                                  id="documento" 
-                                  name="documento" 
-                                  placeholder="Digite seu CPF" 
-                                  type="text" 
-                                  maxlength="14" 
-                                  onkeyup="formatarCPF(this)" 
-                                  required/>
-                          </div>
+      <div class="container mx-auto px-4 max-w-md">
+
+        <header class="flex items-center justify-between py-6">
+          <h1 class="text-xl font-bold text-gray-900 dark:text-white">Criar Conta</h1>
+          <div class="w-8"></div>
+        </header>
 
 
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="email-reg">Email Institucional</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="email-reg" name="email" placeholder="Digite seu email do IFRN" type="email" required/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="phone">Telefone</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="phone" name="telefone" placeholder="Digite seu telefone" type="tel"/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus</label>
-                                <select class="w-full h-12 px-4 rounded-lg border-none appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary bg-no-repeat bg-right form-select" id="campus" name="campus">
-                                    <option value="">Selecione seu campus</option>
-                                    <option value="Natal-Central">Campus Natal-Central</option>
-                                    <option value="Mossoro">Campus Mossoró</option>
-                                    <option value="Parnamirim">Campus Parnamirim</option>
-                                    <option value="Pau dos Ferros"> Campus Pau dos Ferros</option>
-                                    </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="foto">Foto de Perfil (Opcional)</label>
-                                <input class="w-full h-12 px-4 pt-3 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="foto" name="foto" type="file" />
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tipo de Conta</h2>
-                        <div class="grid grid-cols-2 gap-4">
-                            
-                            <label class="perfil-radio flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
-                                <input class="sr-only" name="perfil" type="radio" value="motorista" id="perfilMotorista"/>
-                                <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">directions_car</span>
-                                <span class="font-medium text-gray-900 dark:text-white mt-2">Motorista</span>
-                            </label>
-                            
-                            <label class="perfil-radio flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-primary border-gray-300 dark:border-gray-600">
-                                <input checked="" class="sr-only" name="perfil" type="radio" value="passageiro" id="perfilPassageiro"/>
-                                <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">hail</span>
-                                <span class="font-medium text-gray-900 dark:text-white mt-2">Passageiro</span>
-                            </label>
-                            
-                        </div>
-                    </section>
-                    <section id="camposVeiculo" style="display: none;">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Dados do Veículo (Apenas Motorista)</h2>
-                        <div class="space-y-4">
-                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="veículo">Tipo de Veículo</label>
-                                <select class="w-full h-12 px-4 rounded-lg border-none appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary bg-no-repeat bg-right form-select" id="campus" name="campus">
-                                    <option value="">Selecione o tipo de Veículo</option>
-                                    <option value="Natal-Central">Carro</option>
-                                    <option value="Mossoro">Moto</option>
-                                    </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="modelo">Modelo do Veículo</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="modelo" name="modelo" placeholder="Ex: Fiat Uno" type="text"/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="placa">Placa</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="placa" name="placa" placeholder="Ex: ABC1234" type="text"/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="cor">Cor</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="cor" name="cor" placeholder="Ex: Vermelho" type="text"/>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="assentos">Assentos Disponíveis</label>
-                                <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="assentos" name="assentos" placeholder="Ex: 3" type="number" min="1" max="7"/>
-                            </div>
-                        </div>
-                    </section>
+        <form method="POST" action="{% url 'cadastro' %}" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
 
-                    <section>
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Senha</h2>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password-reg">Criar Senha</label>
-                            <input class="w-full h-12 px-4 rounded-lg border-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary" id="password-reg" name="senha" placeholder="Crie uma senha" type="password" required/>
-                        </div>
-                    </section>
+          <main class="space-y-6">
+            <section>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Informações Pessoais</h2>
+              <div class="space-y-4">
+                <!-- Nome -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="full-name">
+                    Nome Completo</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.nome.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="full-name" name="nome" placeholder="Digite seu nome completo" type="text"
+                    value="{{ form.nome.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.nome.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.nome.errors %}nome-error{% endif %}" required />
+                  {% if form.nome.errors %}
+                  {% for error in form.nome.errors %}
+                  <p id="nome-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
 
+                <!-- CPF / Documento -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    for="documento">CPF</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.documento.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="documento" name="documento" placeholder="Digite seu CPF" type="text" maxlength="14"
+                    onkeyup="formatarCPF(this)" value="{{ form.documento.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.documento.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.documento.errors %}documento-error{% endif %}" required />
+                  {% if form.documento.errors %}
+                  {% for error in form.documento.errors %}
+                  <p id="documento-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
 
-                    <div class="pt-4 pb-8">
-                        <button type="submit" class="w-full h-12 px-6 text-white bg-primary rounded-lg font-bold text-lg tracking-wide">
-                            Finalizar Cadastro
-                        </button>
-                        <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
-                            Já tem uma conta? <a class="font-medium text-primary hover:underline" href="{% url 'login' %}">Fazer login</a>
-                        </p>
-                    </div>
-                </main>
-            </form>
-        </div>
+                <!-- Email -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="email-reg">Email
+                    Institucional</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.email.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="email-reg" name="email" placeholder="Digite seu email do IFRN" type="email"
+                    value="{{ form.email.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.email.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.email.errors %}email-error{% endif %}" required />
+                  {% if form.email.errors %}
+                  {% for error in form.email.errors %}
+                  <p id="email-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Telefone -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    for="phone">Telefone</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.telefone.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="phone" name="telefone" placeholder="Digite seu telefone" type="tel"
+                    value="{{ form.telefone.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.telefone.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.telefone.errors %}telefone-error{% endif %}" />
+                  {% if form.telefone.errors %}
+                  {% for error in form.telefone.errors %}
+                  <p id="telefone-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Campus -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus</label>
+                  <select
+                    class="w-full h-12 px-4 rounded-lg appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary bg-no-repeat bg-right form-select {% if form.tipo_campus.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="tipo_campus" name="tipo_campus">
+                    <option value="">Selecione seu campus</option>
+                    <option value="Campus Natal-Central" 
+                      {% if form.tipo_campus.value == "Campus Natal-Central" %}selected{% endif %}>
+                      Campus Natal-Central
+                    </option>
+                    <option value="Campus Mossoró" 
+                      {% if form.tipo_campus.value == "Campus Mossoró" %}selected{% endif %}>
+                      Campus Mossoró
+                    </option>
+                    <option value="Campus Parnamirim" 
+                      {% if form.tipo_campus.value == "Campus Parnamirim" %}selected{% endif %}>
+                      Campus Parnamirim
+                    </option>
+                    <option value="Campus Pau dos Ferros" 
+                      {% if form.tipo_campus.value == "Campus Pau dos Ferros" %}selected{% endif %}>
+                      Campus Pau dos Ferros
+                    </option>
+                  </select>
+                  {% if form.tipo_campus.errors %}
+                    {% for error in form.tipo_campus.errors %}
+                      <p class="text-red-500 text-sm">{{ error }}</p>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Foto (opcional) -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="foto">Foto de
+                    Perfil (Opcional)</label>
+                  <input
+                    class="w-full h-12 px-4 pt-3 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.foto.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="foto" name="foto" type="file" value="{{ form.foto.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.foto.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.foto.errors %}foto-error{% endif %}" />
+                  {% if form.foto.errors %}
+                  {% for error in form.foto.errors %}
+                  <p id="foto-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tipo de Conta</h2>
+              <div class="grid grid-cols-2 gap-4">
+
+                <label
+                  class="perfil-radio flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-2 has-[:checked]:border-primary {% if form.perfil.errors %}error-border border-2{% else %}border-0{% endif %}">
+                  <input class="sr-only" name="perfil" type="radio" value="motorista" id="perfilMotorista" 
+                    {% if form.perfil.value == 'motorista' %}checked{% endif %} />
+                  <span
+                    class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">directions_car</span>
+                  <span class="font-medium text-gray-900 dark:text-white mt-2">Motorista</span>
+                </label>
+
+                <label
+                  class="perfil-radio flex flex-col items-center justify-center p-4 rounded-lg cursor-pointer has-[:checked]:bg-primary/10 has-[:checked]:border-2 has-[:checked]:border-primary {% if form.perfil.errors %}error-border border-2{% else %}border-0{% endif %}">
+                  <input class="sr-only" name="perfil" type="radio" value="passageiro" id="perfilPassageiro" 
+                    {% if form.perfil.value == 'passageiro' or not form.perfil.value %}checked{% endif %} />
+                  <span class="material-symbols-outlined text-4xl text-gray-700 dark:text-gray-300">hail</span>
+                  <span class="font-medium text-gray-900 dark:text-white mt-2">Passageiro</span>
+                </label>
+              </div>
+
+              {% if form.perfil.errors %}
+              <div class="mt-2">
+                {% for error in form.perfil.errors %}
+                <p class="text-sm text-red-600">{{ error }}</p>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </section>
+
+            <!-- Campos do veículo (visível somente se motorista) -->
+            <section id="camposVeiculo" style="display: none;">
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Dados do Veículo (Apenas Motorista)
+              </h2>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="tipo-veiculo">Tipo
+                    de Veículo</label>
+                  <select
+                    class="w-full h-12 px-4 rounded-lg appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary bg-no-repeat bg-right form-select {% if form.tipo_veiculo.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="tipo-veiculo" name="tipo_veiculo">
+                    <option value="">Selecione o tipo de Veículo</option>
+                    <option value="Carro" {% if form.tipo_veiculo.value == "Carro" %}selected{% endif %}>Carro</option>
+                    <option value="Moto" {% if form.tipo_veiculo.value == "Moto" %}selected{% endif %}>Moto</option>
+                  </select>
+
+                  {% if form.tipo_veiculo.errors %}
+                  {% for error in form.tipo_veiculo.errors %}
+                  <p class="text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+
+                </div>
+
+                <!-- Modelo -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="modelo">Modelo do
+                    Veículo</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.modelo.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="modelo" name="modelo" placeholder="Ex: Fiat Uno" type="text"
+                    value="{{ form.modelo.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.modelo.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.modelo.errors %}modelo-error{% endif %}" />
+                  {% if form.modelo.errors %}
+                  {% for error in form.modelo.errors %}
+                  <p id="modelo-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Placa -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    for="placa">Placa</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.placa.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="placa" name="placa" placeholder="Ex: ABC1234" type="text"
+                    value="{{ form.placa.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.placa.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.placa.errors %}placa-error{% endif %}" />
+                  {% if form.placa.errors %}
+                  {% for error in form.placa.errors %}
+                  <p id="placa-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Cor -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="cor">Cor</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.cor.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="cor" name="cor" placeholder="Ex: Vermelho" type="text"
+                    value="{{ form.cor.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.cor.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.cor.errors %}cor-error{% endif %}" />
+                  {% if form.cor.errors %}
+                  {% for error in form.cor.errors %}
+                  <p id="cor-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+
+                <!-- Assentos -->
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="assentos">Assentos
+                    Disponíveis</label>
+                  <input
+                    class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.assentos.errors %}error-border border-2{% else %}border-0{% endif %}"
+                    id="assentos" name="assentos" placeholder="Ex: 3" type="number" min="1" max="7"
+                    value="{{ form.assentos.value|default_if_none:'' }}"
+                    aria-invalid="{% if form.assentos.errors %}true{% else %}false{% endif %}"
+                    aria-describedby="{% if form.assentos.errors %}assentos-error{% endif %}" />
+                  {% if form.assentos.errors %}
+                  {% for error in form.assentos.errors %}
+                  <p id="assentos-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Senha</h2>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password-reg">Criar
+                  Senha</label>
+                <input
+                  class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.senha.errors %}error-border border-2{% else %}border-0{% endif %}"
+                  id="password-reg" name="senha" placeholder="Crie uma senha" type="password"
+                  aria-invalid="{% if form.senha.errors %}true{% else %}false{% endif %}"
+                  aria-describedby="{% if form.senha.errors %}senha-error{% endif %}" required />
+                {% if form.senha.errors %}
+                {% for error in form.senha.errors %}
+                <p id="senha-error" class="mt-1 text-sm text-red-600">{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+              </div>
+            </section>
+
+            <div class="pt-4 pb-8">
+              <button type="submit"
+                class="w-full h-12 px-6 text-white bg-primary rounded-lg font-bold text-lg tracking-wide action-button">
+                Finalizar Cadastro
+              </button>
+              <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
+                Já tem uma conta? <a class="font-medium text-primary hover:underline" href="{% url 'login' %}">Fazer
+                  login</a>
+              </p>
+            </div>
+          </main>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 
-<script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
+  <script>
+    // Exibição condicional dos campos do veículo baseada no radio selecionado.
+    // Se você já tem cadastro.js com essa lógica, pode remover/ignorar este bloco.
+    (function () {
+      function updateVehicleSection() {
+        const motoristaRadio = document.getElementById('perfilMotorista');
+        const camposVeiculo = document.getElementById('camposVeiculo');
+        if (!motoristaRadio || !camposVeiculo) return;
+        camposVeiculo.style.display = motoristaRadio.checked ? 'block' : 'none';
+      }
+
+      // Executa ao carregar a página (verifica estado do form se for reenviado)
+      document.addEventListener('DOMContentLoaded', function () {
+        // Se o form veio preenchido com perfil == motorista, marcar e mostrar campos
+        const perfilValue = "{{ form.perfil.value|default_if_none:'' }}";
+        if (perfilValue === 'motorista') {
+          document.getElementById('perfilMotorista').checked = true;
+        } else if (perfilValue === 'passageiro' || perfilValue === '') {
+          document.getElementById('perfilPassageiro').checked = true;
+        }
+        updateVehicleSection();
+
+        // eventos para alternar
+        const radios = document.querySelectorAll('input[name="perfil"]');
+        radios.forEach(r => r.addEventListener('change', updateVehicleSection));
+      });
+    })();
+  </script>
+
+  <script src="{% static 'usuario_app/js/cadastro.js' %}"></script>
 </body>
+
 </html>
