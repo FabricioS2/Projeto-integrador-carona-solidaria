@@ -5,7 +5,6 @@ from .models import Usuario, Veiculo
 from django.contrib import messages
 from .forms import CadastroForm
 
-
 def chat(request):
     return render(request, 'usuario_app/chat.html')
 
