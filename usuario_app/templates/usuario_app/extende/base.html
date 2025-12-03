@@ -287,31 +287,49 @@
 
   {% endblock %}
 
+
   <footer
-    class="mt-auto sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
-    <nav class="flex justify-around p-2">
-      <a class="flex flex-col items-center gap-1 text-primary w-1/4" href="{% url 'solicitar_carona' %}">
-        <span class="material-symbols-outlined text-2xl">home</span>
-        <span class="text-xs font-medium">Home</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'cadastrar_caronas' %}">
-        <span class="material-symbols-outlined text-2xl">directions_car</span>
-        <span class="text-xs font-medium">Caronas</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'historico' %}">
-        <span class="material-symbols-outlined text-2xl">history</span>
-        <span class="text-xs font-medium">Histórico</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'chat' %}">
-        <span class="material-symbols-outlined text-2xl">chat</span>
-        <span class="text-xs font-medium">Mensages</span>
-      </a>
-      <a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 w-1/4" href="{% url 'perfil' %}">
-        <span class="material-symbols-outlined text-2xl">person</span>
-        <span class="text-xs font-medium">Perfil</span>
-      </a>
-    </nav>
-  </footer>
+  class="mt-auto sticky bottom-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-700">
+  <nav class="flex justify-around p-2">
+    
+    <!-- HOME (solicitar_carona) -->
+    <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'solicitar_carona' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
+       href="{% url 'solicitar_carona' %}">
+      <span class="material-symbols-outlined text-2xl">home</span>
+      <span class="text-xs font-medium">Home</span>
+    </a>
+
+    <!-- CARONAS (cadastrar_caronas) -->
+    <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'cadastrar_caronas' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
+       href="{% url 'cadastrar_caronas' %}">
+      <span class="material-symbols-outlined text-2xl">directions_car</span>
+      <span class="text-xs font-medium">Caronas</span>
+    </a>
+
+    <!-- HISTÓRICO -->
+    <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'historico' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
+       href="{% url 'historico' %}">
+      <span class="material-symbols-outlined text-2xl">history</span>
+      <span class="text-xs font-medium">Histórico</span>
+    </a>
+
+    <!-- MENSAGENS (chat) -->
+    <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'chat' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
+       href="{% url 'chat' %}">
+      <span class="material-symbols-outlined text-2xl">chat</span>
+      <span class="text-xs font-medium">Mensagens</span>
+    </a>
+
+    <!-- PERFIL -->
+    <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'perfil' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
+       href="{% url 'perfil' %}">
+      <span class="material-symbols-outlined text-2xl">person</span>
+      <span class="text-xs font-medium">Perfil</span>
+    </a>
+
+  </nav>
+</footer>
+
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
