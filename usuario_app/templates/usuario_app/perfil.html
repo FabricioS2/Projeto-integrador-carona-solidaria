@@ -5,147 +5,221 @@
 {% block content %}
 <main class="flex-1 overflow-y-auto p-4 md:p-6">
     <div class="max-w-2xl mx-auto">
-        <!-- FOTO E NOME -->
-        <div class="flex flex-col items-center space-y-4">
-            <div class="relative">
-                <img alt="Foto do perfil de João Silva"
-                    class="w-32 h-32 rounded-full object-cover border-4 border-primary"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO4b8OfWPVp2Djdijkr3q4-AAQVYMjqxdh6jRdyrSJ3dOFAAa_1PAf9hmO_lUxgqSsBHVaaeV6wJFrNZPNS4n9jJgwZPWHZUb2K_9gS5550kMKOL7nyUHQcsJPk3M6ePuj1vVp5E_6LveYsDmjW1YihRptDNEK7XzQjYXRqrFrXnHHMt0mEJXf2IBPHcNY7TPmJ947asOuaWJbJpUqiOcpB-UPLjuis_XNKrg4z4FycAdG4SuvijpkbInqaoFyGdpltrQs0sy_qQ" />
-            </div>
-            <div class="text-center">
-                <h2 class="text-2xl font-bold">João Silva</h2>
-            </div>
-        </div>
 
-        <!-- FORMULÁRIO DE EDIÇÃO -->
-        <form id="profileForm" class="mt-8 grid grid-cols-1 gap-6">
-            <!-- INFORMAÇÕES PESSOAIS -->
+  
+        <form id="profileForm" method="post" action="{% url 'perfil' %}" enctype="multipart/form-data"
+            class="mt-8 grid grid-cols-1 ">
+            {% csrf_token %}
+
+            <!-- FOTO E NOME -->
+            <div class="flex flex-col items-center space-y-4">
+                <div class="relative">
+                    <img alt="Foto do perfil" class="w-32 h-32 rounded-full object-cover border-4 border-primary"
+                        src="{{ usuario.foto.url }}" id="fotoPerfil">
+                    <!-- Input para upload de foto (hidden por padrão) -->
+                    <input type="file" name="foto" id="fotoInput" accept="image/*" class="hidden">
+
+                    <!-- Botão para alterar foto (aparece apenas no modo edição) -->
+                    <button type="button" id="alterarFotoBtn"
+                        class="hidden absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full hover:bg-primary/90 transition-colors duration-200 w-10 h-10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-sm">photo_camera</span>
+                    </button>
+                </div>
+                <!-- <div class="text-center">
+                    <h2 class="text-2xl font-bold">{{ usuario.nome }}</h2>
+                </div> -->
+            </div>
+            <!-- FOTO E NOME -->
+       <!-- PESSOAIS -->
             <div class="bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
-                <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2">
-                    Informações Pessoais
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">person</span>
-                            <span class="font-medium">Nome Completo:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="nome">João da Silva</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="nomeInput" value="João da Silva">
-                    </div>
+                <h3 class="text-lg font-semibold">Informações Pessoais</h3>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">fingerprint</span>
-                            <span class="font-medium">CPF:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="cpf">123.456.789-00</span>
-                        <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="cpfInput" value="123.456.789-00" placeholder="000.000.000-00" maxlength="14">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-black/60 dark:text-white/60">person</span>
+                        <span class="font-medium">Nome Completo:</span>
                     </div>
+                    <span id="nome" class="text-black/80 dark:text-white/80 sm:text-right veiculo-display">{{usuario.nome }}</span>
+                    <input name="nome" id="nomeInput"
+                        class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                        value="{{ usuario.nome }}">
+                </div>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">mail</span>
-                            <span class="font-medium">Email:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="email">joao.silva@academico.ifrn.edu.br</span>
-                        <input type="email" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="emailInput" value="joao.silva@academico.ifrn.edu.br">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-black/60 dark:text-white/60">fingerprint</span>
+                        <span class="font-medium">CPF:</span>
                     </div>
+                    <span id="cpf" class="text-black/80 dark:text-white/80 sm:text-right veiculo-display">{{ usuario.cpf  }}</span>
+                    <input name="cpf" id="cpfInput"
+                        class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                        value="{{ usuario.cpf }}" maxlength="14" placeholder="000.000.000-00">
+                </div>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">phone</span>
-                            <span class="font-medium">Telefone:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="telefone">(84)99999-9999</span>
-                        <input type="tel" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="telefoneInput" value="(84)99999-9999" placeholder="(00)00000-0000" maxlength="14">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-black/60 dark:text-white/60">mail</span>
+                        <span class="font-medium">Email:</span>
                     </div>
+                    <span id="email" class="text-black/80 dark:text-white/80 sm:text-right veiculo-display">{{ usuario.email }}</span>
+                    <input name="email" id="emailInput" type="email"
+                        class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                        value="{{ usuario.email }}">
+                </div>
 
-                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
-                            <span class="font-medium">É motorista:</span>
-                        </div>
-                        <span class="text-black/80 dark:text-white/80 sm:text-right" id="motorista">Sim</span>
-                        <select class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded" id="motoristaInput">
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-black/60 dark:text-white/60">phone</span>
+                        <span class="font-medium">Telefone:</span>
                     </div>
+                    <span id="telefone" class="text-black/80 dark:text-white/80 sm:text-right veiculo-display">{{  usuario.telefone }}</span>
+                    <input name="telefone" id="telefoneInput"
+                        class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                        value="{{ usuario.telefone }}" placeholder="(00)00000-0000" maxlength="14">
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
+                        <span class="font-medium">É motorista:</span>
+                    </div>
+                    <span id="motorista" class="text-black/80 dark:text-white/80 sm:text-right veiculo-display">{% if   usuario.is_motorista %}Sim{% else %}Não{% endif %}</span>
+                    <select name="motorista" id="motoristaInput"
+                        class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input">
+                        <option value="Sim" {% if usuario.is_motorista %}selected{% endif %}>Sim</option>
+                        <option value="Não" {% if not usuario.is_motorista %}selected{% endif %}>Não</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- SEÇÃO DE VEÍCULOS -->
-            <div id="veiculosSection">
-                <!-- Veículo Principal -->
-                <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4">
+            <!-- VEÍCULOS: usamos uma lista 'veiculos' (veja a view) -->
+            <input type="hidden" id="veiculosRemovidos" name="veiculos_removidos" value="">
+            <div id="veiculosSection" class="mt-6 space-y-4">
+                {% for v in veiculos %}
+
+                <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4"
+                    data-veiculo-id="{{ v.id }}">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2 veiculo-title">
-                            Fiat Argo
-                        </h3>
-                        <button type="button" class="remove-veiculo hidden items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
+                        <h3 class="text-lg font-semibold border-black/10 dark:border-white/20 pb-2">{{ v.modelo|default:"Veículo" }}</h3>
+                        <button type="button" data-id="{{ v.id }}"
+                            class="remove-veiculo hidden items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
                             <span class="material-symbols-outlined text-sm">delete</span>
                             <span>Remover</span>
                         </button>
                     </div>
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
-                                <span class="font-medium">Tipo de Veículo:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="tipo">Carro</span>
-                            <select class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="tipo">
-                                <option value="Carro">Carro</option>
-                                <option value="Moto">Moto</option>
-                            </select>
-                        </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
-                                <span class="font-medium">Modelo:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="modelo">Fiat Argo</span>
-                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="modelo" value="Fiat Argo">
-                        </div>
+                    <!-- campos com name iguais -> enviados como listas -->
+                    <input type="hidden" name="veiculo_id" value="{{ v.id }}">
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
-                                <span class="font-medium">Placa:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="placa">QWX-1234</span>
-                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="placa" value="QWX-1234">
+                    <!-- TIPO DE VEÍCULO -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
+                            <span class="font-medium">Tipo de Veículo:</span>
                         </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display"
+                            data-field="tipo">{{ v.tipo_veiculo }}</span>
+                        <select name="veiculo_tipo"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="tipo" required>
+                            <option value="Carro" {% if v.tipo_veiculo == "Carro" %}selected{% endif %}>Carro</option>
+                            <option value="Moto" {% if v.tipo_veiculo == "Moto" %}selected{% endif %}>Moto</option>
+                        </select>
+                    </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
-                                <span class="font-medium">Cor:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="cor">Prata</span>
-                            <input type="text" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="cor" value="Prata">
+                    <!-- MODELO -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
+                            <span class="font-medium">Modelo:</span>
                         </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display"
+                            data-field="modelo">{{ v.modelo }}</span>
+                        <input name="veiculo_modelo" type="text"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="modelo" value="{{ v.modelo }}" required>
+                    </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
-                                <span class="font-medium">Lugares Disponíveis:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="lugares">3</span>
-                            <input type="number" class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="lugares" value="3" min="1" max="10">
+                    <!-- PLACA -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
+                            <span class="font-medium">Placa:</span>
                         </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display"
+                            data-field="placa">{{ v.placa }}</span>
+                        <input name="veiculo_placa" type="text"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="placa" value="{{ v.placa }}" required>
+                    </div>
+
+                    <!-- ANO -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="material-symbols-outlined text-black/60 dark:text-white/60">calendar_today</span>
+                            <span class="font-medium">Ano:</span>
+                        </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="ano">{{ v.ano }}</span>
+                        <input name="veiculo_ano" type="number"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="ano" value="{{ v.ano }}" min="1900" max="2030" required>
+                    </div>
+
+                    <!-- COR -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
+                            <span class="font-medium">Cor:</span>
+                        </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display" data-field="cor">{{ v.cor }}</span>
+                        <input name="veiculo_cor" type="text"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="cor" value="{{ v.cor }}" required>
+                    </div>
+
+
+                    <!-- LUGARES -->
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
+                            <span class="font-medium">Lugares Disponíveis:</span>
+                        </div>
+                        <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display"
+                            data-field="lugares">{{ v.capacidade }}</span>
+                        <input name="veiculo_lugares" type="number"
+                            class="hidden w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input"
+                            data-field="lugares" value="{{ v.capacidade }}" min="1" max="10" required>
                     </div>
                 </div>
+                {% endfor %}
             </div>
+
+
+
+
+
+
+            <!-- CONTROLES -->
+            <div class="mt-6 space-y-4">
+                <div id="addVehicleContainer" class="hidden flex justify-center">
+                    <button type="button" id="addVehicleButton"
+                        class="w-full max-w-sm h-12 flex items-center justify-center bg-green-500 text-white rounded-lg">
+                        <span class="material-symbols-outlined">add</span><span>Adicionar Novo Veículo</span>
+                    </button>
+                </div>
+
+          </div>
         </form>
 
         <!-- BOTÃO ADICIONAR VEÍCULO E EDITAR/SALVAR -->
         <div class="mt-6 space-y-4">
             <!-- Botão Adicionar Veículo (visível apenas no modo edição) -->
             <div id="addVehicleContainer" class="hidden flex justify-center">
-                <button type="button" id="addVehicleButton" class="w-full max-w-sm h-12 flex items-center justify-center space-x-2 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 transition-colors duration-200">
+                <button type="button" id="addVehicleButton"
+                    class="w-full max-w-sm h-12 flex items-center justify-center bg-green-500 text-white rounded-lg">
                     <span class="material-symbols-outlined">add</span>
                     <span>Adicionar Novo Veículo</span>
                 </button>
@@ -162,329 +236,178 @@
     </div>
 </main>
 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
         const editButton = document.getElementById('editButton');
         const addVehicleButton = document.getElementById('addVehicleButton');
         const addVehicleContainer = document.getElementById('addVehicleContainer');
         const veiculosSection = document.getElementById('veiculosSection');
+        const form = document.getElementById('profileForm');
+        const veiculosRemovidosInput = document.getElementById('veiculosRemovidos');
+        const fotoInput = document.getElementById('fotoInput');
+        const alterarFotoBtn = document.getElementById('alterarFotoBtn');
+        const fotoPerfil = document.getElementById('fotoPerfil');
+
         let isEditing = false;
-        let vehicleCount = 1;
+
+        function toggleEditing(on) {
+            // campos pessoais
+            ['nome', 'cpf', 'email', 'telefone', 'motorista'].forEach(id => {
+                const display = document.getElementById(id);
+                const input = document.getElementById(id + 'Input');
+                if (!display || !input) return;
+                display.classList.toggle('hidden', on);
+                input.classList.toggle('hidden', !on);
+            });
+
+            // controle da foto
+            alterarFotoBtn.classList.toggle('hidden', !on);
+
+            // veiculos
+            document.querySelectorAll('.veiculo-display').forEach(d => d.classList.toggle('hidden', on));
+            document.querySelectorAll('.veiculo-input').forEach(i => i.classList.toggle('hidden', !on));
+            document.querySelectorAll('.remove-veiculo').forEach(b => b.classList.toggle('hidden', !on));
+
+            addVehicleContainer.classList.toggle('hidden', !on);
+            editButton.textContent = on ? 'Salvar Alterações' : 'Editar Perfil';
+            isEditing = on;
+        }
+
+        // Handler para o botão de alterar foto
+        alterarFotoBtn.addEventListener('click', () => {
+            fotoInput.click();
+        });
+
+        // Preview da nova foto
+        fotoInput.addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    fotoPerfil.src = e.target.result;
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        // remove vehicle handler (delegation)
+        veiculosSection.addEventListener('click', (e) => {
+            if (e.target.closest('.remove-veiculo')) {
+                const btn = e.target.closest('.remove-veiculo');
+                const id = btn.dataset.id;
+                // Se tem id, marca para remoção
+                if (id) {
+                    const current = veiculosRemovidosInput.value;
+                    veiculosRemovidosInput.value = current ? (current + ',' + id) : id;
+                }
+                // remove do DOM
+                btn.closest('.veiculo-item').remove();
+            }
+        });
+
+        // adicionar veículo
+        addVehicleButton.addEventListener('click', () => {
+
+            const newHtml = `
+    <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4" data-veiculo-id="">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold border-black/10 dark:border-white/20 pb-2">Novo Veículo</h3>
+            <button type="button" class="remove-veiculo flex items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
+                <span class="material-symbols-outlined text-sm">delete</span>
+                <span>Remover</span>
+            </button>
+        </div>
+        <input type="hidden" name="veiculo_id" value="">
         
-        // Lista de campos para alternar entre visualização e edição
-        const fields = [
-            { display: 'nome', input: 'nomeInput' },
-            { display: 'cpf', input: 'cpfInput' },
-            { display: 'email', input: 'emailInput' },
-            { display: 'telefone', input: 'telefoneInput' },
-            { display: 'motorista', input: 'motoristaInput' }
-        ];
-        
-        // Função para formatar CPF
-        function formatarCPF(cpf) {
-            cpf = cpf.replace(/\D/g, '');
-            
-            // Limitar a 11 dígitos
-            if (cpf.length > 11) {
-                cpf = cpf.substring(0, 11);
-            }
-            
-            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
-            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            return cpf;
-        }
+        <!-- TIPO DE VEÍCULO -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
+                <span class="font-medium">Tipo de Veículo:</span>
+            </div>
+            <select name="veiculo_tipo" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" required>
+                <option value="Carro">Carro</option>
+                <option value="Moto">Moto</option>
+            </select>
+        </div>
 
-        // Função para formatar telefone no formato (00)00000-0000
-        function formatarTelefone(telefone) {
-            // Remover tudo que não é número
-            telefone = telefone.replace(/\D/g, '');
-            
-            // Limitar a 11 dígitos
-            if (telefone.length > 11) {
-                telefone = telefone.substring(0, 11);
-            }
-            
-            // Aplicar máscara (00)00000-0000
-            if (telefone.length > 0) {
-                telefone = '(' + telefone;
-            }
-            if (telefone.length > 3) {
-                telefone = telefone.substring(0, 3) + ')' + telefone.substring(3);
-            }
-            if (telefone.length > 9) {
-                telefone = telefone.substring(0, 9) + '-' + telefone.substring(9);
-            }
-            
-            return telefone;
-        }
+        <!-- MODELO -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
+                <span class="font-medium">Modelo:</span>
+            </div>
+            <input name="veiculo_modelo" type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" value="" placeholder="Ex: Honda Civic" required>
+        </div>
 
-        // Função para remover a formatação do telefone (apenas números)
-        function removerFormatacaoTelefone(telefone) {
-            return telefone.replace(/\D/g, '');
-        }
+        <!-- PLACA -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
+                <span class="font-medium">Placa:</span>
+            </div>
+            <input name="veiculo_placa" type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" value="" placeholder="ABC1D23" required>
+        </div>
 
-        // Função para atualizar o título do veículo
-        function updateVehicleTitle(veiculoItem, modelo) {
-            const title = veiculoItem.querySelector('.veiculo-title');
-            title.textContent = modelo || 'Novo Veículo';
-        }
+        <!-- ANO -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">calendar_today</span>
+                <span class="font-medium">Ano:</span>
+            </div>
+            <input name="veiculo_ano" type="number" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" value="2024" " required>
+        </div>
 
-        // Aplicar formatação de CPF nos inputs
-        document.getElementById('cpfInput').addEventListener('input', function(e) {
-            let valor = e.target.value;
-            valor = formatarCPF(valor);
-            e.target.value = valor;
+        <!-- COR -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
+                <span class="font-medium">Cor:</span>
+            </div>
+            <input name="veiculo_cor" type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" value="" placeholder="Preto" required >
+        </div>
+
+        <!-- LUGARES -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
+                <span class="font-medium">Lugares Disponíveis:</span>
+            </div>
+            <input name="veiculo_lugares" type="number" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" value="4" min="1" max="10" required>
+        </div>
+    </div>
+    `;
+
+            veiculosSection.insertAdjacentHTML('beforeend', newHtml);
         });
 
-        // Aplicar formatação de telefone nos inputs
-        document.getElementById('telefoneInput').addEventListener('input', function(e) {
-            let valor = e.target.value;
-            
-            // Se o usuário estiver apagando, não aplicar formatação
-            if (e.inputType === 'deleteContentBackward') {
-                return;
-            }
-            
-            valor = formatarTelefone(valor);
-            e.target.value = valor;
-        });
 
-        // Validar CPF antes de sair do campo
-        document.getElementById('cpfInput').addEventListener('blur', function(e) {
-            const cpfLimpo = e.target.value.replace(/\D/g, '');
-            if (cpfLimpo.length !== 11 && cpfLimpo.length > 0) {
-                alert('CPF deve conter 11 dígitos');
-                e.target.focus();
-            }
-        });
 
-        // Validar telefone antes de sair do campo
-        document.getElementById('telefoneInput').addEventListener('blur', function(e) {
-            const telefoneLimpo = removerFormatacaoTelefone(e.target.value);
-            if (telefoneLimpo.length < 10 && telefoneLimpo.length > 0) {
-                alert('Telefone deve conter 10 ou 11 dígitos');
-                e.target.focus();
-            }
-        });
-
-        // Permitir apagar caracteres do telefone sem problemas
-        document.getElementById('telefoneInput').addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace') {
-                // Permitir backspace normalmente
-                return;
-            }
-        });
-
-        // Atualizar título quando o modelo é alterado
-        document.addEventListener('input', function(e) {
-            if (e.target.classList.contains('veiculo-input') && e.target.dataset.field === 'modelo') {
-                const veiculoItem = e.target.closest('.veiculo-item');
-                updateVehicleTitle(veiculoItem, e.target.value);
-            }
-        });
-
-        editButton.addEventListener('click', function() {
+        // alterna edição/salvar
+        editButton.addEventListener('click', () => {
             if (!isEditing) {
-                // Entrar no modo de edição
-                fields.forEach(field => {
-                    document.getElementById(field.display).classList.add('hidden');
-                    document.getElementById(field.input).classList.remove('hidden');
-                });
-                
-                // Mostrar campos de edição dos veículos
-                document.querySelectorAll('.veiculo-display').forEach(display => {
-                    display.classList.add('hidden');
-                });
-                document.querySelectorAll('.veiculo-input').forEach(input => {
-                    input.classList.remove('hidden');
-                });
-                
-                // Mostrar botões de remover veículo
-                document.querySelectorAll('.remove-veiculo').forEach(button => {
-                    button.classList.remove('hidden');
-                });
-                
-                // Mostrar botão de adicionar veículo
-                addVehicleContainer.classList.remove('hidden');
-                
-                editButton.textContent = 'Salvar Alterações';
-                isEditing = true;
+                toggleEditing(true);
+                // aplicar máscara básica em inputs recém-criados, se quiser
             } else {
-                // Validar campos antes de salvar
-                const cpfLimpo = document.getElementById('cpfInput').value.replace(/\D/g, '');
-                const telefoneLimpo = removerFormatacaoTelefone(document.getElementById('telefoneInput').value);
-                
-                if (cpfLimpo.length !== 11 && cpfLimpo.length > 0) {
-                    alert('CPF deve conter 11 dígitos');
-                    document.getElementById('cpfInput').focus();
-                    return;
-                }
-                
-                if (telefoneLimpo.length < 10 && telefoneLimpo.length > 0) {
-                    alert('Telefone deve conter 10 ou 11 dígitos');
-                    document.getElementById('telefoneInput').focus();
-                    return;
-                }
-                
-                // Salvar alterações
-                fields.forEach(field => {
-                    const inputElement = document.getElementById(field.input);
-                    const displayElement = document.getElementById(field.display);
-                    
-                    // Atualizar o valor exibido com o valor do input
-                    if (field.input === 'cpfInput') {
-                        // Formatar CPF antes de exibir
-                        displayElement.textContent = formatarCPF(inputElement.value);
-                    } else if (field.input === 'telefoneInput') {
-                        // Manter a formatação do telefone
-                        displayElement.textContent = inputElement.value;
-                    } else {
-                        displayElement.textContent = inputElement.value;
-                    }
-                    
-                    // Alternar visibilidade
-                    displayElement.classList.remove('hidden');
-                    inputElement.classList.add('hidden');
-                });
-                
-                // Atualizar e esconder campos dos veículos
-                document.querySelectorAll('.veiculo-item').forEach(veiculoItem => {
-                    const inputs = veiculoItem.querySelectorAll('.veiculo-input');
-                    inputs.forEach(input => {
-                        const display = veiculoItem.querySelector(`.veiculo-display[data-field="${input.dataset.field}"]`);
-                        
-                        // Para selects, pegar o texto da opção selecionada
-                        if (input.tagName === 'SELECT') {
-                            const selectedOption = input.options[input.selectedIndex];
-                            display.textContent = selectedOption.text;
-                        } else {
-                            display.textContent = input.value;
-                        }
-                        
-                        display.classList.remove('hidden');
-                        input.classList.add('hidden');
+                // antes de submeter, podemos validar mínimo: se motorista == Sim e não há veículos, pedir
+                const motoristaSelect = document.getElementById('motoristaInput');
+                const motoristaVal = motoristaSelect ? motoristaSelect.value : (document.getElementById('motorista').textContent.trim());
+                const veiculoCount = document.querySelectorAll('.veiculo-item').length;
 
-                        // Atualizar título se for o campo modelo
-                        if (input.dataset.field === 'modelo') {
-                            updateVehicleTitle(veiculoItem, input.value);
-                        }
-                    });
-                });
-                
-                // Esconder botões de remover veículo
-                document.querySelectorAll('.remove-veiculo').forEach(button => {
-                    button.classList.add('hidden');
-                });
-                
-                // Esconder botão de adicionar veículo
-                addVehicleContainer.classList.add('hidden');
-                
-                editButton.textContent = 'Editar Perfil';
-                isEditing = false;
-                
-                // Aqui você pode adicionar código para enviar os dados para o servidor
-                // Exemplo: enviarFormulario();
+                if (motoristaVal === 'Sim' && veiculoCount === 0) {
+                    if (!confirm('Você marcou como motorista, mas não há veículos. Deseja continuar?')) return;
+                }
+
+                // submete o form (POST)
+                form.submit();
+                // toggleEditing(false) será executado após reload no servidor
             }
         });
 
-        // Função para adicionar novo veículo
-        addVehicleButton.addEventListener('click', function() {
-            vehicleCount++;
-            const newVehicleHtml = `
-                <div class="veiculo-item bg-white/50 dark:bg-white/10 rounded-xl p-6 space-y-4 mt-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold border-b border-black/10 dark:border-white/20 pb-2 veiculo-title">
-                            Novo Veículo
-                        </h3>
-                        <button type="button" class="remove-veiculo items-center space-x-1 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors duration-200">
-                            <span class="material-symbols-outlined text-sm">delete</span>
-                            <span>Remover</span>
-                        </button>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">commute</span>
-                                <span class="font-medium">Tipo de Veículo:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="tipo">Carro</span>
-                            <select class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="tipo">
-                                <option value="Carro">Carro</option>
-                                <option value="Moto">Moto</option>
-                            </select>
-                        </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">directions_car</span>
-                                <span class="font-medium">Modelo:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="modelo">Novo Veículo</span>
-                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="modelo" placeholder="Ex: Honda Civic" value="">
-                        </div>
 
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">confirmation_number</span>
-                                <span class="font-medium">Placa:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="placa"></span>
-                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="placa" placeholder="Ex: ABC-1D23" value="">
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">color_lens</span>
-                                <span class="font-medium">Cor:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="cor"></span>
-                            <input type="text" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="cor" placeholder="Ex: Preto" value="">
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                            <div class="flex items-center space-x-2">
-                                <span class="material-symbols-outlined text-black/60 dark:text-white/60">event_seat</span>
-                                <span class="font-medium">Lugares Disponíveis:</span>
-                            </div>
-                            <span class="text-black/80 dark:text-white/80 sm:text-right veiculo-display hidden" data-field="lugares"></span>
-                            <input type="number" class="w-full sm:w-48 px-2 py-1 border border-gray-300 rounded veiculo-input" data-field="lugares" value="1" min="1" max="10">
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            veiculosSection.insertAdjacentHTML('beforeend', newVehicleHtml);
-            
-            // Adicionar evento de input para atualizar o título quando o modelo for alterado
-            const newModeloInput = veiculosSection.lastElementChild.querySelector('.veiculo-input[data-field="modelo"]');
-            newModeloInput.addEventListener('input', function() {
-                updateVehicleTitle(this.closest('.veiculo-item'), this.value);
-            });
-            
-            // Adicionar evento de remoção para o novo botão
-            const newRemoveButton = veiculosSection.lastElementChild.querySelector('.remove-veiculo');
-            newRemoveButton.addEventListener('click', function() {
-                // Só permite remover se houver mais de um veículo
-                if (document.querySelectorAll('.veiculo-item').length > 1) {
-                    this.closest('.veiculo-item').remove();
-                } else {
-                    alert('Você deve ter pelo menos um veículo cadastrado!');
-                }
-            });
-        });
-
-        // Adicionar eventos de remoção para os veículos existentes
-        document.querySelectorAll('.remove-veiculo').forEach(button => {
-            button.addEventListener('click', function() {
-                // Só permite remover se houver mais de um veículo
-                if (document.querySelectorAll('.veiculo-item').length > 1) {
-                    this.closest('.veiculo-item').remove();
-                } else {
-                    alert('Você deve ter pelo menos um veículo cadastrado!');
-                }
-            });
-        });
     });
 </script>
+
 {% endblock %}
