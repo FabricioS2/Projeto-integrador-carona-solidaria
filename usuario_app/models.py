@@ -44,3 +44,8 @@ class SolicitacaoCarona(models.Model):
     carona = models.ForeignKey(Carona, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pendente')
     data_solicitacao = models.DateTimeField(auto_now_add=True)
+
+class MensagemChat(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    conteudo = models.TextField()
+    data_envio = models.DateTimeField(auto_now_add=True)

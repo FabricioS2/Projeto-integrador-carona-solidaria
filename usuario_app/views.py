@@ -1,12 +1,25 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password
-from .models import Usuario, Veiculo
+from .models import Usuario, Veiculo, MensagemChat
 from django.contrib import messages
 from .forms import CadastroForm
 
 def chat(request):
-    return render(request, 'usuario_app/chat.html')
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    
+    usuario = Usuario.objects.get(id=usuario_id)
+    
+    # Busca as mensagens antigas (todas ou limite as últimas 50)
+    mensagens_antigas = MensagemChat.objects.select_related('usuario').all()
+    
+    return render(request, 'usuario_app/chat.html', {
+        'usuario': usuario,
+        'mensagens_antigas': mensagens_antigas # Passa para o template
+    })
+
 
 def perfil(request):
     usuario_id = request.session.get("usuario_id")

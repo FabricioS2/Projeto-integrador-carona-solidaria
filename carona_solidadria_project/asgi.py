@@ -14,3 +14,25 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'carona_solidadria_project.settings')
 
 application = get_asgi_application()
+
+
+import os
+import django
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nome_do_seu_projeto.settings') # Verifique o nome
+django.setup()
+
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.sessions import SessionMiddlewareStack
+import usuario_app.routing
+
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    # Envolvemos as rotas com SessionMiddlewareStack para acessar request.session no consumer
+    "websocket": SessionMiddlewareStack(
+        URLRouter(
+            usuario_app.routing.websocket_urlpatterns
+        )
+    ),
+})
