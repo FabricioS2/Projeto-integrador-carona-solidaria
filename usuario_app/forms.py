@@ -76,3 +76,23 @@ class CadastroForm(forms.Form):
 
         
         return cleaned_data
+    
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(
+        label="Email",
+        error_messages={
+            "required": "Informe o email.",
+            "invalid": "Informe um email válido.",
+        }
+    )
+
+    password = forms.CharField(
+        label="Senha",
+        widget=forms.PasswordInput,
+        error_messages={
+            "required": "Informe a senha.",
+        }
+    )
+
+    remember_me = forms.BooleanField(required=False)

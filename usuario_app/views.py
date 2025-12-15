@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password
 from .models import Usuario, Veiculo, MensagemChat
 from django.contrib import messages
-from .forms import CadastroForm
+from .forms import CadastroForm,LoginForm
 
 def chat(request):
     usuario_id = request.session.get("usuario_id")
@@ -229,49 +229,45 @@ def cadastro(request):
 
 
 def login(request):
-    # Se já estiver logado, redireciona
     if request.session.get("usuario_id"):
         return redirect("solicitar_carona")
-    
+
     if request.method == "POST":
-        email = request.POST.get("email", "").strip()
-        senha = request.POST.get("password", "")
-        remember_me = request.POST.get("remember-me")
+        form = LoginForm(request.POST)
 
-        if not email or not senha:
-            messages.error(request, "Por favor, preencha todos os campos.")
-            return render(request, "usuario_app/login.html", {
-                "email_value": email
-            })
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            senha = form.cleaned_data["password"]
+            remember_me = form.cleaned_data["remember_me"]
 
-        try:
-            usuario = Usuario.objects.get(email=email)
+            try:
+                usuario = Usuario.objects.get(email=email)
 
-            if check_password(senha, usuario.senha):
-                # Login bem-sucedido
-                request.session["usuario_id"] = usuario.id
-                
-                # Configura tempo da sessão baseado em "Lembrar-me"
-                if remember_me:
-                    request.session.set_expiry(1209600)  # 2 semanas
-                else:
-                    request.session.set_expiry(0)  # Fecha ao sair do browser
-                
-                return redirect("solicitar_carona")   
-            else:
-                messages.error(request, "Senha incorreta. Tente novamente.")
-                return render(request, "usuario_app/login.html", {
-                    "email_value": email
-                })
+                if check_password(senha, usuario.senha):
+                    request.session["usuario_id"] = usuario.id
 
-        except Usuario.DoesNotExist:
-            messages.error(request, 
-                "Email não encontrado. Verifique o email ou cadastre-se.")
-            return render(request, "usuario_app/login.html", {
-                "email_value": email
-            })
+                    if remember_me:
+                        request.session.set_expiry(1209600)
+                    else:
+                        request.session.set_expiry(0)
 
-    return render(request, "usuario_app/login.html")
+                    return redirect("solicitar_carona")
+
+                # senha errada → erro só no campo password
+                form.add_error("password", "Senha incorreta.")
+
+            except Usuario.DoesNotExist:
+                # email não existe → erro só no campo email
+                form.add_error("email", "Email não encontrado.")
+
+    else:
+        form = LoginForm()
+
+    return render(request, "usuario_app/login.html", {
+        "form": form
+    })
+
+
 
 def solicitar_carona(request):
     return render(request, 'usuario_app/solicitar_carona.html')

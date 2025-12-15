@@ -16,6 +16,9 @@ class Usuario(models.Model):
     foto = models.ImageField(upload_to='fotos_perfil/', null=True, blank=True)
     is_motorista = models.BooleanField(default=False,blank=False, null=False)
 
+    def __str__(self):
+        return f"{self.nome}"
+
 class Veiculo(models.Model):
     TIPO_VEICULO = [('Moto', 'Moto'), ('Carro', 'Carro')]
     tipo_veiculo = models.CharField(max_length=50, choices=TIPO_VEICULO)
@@ -27,6 +30,8 @@ class Veiculo(models.Model):
     capacidade = models.IntegerField(validators=[validar_capacidade])
     motorista = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.modelo} - {self.placa} - {self.motorista}"      
 
 class Carona(models.Model):
     STATUS_CHOICES = [('Agendada', 'Agendada'), ('Em Andamento', 'Em Andamento'), ('Finalizada', 'Finalizada'), ('Cancelada', 'Cancelada')]
@@ -39,13 +44,22 @@ class Carona(models.Model):
     vagas_disponiveis = models.IntegerField(validators=[validar_capacidade])
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Agendada')
 
+    def __str__(self):
+        return f"{self.motorista} - {self.horario_e_data} - {self.status}"     
+
 class SolicitacaoCarona(models.Model):
     STATUS_CHOICES = [('Pendente', 'Pendente'), ('Aceita', 'Aceita'), ('Recusada', 'Recusada')]
     carona = models.ForeignKey(Carona, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pendente')
     data_solicitacao = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.carona} - {self.data_solicitacao}"  
+
 class MensagemChat(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     conteudo = models.TextField()
     data_envio = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario} - {self.data_envio}"  
