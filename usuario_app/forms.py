@@ -1,7 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Usuario
+from .models import Usuario,Carona, Veiculo
 import re
+from django.utils import timezone
 
 class CadastroForm(forms.Form):
     nome = forms.CharField(max_length=100, required=True)
@@ -76,3 +77,76 @@ class CadastroForm(forms.Form):
 
         
         return cleaned_data
+    
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(
+        label="Email",
+        error_messages={
+            "required": "Informe o email.",
+            "invalid": "Informe um email válido.",
+        }
+    )
+
+    password = forms.CharField(
+        label="Senha",
+        widget=forms.PasswordInput,
+        error_messages={
+            "required": "Informe a senha.",
+        }
+    )
+
+    remember_me = forms.BooleanField(required=False)
+
+
+
+
+class CaronaForm(forms.ModelForm):
+    class Meta:
+        model = Carona
+        fields = ['veiculo', 'horario_e_data', 'origem', 'destino', 'vagas_disponiveis']
+        widgets = {
+            'horario_e_data': forms.DateTimeInput(
+                attrs={
+                    'type': 'datetime-local',
+                    'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                }
+            ),
+            'origem': forms.TextInput(
+                attrs={
+                    'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                    'placeholder': 'Digite o local de saída'
+                }
+            ),
+            'destino': forms.TextInput(
+                attrs={
+                    'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                    'placeholder': 'Digite o local de destino'
+                }
+            ),
+            'vagas_disponiveis': forms.NumberInput(
+                attrs={
+                    'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+                    'min': 1,
+                    'max': 10
+                }
+            ),
+            'veiculo': forms.Select(
+                attrs={
+                    'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
+                }
+            ),
+        }
+    
+    def __init__(self, usuario, *args, **kwargs):
+        super(CaronaForm, self).__init__(*args, **kwargs)
+        # Filtra veículos apenas do usuário motorista
+        self.fields['veiculo'].queryset = Veiculo.objects.filter(motorista=usuario)
+        # Define o valor mínimo para horário (agora)
+        self.fields['horario_e_data'].initial = timezone.now() + timezone.timedelta(hours=1)
+    
+    def clean_horario_e_data(self):
+        horario = self.cleaned_data['horario_e_data']
+        if horario < timezone.now():
+            raise forms.ValidationError("O horário não pode ser no passado!")
+        return horario

@@ -1,12 +1,29 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password
-from .models import Usuario, Veiculo
+from .models import Usuario, Veiculo, MensagemChat, Carona
 from django.contrib import messages
-from .forms import CadastroForm
+from .forms import CadastroForm,LoginForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.http import require_POST
+from .forms import CaronaForm  # Adicione esta importação
+
 
 def chat(request):
-    return render(request, 'usuario_app/chat.html')
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    
+    usuario = Usuario.objects.get(id=usuario_id)
+    
+    # Busca as mensagens antigas (todas ou limite as últimas 50)
+    mensagens_antigas = MensagemChat.objects.select_related('usuario').all()
+    
+    return render(request, 'usuario_app/chat.html', {
+        'usuario': usuario,
+        'mensagens_antigas': mensagens_antigas # Passa para o template
+    })
+
 
 def perfil(request):
     usuario_id = request.session.get("usuario_id")
@@ -164,7 +181,110 @@ def historico(request):
     return render(request, 'usuario_app/historico.html')
 
 def cadastrar_carona(request):
-    return render(request, 'usuario_app/cadastrar_carona.html')
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    
+    # Verifica se o usuário é motorista
+    if not usuario.is_motorista:
+        messages.error(request, "Apenas motoristas podem criar caronas.")
+        return redirect("solicitar_carona")
+    
+    # Verifica se o usuário tem veículos cadastrados
+    veiculos = Veiculo.objects.filter(motorista=usuario)
+    if not veiculos.exists():
+        messages.error(request, "Você precisa cadastrar um veículo antes de criar uma carona.")
+        return redirect("perfil")
+    
+    # Processa o formulário se for POST
+    if request.method == "POST":
+        form = CaronaForm(usuario, request.POST)
+        if form.is_valid():
+            carona = form.save(commit=False)
+            carona.motorista = usuario
+            carona.save()
+            
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Carona criada com sucesso!'
+                })
+            else:
+                messages.success(request, "Carona criada com sucesso!")
+                return redirect("cadastrar_carona")
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'errors': form.errors
+                })
+    else:
+        form = CaronaForm(usuario)
+    
+    # Busca TODAS as caronas do usuário que NÃO ESTÃO FINALIZADAS
+    # Independente de serem passadas ou futuras
+    caronas = Carona.objects.filter(
+        motorista=usuario
+    ).exclude(
+        status='Finalizada'  # Exclui apenas caronas já finalizadas
+    ).order_by('horario_e_data')
+    
+    context = {
+        'usuario': usuario,
+        'form': form,
+        'caronas': caronas,
+        'veiculos': veiculos,
+    }
+    return render(request, 'usuario_app/cadastrar_carona.html', context)
+
+@require_POST
+def iniciar_carona(request, carona_id):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return JsonResponse({'success': False, 'error': 'Usuário não autenticado'})
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    carona = get_object_or_404(Carona, id=carona_id, motorista=usuario)
+    
+    if carona.status == 'Agendada':
+        carona.status = 'Em Andamento'
+        carona.save()
+        return JsonResponse({'success': True, 'new_status': 'Em Andamento'})
+    
+    return JsonResponse({'success': False, 'error': 'Status inválido'})
+
+@require_POST
+def finalizar_carona(request, carona_id):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return JsonResponse({'success': False, 'error': 'Usuário não autenticado'})
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    carona = get_object_or_404(Carona, id=carona_id, motorista=usuario)
+    
+    if carona.status == 'Em Andamento':
+        carona.status = 'Finalizada'
+        carona.save()
+        return JsonResponse({'success': True, 'new_status': 'Finalizada'})
+    
+    return JsonResponse({'success': False, 'error': 'Status inválido'})
+
+@require_POST
+def remover_carona(request, carona_id):
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return JsonResponse({'success': False, 'error': 'Usuário não autenticado'})
+    
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    carona = get_object_or_404(Carona, id=carona_id, motorista=usuario)
+    
+    if carona.status in ['Agendada', 'Cancelada']:
+        carona.delete()
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False, 'error': 'Não é possível remover caronas em andamento ou finalizadas'})
 
 def cadastro(request):
     if request.method == "POST":
@@ -216,49 +336,45 @@ def cadastro(request):
 
 
 def login(request):
-    # Se já estiver logado, redireciona
     if request.session.get("usuario_id"):
         return redirect("solicitar_carona")
-    
+
     if request.method == "POST":
-        email = request.POST.get("email", "").strip()
-        senha = request.POST.get("password", "")
-        remember_me = request.POST.get("remember-me")
+        form = LoginForm(request.POST)
 
-        if not email or not senha:
-            messages.error(request, "Por favor, preencha todos os campos.")
-            return render(request, "usuario_app/login.html", {
-                "email_value": email
-            })
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+            senha = form.cleaned_data["password"]
+            remember_me = form.cleaned_data["remember_me"]
 
-        try:
-            usuario = Usuario.objects.get(email=email)
+            try:
+                usuario = Usuario.objects.get(email=email)
 
-            if check_password(senha, usuario.senha):
-                # Login bem-sucedido
-                request.session["usuario_id"] = usuario.id
-                
-                # Configura tempo da sessão baseado em "Lembrar-me"
-                if remember_me:
-                    request.session.set_expiry(1209600)  # 2 semanas
-                else:
-                    request.session.set_expiry(0)  # Fecha ao sair do browser
-                
-                return redirect("solicitar_carona")   
-            else:
-                messages.error(request, "Senha incorreta. Tente novamente.")
-                return render(request, "usuario_app/login.html", {
-                    "email_value": email
-                })
+                if check_password(senha, usuario.senha):
+                    request.session["usuario_id"] = usuario.id
 
-        except Usuario.DoesNotExist:
-            messages.error(request, 
-                "Email não encontrado. Verifique o email ou cadastre-se.")
-            return render(request, "usuario_app/login.html", {
-                "email_value": email
-            })
+                    if remember_me:
+                        request.session.set_expiry(1209600)
+                    else:
+                        request.session.set_expiry(0)
 
-    return render(request, "usuario_app/login.html")
+                    return redirect("solicitar_carona")
+
+                # senha errada → erro só no campo password
+                form.add_error("password", "Senha incorreta.")
+
+            except Usuario.DoesNotExist:
+                # email não existe → erro só no campo email
+                form.add_error("email", "Email não encontrado.")
+
+    else:
+        form = LoginForm()
+
+    return render(request, "usuario_app/login.html", {
+        "form": form
+    })
+
+
 
 def solicitar_carona(request):
     return render(request, 'usuario_app/solicitar_carona.html')
