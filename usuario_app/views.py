@@ -429,7 +429,7 @@ def solicitar_carona(request):
     if data_filtro:
         try:
             # Converter string para date object
-            data_obj = datetime.strptime(data_filtro, '%d-%m-%Y').date()
+            data_obj = datetime.strptime(data_filtro, '%Y-%m-%d').date()
             caronas_query = caronas_query.filter(
                 horario_e_data__date=data_obj
             )
