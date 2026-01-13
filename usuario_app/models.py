@@ -69,16 +69,39 @@ class Carona(models.Model):
         return f"{self.motorista} - {self.horario_e_data} - {self.status}"
 
 
-
 class SolicitacaoCarona(models.Model):
-    STATUS_CHOICES = [('Pendente', 'Pendente'), ('Aceita', 'Aceita'), ('Recusada', 'Recusada')]
-    carona = models.ForeignKey(Carona, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pendente')
+    STATUS_CHOICES = [
+        ('Pendente', 'Pendente'), 
+        ('Aceita', 'Aceita'), 
+        ('Recusada', 'Recusada')
+    ]
+    
+    carona = models.ForeignKey(
+        Carona, 
+        on_delete=models.CASCADE,
+        related_name='solicitacoes'
+    )
+    passageiro = models.ForeignKey(
+        Usuario, 
+        on_delete=models.CASCADE,
+        related_name='solicitacoes_caronas',
+        default=1,  # ID de um usuário existente ou null=True temporariamente
+        null=True   # Permitir nulo temporariamente
+    )
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='Pendente'
+    )
     data_solicitacao = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.carona} - {self.data_solicitacao}"  
+    class Meta:
+        unique_together = ['carona', 'passageiro']
 
+    def __str__(self):
+        return f"{self.passageiro.nome if self.passageiro else 'Sem passageiro'} - {self.carona} - {self.status}"
+    
+    
 class MensagemChat(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     conteudo = models.TextField()

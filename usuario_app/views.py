@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password,check_password
-from .models import Usuario, Veiculo, MensagemChat, Carona
+from .models import Usuario, Veiculo, MensagemChat, Carona,SolicitacaoCarona
 from django.contrib import messages
 from .forms import CadastroForm,LoginForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
-from .forms import CaronaForm  # Adicione esta importação
+from .forms import CaronaForm 
+from django.db.models import Q
+from datetime import datetime, date
+
 
 
 def chat(request):
@@ -377,4 +380,120 @@ def login(request):
 
 
 def solicitar_carona(request):
-    return render(request, 'usuario_app/solicitar_carona.html')
+    usuario_id = request.session.get("usuario_id")
+    if not usuario_id:
+        return redirect("login")
+    
+    try:
+        usuario = Usuario.objects.get(id=usuario_id)
+    except Usuario.DoesNotExist:
+        if 'usuario_id' in request.session:
+            del request.session['usuario_id']
+        return redirect("login")
+    
+    # Obter parâmetros da busca
+    busca = request.GET.get('busca', '').strip()
+    data_filtro = request.GET.get('data', '').strip()
+    vagas_filtro = request.GET.get('vagas', '').strip()
+    tipo_veiculo_filtro = request.GET.get('tipo_veiculo', '').strip()
+    campus_filtro = request.GET.get('campus', '').strip()
+    
+    # DEBUG: Imprimir parâmetros recebidos (remova em produção)
+    print(f"DEBUG - Parâmetros recebidos:")
+    print(f"  Busca: {busca}")
+    print(f"  Data: {data_filtro}")
+    print(f"  Vagas: {vagas_filtro}")
+    print(f"  Tipo Veículo: {tipo_veiculo_filtro}")
+    print(f"  Campus: {campus_filtro}")
+    
+    # Filtrar caronas.
+    caronas_query = Carona.objects.filter(
+        status='Agendada'
+    ).exclude(
+        motorista=usuario
+    )
+    
+    # DEBUG: Ver quantas caronas antes dos filtros
+    print(f"DEBUG - Caronas antes dos filtros: {caronas_query.count()}")
+    
+    # filtro de busca
+    if busca:
+        caronas_query = caronas_query.filter(
+            Q(origem__icontains=busca) | 
+            Q(destino__icontains=busca) |
+            Q(motorista__nome__icontains=busca)
+        )
+        print(f"DEBUG - Após busca: {caronas_query.count()}")
+    
+    # filtro de data
+    if data_filtro:
+        try:
+            # Converter string para date object
+            data_obj = datetime.strptime(data_filtro, '%d-%m-%Y').date()
+            caronas_query = caronas_query.filter(
+                horario_e_data__date=data_obj
+            )
+            print(f"DEBUG - Após filtro de data {data_filtro}: {caronas_query.count()}")
+        except ValueError as e:
+            print(f"DEBUG - Erro ao converter data: {e}")
+            pass
+    
+    if vagas_filtro:
+        try:
+            vagas = int(vagas_filtro)
+            caronas_query = caronas_query.filter(vagas_disponiveis__gte=vagas)
+            print(f"DEBUG - Após filtro de vagas: {caronas_query.count()}")
+        except ValueError:
+            print(f"DEBUG - Erro ao converter vagas")
+            pass
+    
+    if tipo_veiculo_filtro:
+        caronas_query = caronas_query.filter(veiculo__tipo_veiculo=tipo_veiculo_filtro)
+        print(f"DEBUG - Após filtro tipo veículo: {caronas_query.count()}")
+    
+    if campus_filtro:
+        caronas_query = caronas_query.filter(motorista__tipo_campus=campus_filtro)
+        print(f"DEBUG - Após filtro campus: {caronas_query.count()}")
+    
+    caronas_query = caronas_query.order_by('horario_e_data')
+    
+    # DEBUG: Ver caronas após todos os filtros
+    print(f"DEBUG - Caronas após todos os filtros: {caronas_query.count()}")
+    
+    # Listar todas as caronas para debug
+    for carona in caronas_query:
+        print(f"DEBUG - Carona: {carona.id} | {carona.origem} -> {carona.destino} | {carona.horario_e_data} | Vagas: {carona.vagas_disponiveis}")
+    
+    # Preparar dados para template
+    caronas_com_status = []
+    for carona in caronas_query:
+        # Verificar se o usuário já solicitou esta carona
+        solicitacao = SolicitacaoCarona.objects.filter(
+            carona=carona,
+            passageiro=usuario
+        ).first()
+        
+        status_solicitacao = solicitacao.status if solicitacao else None
+        
+        caronas_com_status.append({
+            'carona': carona,
+            'status_solicitacao': status_solicitacao
+        })
+    
+    campus_choices = Usuario.TIPO_CAMPUS
+    
+    filtros_ativos = {
+        'busca': busca,
+        'data': data_filtro,
+        'vagas': vagas_filtro,
+        'tipo_veiculo': tipo_veiculo_filtro,
+        'campus': campus_filtro,
+    }
+    
+    return render(request, 'usuario_app/solicitar_carona.html', {
+        'caronas_com_status': caronas_com_status,
+        'usuario': usuario,
+        'filtros_ativos': filtros_ativos,
+        'campus_choices': campus_choices,
+        'tipos_veiculo': [('Carro', 'Carro'), ('Moto', 'Moto')],
+    })
