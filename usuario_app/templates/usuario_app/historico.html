@@ -1,156 +1,257 @@
 {% extends "usuario_app/extende/base.html" %}
+{% load static %}
 
 {% block title %}Histórico{% endblock %}
 
 {% block content %}
-<body
-    class="font-display bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark"
->
+<body class="font-display bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark">
     <div class="flex flex-col min-h-screen content-center items-center">
         <main class="flex-grow p-4 w-full flex justify-center">
-            <div class="max-w-md md:max-w-4xl mx-auto w-full p-4 space-y-6"> 
-                <!-- Card -->
-                <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
+            <div class="max-w-md md:max-w-4xl mx-auto w-full p-4 space-y-6">
+                
                             
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                {% for item in historico_combinado %}
+                    {% if item.tipo == 'solicitacao' %}
+                        <!-- Card para Solicitação (Passageiro) -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md mb-4 p-4 flex flex-col space-y-3">
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-gray-700">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Motorista: {{ item.objeto.carona.motorista.nome }}
+                                        </p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                                            Você solicitou esta carona
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                    {{ item.objeto.carona.horario_e_data|date:"d/m/Y H:i" }}
+                                </p>
                             </div>
 
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-1 space-y-0 relative">
+                                    <p class="text-gray-500 dark:text-gray-400">De:</p>
+                                    <div class="flex items-center space-x-2 py-2">
+                                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                        <span class="text-gray-800 dark:text-gray-200 font-medium">{{ item.objeto.carona.origem }}</span>
+                                    </div>
+
+                                    <p class="text-gray-500 dark:text-gray-400">Para:</p>
+                                    <div class="flex items-center space-x-2 py-2">
+                                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                        <span class="text-gray-800 dark:text-gray-200 font-medium">{{ item.objeto.carona.destino }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 text-gray-600 dark:text-gray-400 self-start">
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path>
+                                        <circle cx="7" cy="17" r="2"></circle>
+                                        <circle cx="17" cy="17" r="2"></circle>
+                                    </svg>
+                                </div>
                             </div>
                             
+                            <div class="flex justify-between space-x-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                                <div class="flex items-center">
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-2"></span>
+                                    {% if item.status == 'Pendente' %}
+                                        <div class="bg-yellow-100 dark:bg-yellow-900 font-medium text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-lg">
+                                            Pendente
+                                        </div>
+                                    {% elif item.status == 'Aceita' and item.carona_status == 'Finalizada' %}
+                                        <div class="bg-blue-100 dark:bg-blue-900 font-medium text-blue-800 dark:text-blue-200 px-3 py-1 rounded-lg">
+                                            Finalizada
+                                        </div>
+                                    {% elif item.status == 'Aceita' and item.carona_status == 'Removida' %}
+                                        {% if item.motorista_removeu %}
+                                            <!-- Se o passageiro for quem removeu (raro), ele vê "Carona Removida" -->
+                                            <div class="bg-red-100 dark:bg-red-900 font-medium text-red-800 dark:text-red-200 px-3 py-1 rounded-lg">
+                                                Carona Removida (por você)
+                                            </div>
+                                        {% else %}
+                                            <!-- Passageiro normal vê "Cancelada" -->
+                                            <div class="bg-red-100 dark:bg-red-900 font-medium text-red-800 dark:text-red-200 px-3 py-1 rounded-lg">
+                                                Cancelada
+                                            </div>
+                                        {% endif %}
+                                    {% elif item.status == 'Aceita' %}
+                                        <div class="bg-green-100 dark:bg-green-900 font-medium text-green-800 dark:text-green-200 px-3 py-1 rounded-lg">
+                                            Aceita
+                                        </div>
+                                    {% elif item.status == 'Recusada' %}
+                                        <div class="bg-red-100 dark:bg-red-900 font-medium text-red-800 dark:text-red-200 px-3 py-1 rounded-lg">
+                                            Recusada
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if item.status == 'Pendente' %}
+                                <button onclick="cancelarSolicitacao({{ item.objeto.id }}, this)" 
+                                        class="bg-red-500 hover:bg-red-600 font-medium text-white px-4 py-2 rounded-lg transition-colors">
+                                    Cancelar solicitação
+                                </button>
+                                {% endif %}
+                            </div>
                         </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-between space-x-2 pt-3 border-t border-gray-100">
-                        <div class="bg-green-100 font-medium text-green-800 px-3 py-1 rounded-lg font-medium ">
-                            Carona aceita
-                        </div>
-                        <button class=" bg-red-500 hover:text-red-300 font-medium text-white px-2 py-1 rounded-lg">
-                            Cancelar carona
-                        </button>
-                    </div>
-                </div>
-                <!--card-->
-                <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
-                            
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                    {% else %}
+                        <!-- Card para Carona (Motorista) -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md mb-4 p-4 flex flex-col space-y-3">
+                            <div class="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-gray-700">
+                                <div class="flex items-center space-x-2">
+                                    <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Você (Motorista)
+                                        </p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                                            {{ item.objeto.horario_e_data|date:"H:i" }} - {{ item.objeto.horario_e_data|date:"d/m/Y" }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                        Vagas: {{ item.objeto.vagas_disponiveis }}
+                                    </p>
+                                </div>
                             </div>
 
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-1 space-y-0 relative">
+                                    <p class="text-gray-500 dark:text-gray-400">De:</p>
+                                    <div class="flex items-center space-x-2 py-2">
+                                        <span class="material-symbols-outlined text-base text-primary">circle</span>
+                                        <span class="text-gray-800 dark:text-gray-200 font-medium">{{ item.objeto.origem }}</span>
+                                    </div>
+
+                                    <p class="text-gray-500 dark:text-gray-400">Para:</p>
+                                    <div class="flex items-center space-x-2 py-2">
+                                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                                        <span class="text-gray-800 dark:text-gray-200 font-medium">{{ item.objeto.destino }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 text-gray-600 dark:text-gray-400 self-start">
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path>
+                                        <circle cx="7" cy="17" r="2"></circle>
+                                        <circle cx="17" cy="17" r="2"></circle>
+                                    </svg>
+                                </div>
                             </div>
                             
-                        </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-between space-x-2 pt-3 border-t border-gray-100">
-                        <div class="bg-green-100 font-medium text-green-800 px-3 py-1 rounded-lg font-medium">
-                            Finalizada
-                        </div>
-                        <button class="hover:underline font-medium text-gray-600 px-6 py-1 rounded-lg flex items-center gap-1">
-                            Exibir detalhes
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <!--Card-->
-                    <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
-                            
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                            <div class="flex justify-between space-x-2 pt-3 border-t border-gray-100 dark:border-gray-700">
+                                <div class="flex items-center">
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-2"></span>
+                                    {% if item.status == 'Agendada' %}
+                                        <div class="bg-yellow-100 dark:bg-yellow-900 font-medium text-yellow-800 dark:text-yellow-200 px-3 py-1 rounded-lg">
+                                            Agendada
+                                        </div>
+                                    {% elif item.status == 'Em Andamento' %}
+                                        <div class="bg-blue-100 dark:bg-blue-900 font-medium text-blue-800 dark:text-blue-200 px-3 py-1 rounded-lg">
+                                            Em Andamento
+                                        </div>
+                                    {% elif item.status == 'Finalizada' %}
+                                        <div class="bg-green-100 dark:bg-green-900 font-medium text-green-800 dark:text-green-200 px-3 py-1 rounded-lg">
+                                            Finalizada
+                                        </div>
+                                    {% elif item.status == 'Cancelada' %}
+                                        <div class="bg-orange-100 dark:bg-orange-900 font-medium text-orange-800 dark:text-orange-200 px-3 py-1 rounded-lg">
+                                            Cancelada
+                                        </div>
+                                    {% elif item.status == 'Removida' %}
+                                        <!-- Apenas o motorista que removeu vê "Removida" -->
+                                        <div class="bg-red-100 dark:bg-red-900 font-medium text-red-800 dark:text-red-200 px-3 py-1 rounded-lg">
+                                            Removida
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                    Veículo: {{ item.objeto.veiculo.modelo }}
+                                </div>
                             </div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <!-- Mensagem quando não há histórico -->
+                    <div class="text-center py-8">
+                        <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Nenhum histórico encontrado</h3>
+                        <p class="text-gray-500 dark:text-gray-400">Você ainda não tem solicitações de carona no seu histórico.</p>
+                    </div>
+                {% endfor %}
 
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-between space-x-2 pt-3 border-t border-gray-100">
-                        <div class="bg-red-200 font-medium text-red-500 px-3 py-1 rounded-lg font-medium">
-                            Recusada
-                        </div>
-                        <button class=" hover:underline text-gray-600 font-medium px-6 py-1 rounded-lg flex items-center gap-1">
-                            Exibir detalhes
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-   
+            </div>
         </main>
     </div>
 
-    
+    <!-- JavaScript para cancelar solicitação -->
+    <script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function showNotification(message, type = 'success') {
+        if (type === 'success') {
+            alert('✅ ' + message);
+        } else {
+            alert('❌ ' + message);
+        }
+    }
+
+    function cancelarSolicitacao(solicitacaoId, button) {
+        if (!confirm('Tem certeza que deseja cancelar esta solicitação?')) {
+            return;
+        }
+        
+        fetch(`/solicitacoes/cancelar/${solicitacaoId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                showNotification(data.message, 'success');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            } else {
+                showNotification(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Erro ao cancelar solicitação', 'error');
+        });
+    }
+    </script>
 </body>
 {% endblock %}
