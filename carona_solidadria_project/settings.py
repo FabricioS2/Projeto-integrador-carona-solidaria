@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 
 
-ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' # Substitua 'nome_do_seu_projeto' pelo nome da pasta principal
+ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' 
 
 # Configuração do Redis (Docker ou Local)
 CHANNEL_LAYERS = {
