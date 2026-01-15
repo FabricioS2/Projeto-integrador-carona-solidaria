@@ -62,4 +62,4 @@ class MensagemChat(models.Model):
     data_envio = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario} - {self.data_envio}"  
+        return f"{self.usuario} - {self.data_envio}"
