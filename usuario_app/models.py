@@ -38,7 +38,8 @@ class Carona(models.Model):
         ('Agendada', 'Agendada'), 
         ('Em Andamento', 'Em Andamento'), 
         ('Finalizada', 'Finalizada'), 
-        ('Cancelada', 'Cancelada')
+        ('Cancelada', 'Cancelada'),
+        ('Removida', 'Removida') 
     ]
     
     motorista = models.ForeignKey(
@@ -102,10 +103,68 @@ class SolicitacaoCarona(models.Model):
         return f"{self.passageiro.nome if self.passageiro else 'Sem passageiro'} - {self.carona} - {self.status}"
     
     
+# class MensagemChat(models.Model):
+#     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+#     conteudo = models.TextField()
+#     data_envio = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f"{self.usuario} - {self.data_envio}"  
+    
+
+# models.py - Modificar o modelo MensagemChat
+
 class MensagemChat(models.Model):
+    carona = models.ForeignKey(
+        Carona, 
+        on_delete=models.CASCADE,
+        related_name='mensagens',
+        null=True,  # Temporariamente permitir nulo para migração
+        blank=True
+    )
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     conteudo = models.TextField()
     data_envio = models.DateTimeField(auto_now_add=True)
+    
+    # Novo campo para identificar se a mensagem foi enviada quando a carona estava ativa
+    carona_ativa = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.usuario} - {self.data_envio}"  
+        return f"{self.usuario} - {self.carona} - {self.data_envio}"
+    
+# models.py - Adicionar após MensagemChat
+
+class Notificacao(models.Model):
+    TIPOS_NOTIFICACAO = [
+        ('nova_solicitacao', 'Nova Solicitação de Carona'),
+        ('solicitacao_aceita', 'Solicitação Aceita'),
+        ('solicitacao_recusada', 'Solicitação Recusada'),
+        ('passageiro_recusou', 'Passageiro Recusou Carona'),
+    ]
+    
+    usuario = models.ForeignKey(
+        Usuario, 
+        on_delete=models.CASCADE,
+        related_name='notificacoes'
+    )
+    tipo = models.CharField(max_length=50, choices=TIPOS_NOTIFICACAO)
+    mensagem = models.TextField()
+    carona = models.ForeignKey(
+        Carona, 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='notificacoes'
+    )
+    solicitacao = models.ForeignKey(
+        SolicitacaoCarona,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='notificacoes'
+    )
+    lida = models.BooleanField(default=False)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.nome} - {self.tipo} - {self.data_criacao}"

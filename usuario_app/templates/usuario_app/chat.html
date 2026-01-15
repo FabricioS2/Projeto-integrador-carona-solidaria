@@ -5,163 +5,300 @@
 
 {% block content %}
 
+    <!-- Header do Chat -->
+  
+    <!-- Área de Mensagens -->
+    <main id="chat-log" class="p-4 space-y-6 flex-1 overflow-y-auto">
+        {% if erro %}
+            <!-- Mensagem de erro -->
+            <div class="flex items-center justify-center h-full">
+                <div class="text-center p-8 bg-neutral-100 dark:bg-neutral-700 rounded-xl max-w-md">
+                    <span class="material-symbols-outlined text-5xl text-neutral-400 mb-4">chat_bubble</span>
+                    <h3 class="text-lg font-semibold text-neutral-700 dark:text-neutral-300 mb-3">Chat Indisponível</h3>
+                    <p class="text-neutral-600 dark:text-neutral-400 mb-6">{{ erro }}</p>
+                    
+                </div>
+            </div>
+        {% elif not mensagens %}
+            <!-- Chat vazio -->
+            <div class="flex flex-col items-center justify-center h-full">
+                <div class="text-center p-6 max-w-sm">
+                    <span class="material-symbols-outlined text-5xl text-neutral-300 dark:text-neutral-600 mb-4">forum</span>
+                    <h3 class="text-lg font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Chat Vazio</h3>
+                    <p class="text-neutral-500 dark:text-neutral-400 mb-1">Nenhuma mensagem ainda.</p>
+                    <p class="text-sm text-neutral-400 dark:text-neutral-500">Seja o primeiro a enviar uma mensagem!</p>
+                </div>
+            </div>
+        {% else %}
+            <!-- Mensagens do banco de dados -->
+            {% for msg in mensagens %}
+                {% if msg.usuario.id == usuario.id %}
+                    <!-- MENSAGEM MINHA (Direita / Azul) -->
+                    <div class="flex items-end gap-3 justify-end">
+                        <div class="flex flex-col gap-1 items-end max-w-[80%]">
+                            <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Você · {{ msg.data_envio|date:"H:i" }}</span>
+                            <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white break-all">
+                                {{ msg.conteudo }}
+                            </p>
+                        </div>
+                        <img alt="Seu avatar" 
+                             class="h-8 w-8 rounded-full object-cover self-end" 
+                             src="{% if usuario.foto %}{{ usuario.foto.url }}{% else %}https://ui-avatars.com/api/?name={{ usuario.nome|urlencode }}&background=random{% endif %}"/>
+                    </div>
+                {% else %}
+                    <!-- MENSAGEM DO OUTRO (Esquerda / Cinza) -->
+                    <div class="flex items-end gap-3">
+                        <img alt="Avatar de {{ msg.usuario.nome }}" 
+                             class="h-8 w-8 rounded-full object-cover self-end" 
+                             src="{% if msg.usuario.foto %}{{ msg.usuario.foto.url }}{% else %}https://ui-avatars.com/api/?name={{ msg.usuario.nome|urlencode }}&background=random{% endif %}"/>
+                        <div class="flex flex-col gap-1 items-start max-w-[80%]">
+                            <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">{{ msg.usuario.nome }} · {{ msg.data_envio|date:"H:i" }}</span>
+                            <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 break-all">
+                                {{ msg.conteudo }}
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </main>
 
-<main id="chat-log" class="p-4 space-y-6 flex-1 overflow-y-auto h-[calc(100vh-140px)] flex flex-col">
-
-  <!-- MENSAGENS ANTIGAS (Vindas do Banco de Dados) -->
-  {% for msg in mensagens_antigas %}
+    <!-- ÁREA DE INPUT (Fixa no fundo) -->
+    {% if carona_ativa and not erro %}
+    <div class="p-2 border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+        <form id="chat-form" class="flex items-center gap-2">
+            {% csrf_token %}
+            <div class="flex-1 relative">
+                <input id="chat-message-input" 
+                       class="w-full bg-neutral-100 dark:bg-neutral-800 border-none rounded-full h-12 px-4 pr-24 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus:ring-2 focus:ring-primary outline-none" 
+                       placeholder="Digite sua mensagem..." 
+                       type="text"
+                       required
+                       autocomplete="off"/>
+            </div>
+            <button id="chat-message-submit" 
+                    type="submit"
+                    class="p-3 aspect-square rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined">send</span>
+            </button>
+        </form>
     
-    {% if msg.usuario.id == usuario.id %}
-      <!-- MENSAGEM MINHA (Direita / Azul) -->
-      <div class="flex items-end gap-3 justify-end">
-        <div class="flex flex-col gap-1 items-end max-w-[80%]">
-          <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Você · {{ msg.data_envio|date:"H:i" }}</span>
-          <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white break-all">
-            {{ msg.conteudo }}
-          </p>
-        </div>
-        <img alt="Seu avatar" class="h-8 w-8 rounded-full object-cover self-end" 
-             src="{% if usuario.foto %}{{ usuario.foto.url }}{% else %}https://ui-avatars.com/api/?name={{ usuario.nome|urlencode }}&background=random{% endif %}"/>
-      </div>
-
-    {% else %}
-      <!-- MENSAGEM DO OUTRO (Esquerda / Cinza) -->
-      <div class="flex items-end gap-3">
-        <img alt="Avatar de {{ msg.usuario.nome }}" class="h-8 w-8 rounded-full object-cover self-end" 
-             src="{% if msg.usuario.foto %}{{ msg.usuario.foto.url }}{% else %}https://ui-avatars.com/api/?name={{ msg.usuario.nome|urlencode }}&background=random{% endif %}"/>
-        <div class="flex flex-col gap-1 items-start max-w-[80%]">
-          <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">{{ msg.usuario.nome }} · {{ msg.data_envio|date:"H:i" }}</span>
-          <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 break-all">
-            {{ msg.conteudo }}
-          </p>
-        </div>
-      </div>
+    </div>
     {% endif %}
 
-  {% empty %}
-    <div class="text-center text-gray-500 mt-10">
-      <p>Nenhuma mensagem ainda. Inicie a conversa!</p>
-    </div>
-  {% endfor %}
-
-</main>
-
-<!-- ÁREA DE INPUT (Fixa no fundo) -->
-<div class="p-2 border-t border-neutral-200 dark:border-neutral-800 bg-background-light dark:bg-background-dark " id="chat-message">
-  <div class="flex items-center gap-2">
-    <div class="flex-1 relative">
-      <input id="chat-message-input" 
-             class="w-full bg-neutral-100 dark:bg-neutral-800 border-none rounded-full h-12 px-4 pr-24 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus:ring-2 focus:ring-primary outline-none" 
-             placeholder="Digite sua mensagem..." 
-             type="text"
-             autocomplete="off"/>
-    </div>
-    <button id="chat-message-submit" 
-            class="p-3 aspect-square rounded-full bg-primary text-white flex items-center justify-center hover:bg-opacity-90 transition">
-      <span class="material-symbols-outlined">send</span>
-    </button>
-  </div>
-</div>
-
 <script>
-    // =============================
-    // CONFIGURAÇÃO DO WEBSOCKET
-    // =============================
-    const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/'
-    );
-
-
     // =============================
     // ELEMENTOS DA TELA
     // =============================
     const chatLog = document.getElementById("chat-log");
     const messageInput = document.getElementById("chat-message-input");
     const messageSubmit = document.getElementById("chat-message-submit");
+    const chatForm = document.getElementById("chat-form");
 
     // =============================
-    // AO CARREGAR A PÁGINA
+    // AO CARREGAR A PÁGINA - Rolar para o final
     // =============================
     window.addEventListener("load", () => {
-        chatLog.scrollTop = chatLog.scrollHeight;
-        messageInput.focus();
+        if (chatLog) {
+            setTimeout(() => {
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }, 100);
+        }
+        if (messageInput) {
+            messageInput.focus();
+        }
     });
 
     // =============================
-    // RECEBER MENSAGEM
+    // CONFIGURAÇÃO DO WEBSOCKET
+    // =============================
+    {% if carona_ativa and not erro %}
+    const caronaId = "{{ carona_ativa.id }}";
+    const usuarioId = "{{ usuario.id }}";
+    
+    // Configurar WebSocket
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const chatSocket = new WebSocket(
+        protocol + '//' + window.location.host + '/ws/chat/' + caronaId + '/'
+    );
+
+    // =============================
+    // RECEBER MENSAGEM DO WEBSOCKET
     // =============================
     chatSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
+        try {
+            const data = JSON.parse(e.data);
+            
+            // Verificar se a carona foi finalizada
+            if (data.carona_finalizada) {
+                showErrorMessage("Esta carona foi finalizada. O chat não está mais disponível.");
+                return;
+            }
 
-        const message = data.message;
-        const nome = data.nome_usuario;
-        const foto =
-            data.foto_url ||
-            `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=random`;
-        const isMe = data.is_me;
-
-        const hora = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-
-        let html = "";
-
-        if (isMe) {
-            html = `
-            <div class="flex items-end gap-3 justify-end">
-                <div class="flex flex-col gap-1 items-end max-w-[80%]">
-                    <span class="text-xs text-neutral-500 px-3">Você · ${hora}</span>
-                    <p class="rounded-xl rounded-br-none px-4 py-2 bg-primary text-white break-all">
-                        ${message}
-                    </p>
-                </div>
-                <img class="h-8 w-8 rounded-full object-cover" src="${foto}">
-            </div>`;
-        } else {
-            html = `
-            <div class="flex items-end gap-3">
-                <img class="h-8 w-8 rounded-full object-cover" src="${foto}">
-                <div class="flex flex-col gap-1 items-start max-w-[80%]">
-                    <span class="text-xs text-neutral-500 px-3">${nome} · ${hora}</span>
-                    <p class="rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 break-all">
-                        ${message}
-                    </p>
-                </div>
-            </div>`;
+            // Se for uma mensagem de chat normal
+            if (data.message) {
+                displayMessage(
+                    data.message,
+                    data.nome_usuario || 'Usuário',
+                    data.foto_url || '',
+                    data.user_id_sender == usuarioId
+                );
+            }
+        } catch (error) {
+            console.error("Erro ao processar mensagem:", error);
         }
-
-        chatLog.insertAdjacentHTML("beforeend", html);
-
-        
     };
-
-    // =============================
-    // ENVIAR COM ENTER
-    // =============================
-    messageInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            messageSubmit.click();
-        }
-    });
 
     // =============================
     // ENVIAR MENSAGEM
     // =============================
-    messageSubmit.onclick = function () {
+    if (chatForm) {
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+    }
+
+    if (messageInput) {
+        messageInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    }
+
+    function sendMessage() {
+        if (!messageInput) return;
+        
         const message = messageInput.value.trim();
         if (!message) return;
+        
+        // Enviar via WebSocket
+        if (chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({ 
+                message: message,
+                carona_id: caronaId 
+            }));
+            
+            // Limpar input
+            messageInput.value = "";
+            messageInput.focus();
+            
+            // Desabilitar botão temporariamente para evitar spam
+            if (messageSubmit) {
+                messageSubmit.disabled = true;
+                setTimeout(() => {
+                    messageSubmit.disabled = false;
+                }, 500);
+            }
+        } else {
+            showErrorMessage("Conexão perdida. Tentando reconectar...");
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        }
+    }
 
-        chatSocket.send(JSON.stringify({ message }));
-        messageInput.value = "";
-        messageInput.focus();
+    // =============================
+    // FUNÇÃO PARA MOSTRAR MENSAGEM
+    // =============================
+    function displayMessage(message, senderName, senderPhoto, isMe) {
+        if (!chatLog) return;
+        
+        const hora = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        
+        const defaultPhoto = `https://ui-avatars.com/api/?name=${encodeURIComponent(senderName)}&background=random`;
+        
+        let html = '';
+        
+        if (isMe) {
+            html = `
+            <div class="flex items-end gap-3 justify-end">
+                <div class="flex flex-col gap-1 items-end max-w-[80%]">
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">Você · ${hora}</span>
+                    <p class="text-base font-normal rounded-xl rounded-br-none px-4 py-2 bg-primary text-white break-all">
+                        ${message}
+                    </p>
+                </div>
+                <img class="h-8 w-8 rounded-full object-cover self-end" 
+                     src="${senderPhoto || defaultPhoto}"/>
+            </div>`;
+        } else {
+            html = `
+            <div class="flex items-end gap-3">
+                <img class="h-8 w-8 rounded-full object-cover self-end" 
+                     src="${senderPhoto || defaultPhoto}"/>
+                <div class="flex flex-col gap-1 items-start max-w-[80%]">
+                    <span class="text-xs text-neutral-500 dark:text-neutral-400 px-3">${senderName} · ${hora}</span>
+                    <p class="text-base font-normal rounded-xl rounded-bl-none px-4 py-2 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 break-all">
+                        ${message}
+                    </p>
+                </div>
+            </div>`;
+        }
+        
+        chatLog.insertAdjacentHTML("beforeend", html);
+        
+        // Rolar para o final
+        setTimeout(() => {
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }, 50);
+    }
+
+    // =============================
+    // FUNÇÃO PARA MOSTRAR ERRO
+    // =============================
+    function showErrorMessage(message) {
+        if (!chatLog) return;
+        
+        const html = `
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-4">
+            <div class="flex items-center">
+                <span class="material-symbols-outlined text-red-500 mr-2">error</span>
+                <p class="text-sm text-red-700 dark:text-red-400">${message}</p>
+            </div>
+        </div>`;
+        
+        chatLog.insertAdjacentHTML("beforeend", html);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    // =============================
+    // TRATAMENTO DE ERROS DO WEBSOCKET
+    // =============================
+    chatSocket.onclose = function (e) {
+        console.log("WebSocket fechado:", e);
+        if (e.code === 4003) {
+            showErrorMessage("Você não tem permissão para acessar este chat.");
+        } else {
+            showErrorMessage("Conexão perdida. Recarregue a página para tentar novamente.");
+        }
     };
 
-    chatSocket.onclose = function () {
-        console.error("WebSocket fechado inesperadamente");
+    chatSocket.onerror = function (error) {
+        console.error("WebSocket error:", error);
+        showErrorMessage("Erro na conexão. Tente recarregar a página.");
     };
+
+    // =============================
+    // AUTO-ROLAR PARA NOVAS MENSAGENS
+    // =============================
+    function scrollToBottom() {
+        if (chatLog) {
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+    }
+
+    // Observar mudanças no chatLog para rolar automaticamente
+    if (chatLog) {
+        const observer = new MutationObserver(scrollToBottom);
+        observer.observe(chatLog, { childList: true, subtree: true });
+    }
+    {% endif %}
 </script>
-
 
 {% endblock %}
