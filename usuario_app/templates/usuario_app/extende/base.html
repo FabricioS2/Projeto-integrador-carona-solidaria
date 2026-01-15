@@ -80,6 +80,18 @@
       border-radius: 1rem;
       font-weight: 500;
     }
+
+    .transition-all {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+    }
+
+    .detalhes-transition {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        overflow: hidden;
+    }
+
   </style>
 </head>
 
@@ -300,11 +312,13 @@
     </a>
 
     <!-- CARONAS (cadastrar_caronas) -->
+{% if usuario.is_motorista%}
     <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'cadastrar_caronas' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 
        href="{% url 'cadastrar_caronas' %}">
       <span class="material-symbols-outlined text-2xl">directions_car</span>
       <span class="text-xs font-medium">Caronas</span>
     </a>
+{% endif %}
 
     <!-- HISTÓRICO -->
     <a class="flex flex-col items-center gap-1 w-1/4 {% if request.resolver_match.url_name == 'historico' %}text-primary{% else %}text-gray-500 dark:text-gray-400{% endif %}" 

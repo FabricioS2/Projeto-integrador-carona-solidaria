@@ -54,70 +54,153 @@ function formatarHorario(h) {
     const hora12 = hNum % 12 || 12;
     return `${hora12}:${mm} ${periodo}`;
 }
-/*
-// Cria o card da carona
-function criarCardCarona({ horario, origem, destino }) {
-    const card = document.createElement("div");
-    card.className = "bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3";
 
-    card.innerHTML = `
-        <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-            <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><circle cx="12" cy="7" r="4"></circle></svg>
-                <span>Usuário...</span>
-            </div>
-            <p class="text-sm font-semibold text-gray-700">${horario}</p>
-        </div>
+// static/usuario_app/js/cadastrar_carona.js
+document.addEventListener('DOMContentLoaded', function() {
+    const btnAdicionarCarona = document.getElementById('btnAdicionarCarona');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const btnFecharPopup = document.getElementById('btnFecharPopup');
+    const btnCancelar = document.getElementById('btnCancelar');
+    const caronaForm = document.getElementById('caronaForm');
+    const listaCaronas = document.getElementById('listaCaronas');
 
-        <div class="flex items-start space-x-3">
-            <div class="flex-1">
-                <p class="text-gray-500">De:</p>
-                <div class="py-2"><span class="text-gray-800 font-medium">${origem}</span></div>
-
-                <p class="text-gray-500">Para:</p>
-                <div class="py-2"><span class="text-gray-800 font-medium">${destino}</span></div>
-            </div>
-        </div>
-
-        <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-            <button class="btn-remover bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg text-sm">Remover</button>
-            <button class="btn-iniciar bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg text-sm">Iniciar</button>
-        </div>
-    `;
-
-    const btnRemover = card.querySelector(".btn-remover");
-    const btnIniciar = card.querySelector(".btn-iniciar");
-
-    // Remover o card
-    btnRemover.addEventListener("click", () => {
-        card.remove();
-        mostrarMensagem("Carona removida!", "error");
+    // Abrir popup
+    btnAdicionarCarona.addEventListener('click', function() {
+        popupOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     });
 
-    // INICIAR CARONA
-    btnIniciar.addEventListener("click", () => {
-        if (btnIniciar.textContent === "Iniciar") {
+    // Fechar popup
+    function fecharPopup() {
+        popupOverlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        caronaForm.reset();
+    }
 
-            // Muda o botão Iniciar → Em andamento (verde)
-            btnIniciar.textContent = "Em andamento";
-            btnIniciar.classList.remove("bg-blue-500", "hover:bg-blue-600");
-            btnIniciar.classList.add("bg-green-600");
+    btnFecharPopup.addEventListener('click', fecharPopup);
+    btnCancelar.addEventListener('click', fecharPopup);
 
-            // Substitui botão Remover → Finalizar (amarelo)
-            btnRemover.textContent = "Finalizar";
-            btnRemover.classList.remove("bg-red-500", "hover:bg-red-600");
-            btnRemover.classList.add("bg-yellow-500", "hover:bg-yellow-600");
-
-            // Ajusta ação do novo botão Finalizar
-            btnRemover.onclick = () => {
-                card.remove();
-                mostrarMensagem("Carona finalizada!", "success");
-            };
-
-            mostrarMensagem("Carona iniciada!", "success");
+    // Fechar ao clicar fora do popup
+    popupOverlay.addEventListener('click', function(e) {
+        if (e.target === popupOverlay) {
+            fecharPopup();
         }
     });
 
-    return card;
-} 
-    */
+    // Enviar formulário via AJAX
+    caronaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message || 'Carona criada com sucesso!');
+                fecharPopup();
+                location.reload(); // Recarrega a página para mostrar a nova carona
+            } else {
+                // Mostrar erros de validação
+                if (data.errors) {
+                    let errorMessage = 'Erro ao criar carona:\n';
+                    for (const field in data.errors) {
+                        errorMessage += `${field}: ${data.errors[field].join(', ')}\n`;
+                    }
+                    alert(errorMessage);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Erro ao criar carona. Tente novamente.');
+        });
+    });
+});
+
+// Funções para manipular caronas
+function iniciarCarona(caronaId) {
+    if (!confirm('Deseja iniciar esta carona?')) return;
+    
+    fetch(`/caronas/${caronaId}/iniciar/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Carona iniciada com sucesso!');
+            location.reload();
+        } else {
+            alert('Erro: ' + data.error);
+        }
+    });
+}
+
+function finalizarCarona(caronaId) {
+    if (!confirm('Deseja finalizar esta carona?')) return;
+    
+    fetch(`/caronas/${caronaId}/finalizar/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Carona finalizada com sucesso!');
+            location.reload();
+        } else {
+            alert('Erro: ' + data.error);
+        }
+    });
+}
+
+function removerCarona(caronaId) {
+    if (!confirm('Deseja remover esta carona?')) return;
+    
+    fetch(`/caronas/${caronaId}/remover/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Carona removida com sucesso!');
+            location.reload();
+        } else {
+            alert('Erro: ' + data.error);
+        }
+    });
+}
+
+// Função auxiliar para pegar o token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

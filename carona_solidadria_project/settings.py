@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 
 
-ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' # Substitua 'nome_do_seu_projeto' pelo nome da pasta principal
+ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' 
 
 # Configuração do Redis (Docker ou Local)
 CHANNEL_LAYERS = {
@@ -79,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'usuario_app.context_processors.notificacoes_context',
+
             ],
         },
     },

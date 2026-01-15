@@ -1,6 +1,5 @@
 from django.db import models
 from .validators import validar_cpf,validar_ano,validar_capacidade
-
 # Create your models here.
 
 class Usuario(models.Model):
@@ -33,33 +32,116 @@ class Veiculo(models.Model):
     def __str__(self):
         return f"{self.modelo} - {self.placa} - {self.motorista}"      
 
+
 class Carona(models.Model):
-    STATUS_CHOICES = [('Agendada', 'Agendada'), ('Em Andamento', 'Em Andamento'), ('Finalizada', 'Finalizada'), ('Cancelada', 'Cancelada')]
-    motorista = models.OneToOneField(Usuario, on_delete=models.CASCADE,related_name='carona_motorista')
-    veiculo = models.OneToOneField(Veiculo, on_delete=models.CASCADE)
-    passageiro =  models.ForeignKey(Usuario, on_delete=models.CASCADE,related_name='caronas_passageiro')
+    STATUS_CHOICES = [
+        ('Agendada', 'Agendada'), 
+        ('Em Andamento', 'Em Andamento'), 
+        ('Finalizada', 'Finalizada'), 
+        ('Cancelada', 'Cancelada')
+    ]
+    
+    motorista = models.ForeignKey(
+        Usuario, 
+        on_delete=models.CASCADE,  
+        related_name='caronas_como_motorista'
+    )
+    veiculo = models.ForeignKey( 
+        Veiculo, 
+        on_delete=models.CASCADE,
+        related_name='caronas_veiculo'
+    )
     horario_e_data = models.DateTimeField()
     origem = models.CharField(max_length=125)
     destino = models.CharField(max_length=125)
-    vagas_disponiveis = models.IntegerField(validators=[validar_capacidade])
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Agendada')
-
+    vagas_disponiveis = models.IntegerField(
+        validators=[validar_capacidade],
+        default=1
+    )
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='Agendada'
+    )
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
-        return f"{self.motorista} - {self.horario_e_data} - {self.status}"     
+        return f"{self.motorista} - {self.horario_e_data} - {self.status}"
+
 
 class SolicitacaoCarona(models.Model):
-    STATUS_CHOICES = [('Pendente', 'Pendente'), ('Aceita', 'Aceita'), ('Recusada', 'Recusada')]
-    carona = models.ForeignKey(Carona, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pendente')
+    STATUS_CHOICES = [
+        ('Pendente', 'Pendente'), 
+        ('Aceita', 'Aceita'), 
+        ('Recusada', 'Recusada')
+    ]
+    
+    carona = models.ForeignKey(
+        Carona, 
+        on_delete=models.CASCADE,
+        related_name='solicitacoes'
+    )
+    passageiro = models.ForeignKey(
+        Usuario, 
+        on_delete=models.CASCADE,
+        related_name='solicitacoes_caronas',
+        default=1,  # ID de um usuário existente ou null=True temporariamente
+        null=True   # Permitir nulo temporariamente
+    )
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='Pendente'
+    )
     data_solicitacao = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.carona} - {self.data_solicitacao}"  
+    class Meta:
+        unique_together = ['carona', 'passageiro']
 
+    def __str__(self):
+        return f"{self.passageiro.nome if self.passageiro else 'Sem passageiro'} - {self.carona} - {self.status}"
+    
+    
 class MensagemChat(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     conteudo = models.TextField()
     data_envio = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario} - {self.data_envio}"
+        return f"{self.usuario} - {self.data_envio}"  
+
+
+class Notificacao(models.Model):
+    TIPOS_NOTIFICACAO = [
+        ('nova_solicitacao', 'Nova Solicitação de Carona'),
+        ('solicitacao_aceita', 'Solicitação Aceita'),
+        ('solicitacao_recusada', 'Solicitação Recusada'),
+        ('passageiro_recusou', 'Passageiro Recusou Carona'),
+    ]
+    
+    usuario = models.ForeignKey(
+        Usuario, 
+        on_delete=models.CASCADE,
+        related_name='notificacoes'
+    )
+    tipo = models.CharField(max_length=50, choices=TIPOS_NOTIFICACAO)
+    mensagem = models.TextField()
+    carona = models.ForeignKey(
+        Carona, 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='notificacoes'
+    )
+    solicitacao = models.ForeignKey(
+        SolicitacaoCarona,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='notificacoes'
+    )
+    lida = models.BooleanField(default=False)
+    data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.usuario.nome} - {self.tipo} - {self.data_criacao}"

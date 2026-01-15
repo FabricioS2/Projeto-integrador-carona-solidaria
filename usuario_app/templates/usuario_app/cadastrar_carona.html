@@ -48,204 +48,172 @@
           </div>
           
           <!-- Formulário -->
-          <form id="caronaForm" class="p-6 space-y-4">
-            <div>
-              <label for="horario" class="block text-sm font-medium text-gray-700 mb-2">Horário</label>
-              <input
-                type="time"
-                id="horario"
-                name="horario"
-                required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-            </div>
-            
-            <div>
-              <label for="origem" class="block text-sm font-medium text-gray-700 mb-2">Local de Saída</label>
-              <input
-                type="text"
-                id="origem"
-                name="origem"
-                required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Digite o local de saída"
-              >
-            </div>
-            
-            <div>
-              <label for="destino" class="block text-sm font-medium text-gray-700 mb-2">Local de Destino</label>
-              <input
-                type="text"
-                id="destino"
-                name="destino"
-                required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Digite o local de destino"
-              >
-            </div>
-            
-            <div class="flex gap-4 pt-4">
-              <button
-                type="button"
-                id="btnCancelar"
-                class="flex-1 bg-red-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
-              >
-                Criar Carona
-              </button>
-            </div>
-          </form>
+<form id="caronaForm" class="p-6 space-y-4" method="post" action="{% url 'cadastrar_caronas' %}">
+    {% csrf_token %}
+    
+    <div>
+        <label for="id_veiculo" class="block text-sm font-medium text-gray-700 mb-2">Veículo</label>
+        <select
+            id="id_veiculo"
+            name="veiculo"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+            <option value="">Selecione um veículo</option>
+            {% for veiculo in veiculos %}
+                <option value="{{ veiculo.id }}">{{ veiculo.modelo }} - {{ veiculo.placa }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div>
+        <label for="id_horario_e_data" class="block text-sm font-medium text-gray-700 mb-2">Data e Horário</label>
+        <input
+            type="datetime-local"
+            id="id_horario_e_data"
+            name="horario_e_data"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+    </div>
+    
+    <div>
+        <label for="id_origem" class="block text-sm font-medium text-gray-700 mb-2">Local de Saída</label>
+        <input
+            type="text"
+            id="id_origem"
+            name="origem"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Digite o local de saída"
+        >
+    </div>
+    
+    <div>
+        <label for="id_destino" class="block text-sm font-medium text-gray-700 mb-2">Local de Destino</label>
+        <input
+            type="text"
+            id="id_destino"
+            name="destino"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Digite o local de destino"
+        >
+    </div>
+    
+    <div>
+        <label for="id_vagas_disponiveis" class="block text-sm font-medium text-gray-700 mb-2">Vagas Disponíveis</label>
+        <input
+            type="number"
+            id="id_vagas_disponiveis"
+            name="vagas_disponiveis"
+            required
+            min="1"
+            max="10"
+            value="1"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        >
+    </div>
+    
+    <div class="flex gap-4 pt-4">
+        <button
+            type="button"
+            id="btnCancelar"
+            class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
+        >
+            Cancelar
+        </button>
+        <button
+            type="submit"
+            class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-medium transition-colors text-base"
+        >
+            Criar Carona
+        </button>
+    </div>
+</form>
         </div>
       </div>
 
       <!-- Lista de Caronas -->
       <div class="flex justify-center">
-        <div id="listaCaronas" class="max-w-md md:max-w-4xl mx-auto w-full p-4 space-y-6"> <!-- Container principal -->
-          
-          <!-- Card 1 -->
-          <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
-                            
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                            </div>
-
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                        <button class="action-button bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
-                            Finalizar
-                        </button>
-                        <button id="btn-ride-1"
-                            class="action-button bg-green-500 font-medium text-white px-2 py-1 rounded-lg text-sm">
-                            Em andamento
-                        </button>
-                    </div>
-                </div>
-
-          <!-- Card 2 -->
-                    <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
-                            
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                            </div>
-
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                        <button class="action-button bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
-                            Remover
-                        </button>
-                        <button id="btn-ride-1"
-                            class="action-button bg-primary font-medium text-white px-6 py-1 rounded-lg text-sm">
-                            Iniciar
-                        </button>
-                    </div>
-                </div>
-
-          <!-- Card 3: -->
-                    <div class=" bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="ride-1">
-                    
-                    <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                        <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                            <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>Carlos Silva Costa...</span>
-                        </div>
-                        
-                        <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-                    </div>
-
-                    <div class="flex items-start space-x-3">
-                        <div class="flex-1 space-y-0 relative">
-                            
-
-                            <p class="text-gray-500 ">De:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">circle</span>
-                                <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                            </div>
-
-                            <p class="text-gray-500 ">Para:</p>
-                            <div class="flex items-center space-x-2 py-2">
-                                <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                                <span class="text-gray-800 font-medium">Natal Shopping</span>
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="flex space-x-2 text-gray-600 self-start">
-                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                        <button class="action-button bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
-                            Remover
-                        </button>
-                        <button id="btn-ride-1"
-                            class="action-button bg-primary font-medium text-white px-6 py-1 rounded-lg text-sm">
-                            Iniciar
-                        </button>
-                    </div>
-                </div>
-          
+       
+<!-- Substitua a seção de lista de caronas -->
+<div id="listaCaronas" class="max-w-md md:max-w-4xl mx-auto w-full p-4 space-y-6">
+    {% for carona in caronas %}
+    <div class="bg-white rounded-xl shadow-md ride-card p-4 flex flex-col space-y-3" data-id="{{ carona.id }}">
+        <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+            <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>{{ carona.motorista.nome|truncatechars:20 }}</span>
+            </div>
+             <p class="text-sm font-semibold text-gray-700">
+    {{ carona.horario_e_data|date:"d/m/Y H:i" }}
+</p>
         </div>
+
+        <div class="flex items-start space-x-3">
+            <div class="flex-1 space-y-0 relative">
+                <p class="text-gray-500">De:</p>
+                <div class="flex items-center space-x-2 py-2">
+                    <span class="material-symbols-outlined text-base text-primary">circle</span>
+                    <span class="text-gray-800 font-medium">{{ carona.origem }}</span>
+                </div>
+
+                <p class="text-gray-500">Para:</p>
+                <div class="flex items-center space-x-2 py-2">
+                    <span class="material-symbols-outlined text-base text-primary">location_on</span>
+                    <span class="text-gray-800 font-medium">{{ carona.destino }}</span>
+                </div>
+                
+                <div class="mt-2 text-sm text-gray-600">
+                    <span class="font-medium">Veículo:</span> {{ carona.veiculo.modelo }} - {{ carona.veiculo.placa }}
+                </div>
+                <div class="text-sm text-gray-600">
+                    <span class="font-medium">Vagas:</span> {{ carona.vagas_disponiveis }}
+                </div>
+            </div>
+            
+            <div class="flex space-x-2 text-gray-600 self-start">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2"></path>
+                    <circle cx="7" cy="17" r="2"></circle>
+                    <circle cx="17" cy="17" r="2"></circle>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+            {% if carona.status == 'Agendada' %}
+                <button onclick="removerCarona({{ carona.id }})" class="action-button bg-red-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                    Remover
+                </button>
+                <button onclick="iniciarCarona({{ carona.id }})" class="action-button bg-green-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                    Iniciar
+                </button>
+            {% elif carona.status == 'Em Andamento' %}
+             <span class=" font-medium text-black px-6 py-1 rounded-lg text-sm">
+                    Em andamento
+                </span>
+                <button onclick="finalizarCarona({{ carona.id }})" class="action-button bg-blue-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                    Finalizar
+                </button>
+            {% elif carona.status == 'Finalizada' %}
+                <span class="bg-blue-500 font-medium text-white px-6 py-1 rounded-lg text-sm">
+                    Finalizada
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-8 text-gray-500">
+        Nenhuma carona criada ainda. Clique em "Adicionar carona" para criar uma nova.
+    </div>
+    {% endfor %}
+</div>
+
       </div>
     </main>
 
