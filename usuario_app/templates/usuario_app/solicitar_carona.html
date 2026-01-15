@@ -4,12 +4,65 @@
 
 {% block content %}
 <main class="max-w-md md:max-w-4xl mx-auto w-full p-4">
+    <!-- ALERTA DE SOLICITAÇÃO ATIVA -->
+    {% if tem_solicitacao_ativa %}
+    <!-- <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg shadow-sm">
+        <div class="flex items-start">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3 flex-1">
+                <h3 class="text-sm font-medium text-yellow-800">
+                    Você tem uma solicitação ativa
+                </h3>
+                <div class="mt-2 text-sm text-yellow-700">
+                    <p>
+                        Status: <span class="font-semibold">{{ solicitacao_ativa.get_status_display }}</span><br>
+                        Para: <strong>{{ solicitacao_ativa.carona.destino }}</strong><br>
+                        Data: <strong>{{ solicitacao_ativa.carona.horario_e_data|date:"d/m/Y \à\s H:i" }}</strong>
+                    </p>
+                    
+                    <div class="mt-3 flex space-x-2">
+                        <button onclick="cancelarSolicitacaoAtiva({{ solicitacao_ativa.id }})"
+                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                            Cancelar Solicitação
+                        </button>
+                        <button onclick="verDetalhesSolicitacao({{ solicitacao_ativa.id }})"
+                            class="inline-flex items-center px-3 py-1.5 border border-yellow-400 text-xs font-medium rounded-md text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors">
+                            Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    
+    <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg shadow-sm">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                    Você não pode solicitar novas caronas enquanto tiver uma solicitação ativa.
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
     <!-- Barra de busca e filtros -->
     <form id="searchForm" method="GET" action="{% url 'solicitar_carona' %}" class="space-y-4 mb-6">
         <div class="flex items-center space-x-2">
             <div class="relative flex-1">
                 <input type="text" name="busca" value="{{ filtros_ativos.busca }}" placeholder="Buscar por origem, destino ou motorista..."
-                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary
+                    {% if tem_solicitacao_ativa %}bg-gray-100 cursor-not-allowed{% endif %}"
+                    {% if tem_solicitacao_ativa %}disabled{% endif %}>
                 <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -17,11 +70,16 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
-            <button type="submit" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90">
+            <button type="submit" 
+                class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors
+                {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                {% if tem_solicitacao_ativa %}disabled{% endif %}>
                 Buscar
             </button>
             <button type="button" id="btnAbrirFiltros" 
-                class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center space-x-2">
+                class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center space-x-2 transition-colors
+                {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                {% if tem_solicitacao_ativa %}disabled{% endif %}>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                           d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
@@ -83,9 +141,9 @@
     </form>
 
     <!-- Lista de caronas -->
-     <div id="ride-list" class="space-y-4">
+    <div id="ride-list" class="space-y-4">
         {% for item in caronas_com_status %}
-        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100" 
+        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100 {% if tem_solicitacao_ativa %}opacity-75{% endif %}" 
              data-id="ride-{{ item.carona.id }}">
             
             <div class="flex justify-between items-center pb-2 border-b border-gray-100">
@@ -115,7 +173,6 @@
                         <span class="text-gray-800 font-medium">{{ item.carona.destino }}</span>
                     </div>
                 </div>
-             
             </div>
 
             <!-- Seção de detalhes (inicialmente oculta) -->
@@ -173,7 +230,7 @@
 
             <div class="flex justify-end space-x-2 pt-3">
                 <button onclick="toggleDetalhes({{ item.carona.id }}, this)"
-                    class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg flex items-center space-x-1 toggle-detalhes">
+                    class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg flex items-center space-x-1 toggle-detalhes transition-colors">
                     <span>Exibir detalhes</span>
                     <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -182,27 +239,56 @@
                 
                 {% if not item.status_solicitacao %}
                     <button onclick="solicitarCarona({{ item.carona.id }}, this)"
-                        class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
+                        class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors
+                        {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                        {% if tem_solicitacao_ativa %}disabled{% endif %}>
                         Solicitar
                     </button>
                 {% elif item.status_solicitacao == 'Pendente' %}
-                    <button class="action-button bg-yellow-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
-                        Solicitado
-                    </button>
+                    {% if item.solicitacao_obj == solicitacao_ativa %}
+                        <!-- Esta é a solicitação ativa -->
+                        <button class="action-button bg-yellow-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Pendente 
+                        </button>
+                                     {% else %}
+                        <!-- Esta é uma solicitação pendente antiga (não deveria acontecer, mas vamos mostrar) -->
+                        <button class="action-button bg-yellow-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Pendente
+                        </button>
+                    {% endif %}
                 {% elif item.status_solicitacao == 'Aceita' %}
-                    <button class="action-button bg-green-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
-                        Aceito
-                    </button>
+                    {% if item.solicitacao_obj == solicitacao_ativa %}
+                        <!-- Esta é a solicitação ativa -->
+                        <button class="action-button bg-green-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Aceita 
+                        </button>
+                        {% else %}
+                        <!-- Esta é uma solicitação aceita antiga (não deveria acontecer, mas vamos mostrar) -->
+                        <button class="action-button bg-blue-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Aceita
+                        </button>
+                    {% endif %}
                 {% elif item.status_solicitacao == 'Recusada' %}
-                    <button class="action-button bg-red-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
-                        Recusado
-                    </button>
+                    {% if not tem_solicitacao_ativa %}
+                        <!-- Se não tem solicitação ativa, pode solicitar novamente -->
+                         <button class="action-button bg-red-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Recusado
+                        </button>
+                    {% else %}
+                        <!-- Se tem solicitação ativa, mostrar apenas o status -->
+                        <button class="action-button bg-red-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Recusado
+                        </button>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
         {% empty %}
         <div class="text-center py-8">
-            <p class="text-gray-500">Nenhuma carona disponível no momento.</p>
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <p class="mt-2 text-gray-500">Nenhuma carona disponível no momento.</p>
         </div>
         {% endfor %}
     </div>
@@ -283,70 +369,6 @@
     </div>
 </div>
 
-<style>
-    /* Animação do popup */
-    .popup-entrar {
-        animation: popupEntrar 0.3s ease-out forwards;
-    }
-    
-    .popup-sair {
-        animation: popupSair 0.3s ease-out forwards;
-    }
-    
-    @keyframes popupEntrar {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    @keyframes popupSair {
-        from {
-            opacity: 1;
-            transform: scale(1);
-        }
-        to {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-    }
-    
-    /* Animação suave para expandir/recolher */
-    .detalhes-expandir {
-        animation: expandir 0.3s ease-out forwards;
-    }
-    
-    .detalhes-recolher {
-        animation: recolher 0.3s ease-out forwards;
-    }
-    
-    @keyframes expandir {
-        from {
-            max-height: 0;
-            opacity: 0;
-        }
-        to {
-            max-height: 500px;
-            opacity: 1;
-        }
-    }
-    
-    @keyframes recolher {
-        from {
-            max-height: 500px;
-            opacity: 1;
-        }
-        to {
-            max-height: 0;
-            opacity: 0;
-        }
-    }
-</style>
-
 <script>
 // Funções para o popup de filtros
 document.addEventListener('DOMContentLoaded', function() {
@@ -360,6 +382,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Abrir popup
     btnAbrirFiltros.addEventListener('click', function() {
+        if (this.disabled) return;
+        
         popupFiltros.classList.remove('hidden');
         popupFiltros.classList.add('popup-entrar');
         popupFiltros.classList.remove('popup-sair');
@@ -508,8 +532,120 @@ function toggleDetalhes(caronaId, button) {
     }
 }
 
+// Função para cancelar a solicitação ativa
+function cancelarSolicitacaoAtiva(solicitacaoId) {
+    if (!confirm('Tem certeza que deseja cancelar sua solicitação ativa? Isso permitirá que você solicite outras caronas.')) {
+        return;
+    }
+    
+    // Mostrar indicador de carregamento
+//    showLoading();
+    
+    fetch(`/solicitacoes/cancelar/${solicitacaoId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        if (data.status === 'success') {
+            // Recarregar a página para atualizar o estado
+            location.reload();
+        } else {
+            // Se já existe showNotification no base.html, use-a
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        hideLoading();
+        console.error('Error:', error);
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao cancelar solicitação', 'error');
+        } else {
+            alert('Erro ao cancelar solicitação');
+        }
+    });
+}
+
+// Função para ver detalhes da solicitação ativa
+function verDetalhesSolicitacao(solicitacaoId) {
+    // Redirecionar para a página de detalhes da solicitação
+    window.location.href = `/solicitacoes/detalhes/${solicitacaoId}/`;
+}
+
+// Função para cancelar uma solicitação específica (não necessariamente a ativa)
+function cancelarSolicitacao(solicitacaoId, button) {
+    if (!confirm('Tem certeza que deseja cancelar esta solicitação?')) {
+        return;
+    }
+    
+    // Mostrar indicador de carregamento no botão
+    const originalText = button.textContent;
+    button.textContent = 'Cancelando...';
+    button.disabled = true;
+    
+    fetch(`/solicitacoes/cancelar/${solicitacaoId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Recarregar a página para atualizar o estado
+            location.reload();
+        } else {
+            // Restaurar o botão
+            button.textContent = originalText;
+            button.disabled = false;
+            
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Restaurar o botão
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao cancelar solicitação', 'error');
+        } else {
+            alert('Erro ao cancelar solicitação');
+        }
+    });
+}
+
 // Função para solicitar carona
 function solicitarCarona(caronaId, button) {
+    // Verificar se o botão está desabilitado (tem solicitação ativa)
+    if (button.disabled) {
+        if (typeof showNotification === 'function') {
+            showNotification('Você já tem uma solicitação ativa. Cancele-a primeiro para solicitar outra carona.', 'warning');
+        } else {
+            alert('Você já tem uma solicitação ativa. Cancele-a primeiro para solicitar outra carona.');
+        }
+        return;
+    }
+    
+    // Mostrar indicador de carregamento no botão
+    // const originalText = button.textContent;
+    // button.textContent = 'Solicitando...';
+    // button.disabled = true;
+    
     fetch(`/solicitar-carona/${caronaId}/`, {
         method: 'POST',
         headers: {
@@ -520,22 +656,59 @@ function solicitarCarona(caronaId, button) {
     .then(response => response.json())
     .then(data => {
         if (data.status === 'success') {
-            // Atualizar o botão conforme o status
-            button.textContent = 'Solicitado';
-            button.disabled = true;
-            button.classList.remove('bg-primary');
-            button.classList.add('bg-yellow-500');
-            
-            // Mostrar mensagem de sucesso
-            alert('Solicitação enviada com sucesso!');
+            // Recarregar a página para atualizar o estado
+            location.reload();
         } else {
-            alert('Erro ao solicitar carona: ' + data.message);
+            // Restaurar o botão
+            button.textContent = originalText;
+            button.disabled = false;
+            
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Erro ao processar solicitação');
+        // Restaurar o botão
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao processar solicitação', 'error');
+        } else {
+            alert('Erro ao processar solicitação');
+        }
     });
+}
+
+// Funções auxiliares para indicadores de carregamento
+// function showLoading() {
+//     // Criar elemento de carregamento se não existir
+//     if (!document.getElementById('loading-overlay')) {
+//         const overlay = document.createElement('div');
+//         overlay.id = 'loading-overlay';
+//         overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+//         overlay.innerHTML = `
+//             <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-3">
+//                 <svg class="animate-spin h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+//                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//                 </svg>
+//                 <span>Processando...</span>
+//             </div>
+//         `;
+//         document.body.appendChild(overlay);
+//     }
+// }
+
+function hideLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
 }
 
 // Função auxiliar para obter o token CSRF
