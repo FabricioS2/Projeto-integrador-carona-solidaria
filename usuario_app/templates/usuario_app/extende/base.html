@@ -80,6 +80,20 @@
       border-radius: 1rem;
       font-weight: 500;
     }
+
+    /* Se quiser fazer uma transição mais suave */
+    .transition-all {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+    }
+
+    /* Ou adicione diretamente no estilo do elemento de detalhes */
+    .detalhes-transition {
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+        overflow: hidden;
+    }
+
   </style>
 </head>
 
@@ -89,194 +103,124 @@
     <div class="flex items-center justify-between p-4">
       <div class="w-10"></div>
       <div class="relative">
-        <button id="notificationButton" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10 relative">
-          <span class="material-symbols-outlined">
-            notifications
-          </span>
-          <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-            9
-          </span>
-        </button>
-        
-        <!-- Área de Notificações -->
-        <div id="notificationPanel" class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 hidden z-20">
-          <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex justify-between items-center">
-              <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Notificações</h3>
-              <span class="text-sm text-gray-500 dark:text-gray-400">9 novas</span>
-            </div>
-          </div>
-          <div class="max-h-96 overflow-y-auto">
-            <!-- Notificação 1 - Carona Aceita -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-green-500">check_circle</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona aceita!</h4>
-                  <span class="status-badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aceita</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Shopping foi aceita por Maria.</p>
-                <div class="flex space-x-2 mt-2">
-                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="1">
-                    Recusar
-                  </button>
-                </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 5 minutos</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 2 - Carona Recusada -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-red-500">cancel</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona recusada</h4>
-                  <span class="status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Recusada</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">João recusou sua solicitação para a carona até o Centro.</p>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 15 minutos</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 3 - Carona Pendente -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-yellow-500">pending</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona pendente</h4>
-                  <span class="status-badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pendente</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até a Universidade está pendente.</p>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 30 minutos</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 4 - Solicitação de Passageiro (Aguardando resposta) -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-blue-500">person</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
-                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Ana quer participar da sua carona até o Aeroporto.</p>
-                <div class="flex space-x-2 mt-2">
-                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="4">
-                    Aceitar
-                  </button>
-                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="4">
-                    Recusar
-                  </button>
-                </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 1 hora</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 5 - Carona Aceita -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-green-500">check_circle</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona aceita!</h4>
-                  <span class="status-badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Aceita</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Parque foi aceita por Carlos.</p>
-                <div class="flex space-x-2 mt-2">
-                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="5">
-                    Recusar
-                  </button>
-                </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 2 horas</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 6 - Solicitação de Passageiro (Aguardando resposta) -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-blue-500">person</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
-                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Pedro quer participar da sua carona até o Centro.</p>
-                <div class="flex space-x-2 mt-2">
-                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="6">
-                    Aceitar
-                  </button>
-                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="6">
-                    Recusar
-                  </button>
-                </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 3 horas</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 7 - Carona Recusada -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-red-500">cancel</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona recusada</h4>
-                  <span class="status-badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Recusada</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Maria recusou sua solicitação para a carona até a Praia.</p>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 5 horas</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 8 - Carona Pendente -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-yellow-500">pending</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Carona pendente</h4>
-                  <span class="status-badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pendente</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Sua solicitação para a carona até o Hospital está pendente.</p>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 1 dia</span>
-              </div>
-            </div>
-            
-            <!-- Notificação 9 - Solicitação de Passageiro (Aguardando resposta) -->
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3 notification-item">
-              <div class="flex-shrink-0">
-                <span class="material-symbols-outlined text-blue-500">person</span>
-              </div>
-              <div class="flex-1">
-                <div class="flex justify-between items-start">
-                  <h4 class="text-sm font-medium text-gray-800 dark:text-white">Nova solicitação</h4>
-                  <span class="status-badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">Aguardando</span>
-                </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Julia quer participar da sua carona até a Faculdade.</p>
-                <div class="flex space-x-2 mt-2">
-                  <button class="action-button bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="9">
-                    Aceitar
-                  </button>
-                  <button class="action-button bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" data-notification-id="9">
-                    Recusar
-                  </button>
-                </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Há 2 dias</span>
-              </div>
-            </div>
-          </div>
+       
+        <!-- Substitua todo o conteúdo dentro do botão de notificações no header por: -->
+<button id="notificationButton" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-primary/10 relative">
+    <span class="material-symbols-outlined">
+        notifications
+    </span>
+    {% if contador_notificacoes > 0 %}
+    <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+        {{ contador_notificacoes }}
+    </span>
+    {% else %}
+    <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">
+        0
+    </span>
+    {% endif %}
+</button>
+
+<!-- Área de Notificações -->
+<div id="notificationPanel" class="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 hidden z-20 max-h-96 overflow-hidden flex flex-col">
+    <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Notificações</h3>
+            <span id="notificationCount" class="text-sm text-gray-500 dark:text-gray-400">
+                {% if contador_notificacoes > 0 %}{{ contador_notificacoes }} novas{% else %}0 novas{% endif %}
+            </span>
         </div>
+    </div>
+    
+    <div id="notificationList" class="overflow-y-auto flex-1">
+        {% for notificacao in notificacoes_usuario %}
+        <div class="notification-item p-4 border-b border-gray-200 dark:border-gray-700 flex items-start space-x-3" 
+             data-notification-id="{{ notificacao.id }}"
+             data-notification-type="{{ notificacao.tipo }}">
+            <div class="flex-shrink-0">
+                {% if notificacao.tipo == 'nova_solicitacao' %}
+                <span class="material-symbols-outlined text-blue-500">person</span>
+                {% elif notificacao.tipo == 'solicitacao_aceita' %}
+                <span class="material-symbols-outlined text-green-500">check_circle</span>
+                {% elif notificacao.tipo == 'solicitacao_recusada' %}
+                <span class="material-symbols-outlined text-red-500">cancel</span>
+                {% elif notificacao.tipo == 'passageiro_recusou' %}
+                <span class="material-symbols-outlined text-orange-500">warning</span>
+                {% else %}
+                <span class="material-symbols-outlined text-gray-500">notifications</span>
+                {% endif %}
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h4 class="text-sm font-medium text-gray-800 dark:text-white">
+                        {{ notificacao.get_tipo_display }}
+                    </h4>
+                    <span class="status-badge 
+                        {% if notificacao.tipo == 'solicitacao_aceita' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+                        {% elif notificacao.tipo == 'solicitacao_recusada' %}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
+                        {% elif notificacao.tipo == 'nova_solicitacao' %}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
+                        {% else %}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200{% endif %}">
+                        {% if notificacao.tipo == 'nova_solicitacao' %}Aguardando
+                        {% elif notificacao.tipo == 'solicitacao_aceita' %}Aceita
+                        {% elif notificacao.tipo == 'solicitacao_recusada' %}Recusada
+                        {% elif notificacao.tipo == 'passageiro_recusou' %}Recusada
+                        {% endif %}
+                    </span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{{ notificacao.mensagem }}</p>
+                
+                {% if notificacao.tipo == 'nova_solicitacao' %}
+                <div class="flex space-x-2 mt-2">
+                    <button class="action-button aceitar-notificacao bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full" 
+                            data-notification-id="{{ notificacao.id }}">
+                        Aceitar
+                    </button>
+                    <button class="action-button recusar-notificacao bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" 
+                            data-notification-id="{{ notificacao.id }}">
+                        Recusar
+                    </button>
+                </div>
+                {% elif notificacao.tipo == 'solicitacao_aceita' %}
+                    {% if usuario.id == notificacao.solicitacao.passageiro.id %}
+
+                <div class="flex space-x-2 mt-2">
+                    <button class="action-button passageiro-recusar bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded-full" 
+                            data-notification-id="{{ notificacao.id }}">
+                        Recusar Carona
+                    </button>
+                </div>
+
+                {% elif usuario.id == notificacao.solicitacao.carona.motorista.id %}
+    <div class="flex space-x-2 mt-2">
+        <button class="action-button motorista-remover bg-orange-500 hover:bg-orange-600 text-white text-xs px-3 py-1 rounded-full" 
+                data-notification-id="{{ notificacao.id }}">
+            Remover Passageiro
+        </button>
+    </div>
+
+                    {% endif %}
+
+                {% endif %}
+                
+                <span class="text-xs text-gray-500 dark:text-gray-400 mt-2 block">
+                    {{ notificacao.data_criacao|timesince }} atrás
+                </span>
+            </div>
+        </div>
+        {% empty %}
+        <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+            Nenhuma notificação no momento.
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="p-2 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+        <a href="{% url 'historico' %}" class="text-sm text-primary hover:text-primary/80 text-center block w-full py-1">
+            Ver todas as notificações
+        </a>
+    </div>
+</div>
+
+
       </div>
     </div>
     <nav class="flex border-b border-border-light dark:border-border-dark px-4"></nav>
@@ -332,7 +276,7 @@
   </nav>
 </footer>
 
-
+<!-- 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const notificationButton = document.getElementById('notificationButton');
@@ -503,8 +447,260 @@
       // showNotification('Erro ao processar solicitação', 'error');
       // showNotification('Informação importante', 'info');
     });
-  </script>
+  </script> -->
 
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const notificationButton = document.getElementById('notificationButton');
+    const notificationPanel = document.getElementById('notificationPanel');
+    const notificationBadge = document.getElementById('notificationBadge');
+    const notificationCount = document.getElementById('notificationCount');
+    const notificationList = document.getElementById('notificationList');
+    
+    // Função para carregar notificações via AJAX
+    function carregarNotificacoes() {
+        fetch('/notificacoes/contador/')
+            .then(response => response.json())
+            .then(data => {
+                atualizarContadorNotificacoes(data.count);
+            });
+    }
+    
+    // Atualizar contador
+    function atualizarContadorNotificacoes(count) {
+        notificationBadge.textContent = count;
+        notificationCount.textContent = count + ' novas';
+        
+        if (count > 0) {
+            notificationBadge.classList.remove('hidden');
+        } else {
+            notificationBadge.classList.add('hidden');
+        }
+    }
+    
+    // Alternar visibilidade do painel de notificações
+    notificationButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        notificationPanel.classList.toggle('hidden');
+        if (!notificationPanel.classList.contains('hidden')) {
+            carregarNotificacoes();
+        }
+    });
+    
+    // Fechar o painel ao clicar fora
+    document.addEventListener('click', function(e) {
+        if (!notificationPanel.contains(e.target) && !notificationButton.contains(e.target)) {
+            notificationPanel.classList.add('hidden');
+        }
+    });
+    
+    // Adicionar funcionalidade aos botões de ação
+    notificationList.addEventListener('click', function(e) {
+        const target = e.target;
+        
+        if (target.classList.contains('aceitar-notificacao')) {
+            e.stopPropagation();
+            const notificationId = target.getAttribute('data-notification-id');
+            aceitarSolicitacao(notificationId, target);
+        }
+        
+        if (target.classList.contains('recusar-notificacao')) {
+            e.stopPropagation();
+            const notificationId = target.getAttribute('data-notification-id');
+            recusarSolicitacao(notificationId, target);
+        }
+        
+        if (target.classList.contains('passageiro-recusar')) {
+            e.stopPropagation();
+            const notificationId = target.getAttribute('data-notification-id');
+            passageiroRecusar(notificationId, target);
+        }
+
+        // Adicione este código no evento click do notificationList
+if (target.classList.contains('motorista-remover')) {
+    e.stopPropagation();
+    const notificationId = target.getAttribute('data-notification-id');
+    motoristaRemoverPassageiro(notificationId, target);
+}
+
+// Adicione esta função ao JavaScript
+function motoristaRemoverPassageiro(notificationId, button) {
+    if (!confirm('Tem certeza que deseja remover este passageiro da carona?')) {
+        return;
+    }
+    
+    const originalText = button.textContent;
+    button.textContent = 'Removendo...';
+    button.disabled = true;
+    
+    fetch(`/notificacoes/motorista-remover/${notificationId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            const notificationItem = button.closest('.notification-item');
+            notificationItem.remove();
+            carregarNotificacoes();
+            showNotification(data.message, 'warning');
+        } else {
+            button.textContent = originalText;
+            button.disabled = false;
+            showNotification(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        button.textContent = originalText;
+        button.disabled = false;
+        showNotification('Erro ao remover passageiro', 'error');
+    });
+}
+
+    });
+    
+    // Função para aceitar solicitação
+    function aceitarSolicitacao(notificationId, button) {
+        fetch(`/notificacoes/aceitar/${notificationId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const notificationItem = button.closest('.notification-item');
+                notificationItem.remove();
+                carregarNotificacoes();
+                showNotification(data.message, 'success');
+            } else {
+                showNotification(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Erro ao processar solicitação', 'error');
+        });
+    }
+    
+    // Função para recusar solicitação
+    function recusarSolicitacao(notificationId, button) {
+        fetch(`/notificacoes/recusar/${notificationId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const notificationItem = button.closest('.notification-item');
+                notificationItem.remove();
+                carregarNotificacoes();
+                showNotification(data.message, 'warning');
+            } else {
+                showNotification(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Erro ao processar solicitação', 'error');
+        });
+    }
+    
+    // Função para passageiro recusar carona aceita
+    function passageiroRecusar(notificationId, button) {
+        fetch(`/notificacoes/passageiro-recusar/${notificationId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const notificationItem = button.closest('.notification-item');
+                notificationItem.remove();
+                carregarNotificacoes();
+                showNotification(data.message, 'warning');
+            } else {
+                showNotification(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('Erro ao processar solicitação', 'error');
+        });
+    }
+    
+    // Atualizar notificações a cada 30 segundos
+    setInterval(carregarNotificacoes, 30000);
+    
+    // Função auxiliar para obter o token CSRF
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Função para mostrar notificações toast
+    function showNotification(message, type = 'info') {
+        // Criar elemento de notificação
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-0 opacity-100 ${
+            type === 'success' ? 'bg-green-500 text-white' :
+            type === 'warning' ? 'bg-yellow-500 text-white' :
+            type === 'error' ? 'bg-red-500 text-white' :
+            'bg-blue-500 text-white'
+        }`;
+        
+        // Adicionar ícone baseado no tipo
+        const icon = type === 'success' ? 'check_circle' :
+                   type === 'warning' ? 'warning' :
+                   type === 'error' ? 'error' :
+                   'info';
+        
+        notification.innerHTML = `
+            <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined">${icon}</span>
+                <span class="font-medium">${message}</span>
+            </div>
+        `;
+        
+        // Adicionar ao body
+        document.body.appendChild(notification);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 3000);
+    }
+});
+</script>
 </body>
 
 </html>

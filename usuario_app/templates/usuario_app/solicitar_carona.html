@@ -3,31 +3,149 @@
 {% block title %}Solicitar Carona{% endblock %}
 
 {% block content %}
-
 <main class="max-w-md md:max-w-4xl mx-auto w-full p-4">
-
-    <div class="flex items-center space-x-2 mb-4">
-        <div class="relative flex-1">
-            <input type="text" placeholder="Para onde vai?"
-                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"
-                style="padding-left: 2.5rem;">
-
-            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+    <!-- ALERTA DE SOLICITAÇÃO ATIVA -->
+    {% if tem_solicitacao_ativa %}
+    <!-- <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg shadow-sm">
+        <div class="flex items-start">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3 flex-1">
+                <h3 class="text-sm font-medium text-yellow-800">
+                    Você tem uma solicitação ativa
+                </h3>
+                <div class="mt-2 text-sm text-yellow-700">
+                    <p>
+                        Status: <span class="font-semibold">{{ solicitacao_ativa.get_status_display }}</span><br>
+                        Para: <strong>{{ solicitacao_ativa.carona.destino }}</strong><br>
+                        Data: <strong>{{ solicitacao_ativa.carona.horario_e_data|date:"d/m/Y \à\s H:i" }}</strong>
+                    </p>
+                    
+                    <div class="mt-3 flex space-x-2">
+                        <button onclick="cancelarSolicitacaoAtiva({{ solicitacao_ativa.id }})"
+                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                            Cancelar Solicitação
+                        </button>
+                        <button onclick="verDetalhesSolicitacao({{ solicitacao_ativa.id }})"
+                            class="inline-flex items-center px-3 py-1.5 border border-yellow-400 text-xs font-medium rounded-md text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors">
+                            Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button class="bg-primary text-white py-2 px-4 rounded-lg action-button hover:bg-primary/90">
-            Filtros
-        </button>
+    </div> -->
+    
+    <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg shadow-sm">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-blue-700">
+                    Você não pode solicitar novas caronas enquanto tiver uma solicitação ativa.
+                </p>
+            </div>
+        </div>
     </div>
+    {% endif %}
+    
+    <!-- Barra de busca e filtros -->
+    <form id="searchForm" method="GET" action="{% url 'solicitar_carona' %}" class="space-y-4 mb-6">
+        <div class="flex items-center space-x-2">
+            <div class="relative flex-1">
+                <input type="text" name="busca" value="{{ filtros_ativos.busca }}" placeholder="Buscar por origem, destino ou motorista..."
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary
+                    {% if tem_solicitacao_ativa %}bg-gray-100 cursor-not-allowed{% endif %}"
+                    {% if tem_solicitacao_ativa %}disabled{% endif %}>
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <button type="submit" 
+                class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition-colors
+                {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                {% if tem_solicitacao_ativa %}disabled{% endif %}>
+                Buscar
+            </button>
+            <button type="button" id="btnAbrirFiltros" 
+                class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center space-x-2 transition-colors
+                {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                {% if tem_solicitacao_ativa %}disabled{% endif %}>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                </svg>
+                <span>Filtros</span>
+                {% if filtros_ativos.data or filtros_ativos.vagas or filtros_ativos.tipo_veiculo or filtros_ativos.campus %}
+                <span class="bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    !
+                </span>
+                {% endif %}
+            </button>
+        </div>
+        
+        <!-- Mostrar filtros ativos -->
+        {% if filtros_ativos.data or filtros_ativos.vagas or filtros_ativos.tipo_veiculo or filtros_ativos.campus %}
+        <div class="flex flex-wrap gap-2">
+            {% if filtros_ativos.data %}
+            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full flex items-center">
+                Data: {{ filtros_ativos.data }}
+                <button type="button" onclick="removerFiltro('data')" class="ml-2 text-blue-600 hover:text-blue-800">
+                    ×
+                </button>
+            </span>
+            {% endif %}
+            
+            {% if filtros_ativos.vagas %}
+            <span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full flex items-center">
+                Vagas: {{ filtros_ativos.vagas }}+
+                <button type="button" onclick="removerFiltro('vagas')" class="ml-2 text-green-600 hover:text-green-800">
+                    ×
+                </button>
+            </span>
+            {% endif %}
+            
+            {% if filtros_ativos.tipo_veiculo %}
+            <span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full flex items-center">
+                Veículo: {{ filtros_ativos.tipo_veiculo }}
+                <button type="button" onclick="removerFiltro('tipo_veiculo')" class="ml-2 text-purple-600 hover:text-purple-800">
+                    ×
+                </button>
+            </span>
+            {% endif %}
+            
+            {% if filtros_ativos.campus %}
+            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full flex items-center">
+                Campus: {{ filtros_ativos.campus }}
+                <button type="button" onclick="removerFiltro('campus')" class="ml-2 text-yellow-600 hover:text-yellow-800">
+                    ×
+                </button>
+            </span>
+            {% endif %}
+            
+            <button type="button" onclick="limparTodosFiltros()" 
+                class="text-sm text-gray-600 hover:text-gray-800 underline">
+                Limpar todos
+            </button>
+        </div>
+        {% endif %}
+    </form>
 
+    <!-- Lista de caronas -->
     <div id="ride-list" class="space-y-4">
-
-        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100" data-id="ride-1">
-
+        {% for item in caronas_com_status %}
+        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100 {% if tem_solicitacao_ativa %}opacity-75{% endif %}" 
+             data-id="ride-{{ item.carona.id }}">
+            
             <div class="flex justify-between items-center pb-2 border-b border-gray-100">
                 <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
                     <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -36,221 +154,593 @@
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span>Carlos Silva Costa...</span>
+                    <span>{{ item.carona.motorista.nome }}</span>
                 </div>
-
-                <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
+                <p class="text-sm font-semibold text-gray-700">
+                    {{ item.carona.horario_e_data|date:"H:i" }} - {{ item.carona.horario_e_data|date:"d/m/Y" }}
+                </p>
             </div>
 
             <div class="flex items-start space-x-3">
                 <div class="flex-1 space-y-0 relative">
-
-                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
-
+                    <div class="absolute left-[6px] top-[25px] bottom-[25px] w-0.5 bg-primary/50"></div>
                     <div class="flex items-center space-x-2 py-2">
                         <span class="material-symbols-outlined text-base text-primary">circle</span>
-                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
+                        <span class="text-gray-800 font-medium">{{ item.carona.origem }}</span>
                     </div>
-
                     <div class="flex items-center space-x-2 py-2">
                         <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                        <span class="text-gray-800 font-medium">Natal Shopping</span>
+                        <span class="text-gray-800 font-medium">{{ item.carona.destino }}</span>
                     </div>
-
-                </div>
-
-                <div class="flex space-x-2 text-gray-600 self-start">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
-                        </path>
-                        <circle cx="7" cy="17" r="2"></circle>
-                        <circle cx="17" cy="17" r="2"></circle>
-                    </svg>
                 </div>
             </div>
 
-            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                    Exibir detalhes
+            <!-- Seção de detalhes (inicialmente oculta) -->
+            <div id="detalhes-{{ item.carona.id }}" class="hidden mt-4 pt-4 border-t border-gray-200">
+                <h4 class="font-semibold text-gray-700 mb-3">Detalhes da Carona</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <div>
+                            <p class="font-medium">Veículo</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.veiculo.marca }} {{ item.carona.veiculo.modelo }}</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">Cor</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.veiculo.cor }}</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">Ano</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.veiculo.ano }}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="font-medium">Tipo do Veículo</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.veiculo.tipo_veiculo }}</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">Placa</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.veiculo.placa }}</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">Vagas Disponíveis</p>
+                            <p class="text-sm text-gray-500">{{ item.carona.vagas_disponiveis }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if item.carona.motorista.foto %}
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <p class="font-medium">Motorista</p>
+                    <div class="flex items-center space-x-3">
+                        {% if item.carona.motorista.foto %}
+                        <img src="{{ item.carona.motorista.foto.url }}" alt="{{ item.carona.motorista.nome }}"
+                             class="w-10 h-10 rounded-full object-cover">
+                        {% endif %}
+                        <div>
+                            <p class="text-sm text-gray-600">{{ item.carona.motorista.nome }}</p>
+                            <p class="text-sm text-gray-600">{{ item.carona.motorista.email }}</p>
+                            <p class="text-sm text-gray-600">{{ item.carona.motorista.telefone }}</p>
+                            <p class="text-sm text-gray-600">{{ item.carona.motorista.tipo_campus }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-3">
+                <button onclick="toggleDetalhes({{ item.carona.id }}, this)"
+                    class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg flex items-center space-x-1 toggle-detalhes transition-colors">
+                    <span>Exibir detalhes</span>
+                    <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
                 </button>
-                <button id="btn-ride-3"
-                    class="action-button bg-red-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
-                    Recusado
-                </button>
+                
+                {% if not item.status_solicitacao %}
+                    <button onclick="solicitarCarona({{ item.carona.id }}, this)"
+                        class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm hover:bg-primary/90 transition-colors
+                        {% if tem_solicitacao_ativa %}opacity-50 cursor-not-allowed{% endif %}"
+                        {% if tem_solicitacao_ativa %}disabled{% endif %}>
+                        Solicitar
+                    </button>
+                {% elif item.status_solicitacao == 'Pendente' %}
+                    {% if item.solicitacao_obj == solicitacao_ativa %}
+                        <!-- Esta é a solicitação ativa -->
+                        <button class="action-button bg-yellow-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Pendente 
+                        </button>
+                                     {% else %}
+                        <!-- Esta é uma solicitação pendente antiga (não deveria acontecer, mas vamos mostrar) -->
+                        <button class="action-button bg-yellow-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Pendente
+                        </button>
+                    {% endif %}
+                {% elif item.status_solicitacao == 'Aceita' %}
+                    {% if item.solicitacao_obj == solicitacao_ativa %}
+                        <!-- Esta é a solicitação ativa -->
+                        <button class="action-button bg-green-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Aceita 
+                        </button>
+                        {% else %}
+                        <!-- Esta é uma solicitação aceita antiga (não deveria acontecer, mas vamos mostrar) -->
+                        <button class="action-button bg-blue-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Aceita
+                        </button>
+                    {% endif %}
+                {% elif item.status_solicitacao == 'Recusada' %}
+                    {% if not tem_solicitacao_ativa %}
+                        <!-- Se não tem solicitação ativa, pode solicitar novamente -->
+                         <button class="action-button bg-red-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
+                            Recusado
+                        </button>
+                    {% else %}
+                        <!-- Se tem solicitação ativa, mostrar apenas o status -->
+                        <button class="action-button bg-red-300 text-gray-500 px-6 py-1 rounded-lg text-sm" disabled>
+                            Recusado
+                        </button>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
-
-         <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100" data-id="ride-1">
-
-            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span>Carlos Silva Costa...</span>
-                </div>
-
-                <p class="text-sm font-semibold text-gray-700">1:30 AM</p>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div class="flex-1 space-y-0 relative">
-
-                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">circle</span>
-                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                    </div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                        <span class="text-gray-800 font-medium">Natal Shopping</span>
-                    </div>
-
-                </div>
-
-                <div class="flex space-x-2 text-gray-600 self-start">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
-                        </path>
-                        <circle cx="7" cy="17" r="2"></circle>
-                        <circle cx="17" cy="17" r="2"></circle>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                    Exibir detalhes
-                </button>
-                <button id="btn-ride-3"
-                    class="action-button bg-yellow-500 text-white px-6 py-1 rounded-lg text-sm" disabled>
-                    Solicitado
-                </button>
-            </div>
+        {% empty %}
+        <div class="text-center py-8">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <p class="mt-2 text-gray-500">Nenhuma carona disponível no momento.</p>
         </div>
-        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100" data-id="ride-2">
-
-            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span>Ana Beatriz Vasconcelos</span>
-                </div>
-                <p class="text-sm font-semibold text-gray-700">2:00 PM</p>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div class="flex-1 space-y-0 relative">
-
-                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">circle</span>
-                        <span class="text-gray-800 font-medium">IFRN Campus Ceará-Mirim</span>
-                    </div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                        <span class="text-gray-800 font-medium">Parque das Dunas</span>
-                    </div>
-                </div>
-
-                <div class="flex space-x-2 text-gray-600 self-start">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path
-                            d="M19 17h2c.6 0 1-.4 1-1v-3c0-.6-.4-1-1-1h-1V9c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v4c0 .6-.4 1-1 1v3c0 .6.4 1 1 1h2">
-                        </path>
-                        <circle cx="7" cy="17" r="2"></circle>
-                        <circle cx="17" cy="17" r="2"></circle>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                    Exibir detalhes
-                </button>
-                <button id="btn-ride-2" onclick="handleRequest(this, 'ride-2')"
-                    class="action-button bg-primary text-white px-6 py-1 rounded-lg text-sm">
-                    Solicitar
-                </button>
-            </div>
-        </div>
-
-        <div class="ride-card p-4 flex flex-col space-y-3 bg-white rounded-xl shadow-md border border-gray-100" data-id="ride-3">
-
-            <div class="flex justify-between items-center pb-2 border-b border-gray-100">
-                <div class="flex items-center space-x-2 text-sm font-medium text-gray-700">
-                    <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span>Pedro Alves</span>
-                </div>
-                <p class="text-sm font-semibold text-gray-700">7:00 AM</p>
-            </div>
-
-            <div class="flex items-start space-x-3">
-                <div class="flex-1 space-y-0 relative">
-
-                    <div class="absolute left-[3px] top-[14px] bottom-[14px] w-0.5 bg-primary/50"></div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">circle</span>
-                        <span class="text-gray-800 font-medium">Bairro de Lagoa Seca</span>
-                    </div>
-
-                    <div class="flex items-center space-x-2 py-2">
-                        <span class="material-symbols-outlined text-base text-primary">location_on</span>
-                        <span class="text-gray-800 font-medium">IFRN Campus Central</span>
-                    </div>
-
-                </div>
-
-                <div class="flex space-x-2 text-gray-600 self-start">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="18" r="3"></circle>
-                        <circle cx="6" cy="18" r="3"></circle>
-                        <path
-                            d="M17 18h-2c-1.1 0-2-.9-2-2v-3c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v3c0 1.1-.9 2-2 2h-1c-.6 0-1-.4-1-1v-2l-1 1-1-1v2c0 .6-.4 1-1 1h-1">
-                        </path>
-                        <path d="M16 16.5l-2.8-2.8c-.3-.3-.8-.3-1.1 0l-1.1 1.1c-.3.3-.8.3-1.1 0l-2.8-2.8"></path>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="flex justify-end space-x-2 pt-3 border-t border-gray-100">
-                <button class="text-sm font-medium text-gray-600 hover:underline px-3 py-1 rounded-lg">
-                    Exibir detalhes
-                </button>
-                <button id="btn-ride-3" class="action-button bg-green-500 text-white px-6 py-1 rounded-lg text-sm"
-                    disabled>
-                    Aceito
-                </button>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
 </main>
+
+<!-- Popup de Filtros -->
+<div id="popupFiltros" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all">
+        <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800">Filtrar Caronas</h2>
+            <button id="btnFecharFiltros" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <form id="filtrosForm" class="p-6 space-y-6">
+            <!-- Filtro por Data -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Data da Carona</label>
+                <input type="date" id="filtroData" name="data" 
+                    value="{{ filtros_ativos.data }}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
+            </div>
+            
+            <!-- Filtro por Vagas -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Mínimo de Vagas</label>
+                <select id="filtroVagas" name="vagas" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
+                    <option value="">Qualquer quantidade</option>
+                    <option value="1" {% if filtros_ativos.vagas == '1' %}selected{% endif %}>1 vaga ou mais</option>
+                    <option value="2" {% if filtros_ativos.vagas == '2' %}selected{% endif %}>2 vagas ou mais</option>
+                    <option value="3" {% if filtros_ativos.vagas == '3' %}selected{% endif %}>3 vagas ou mais</option>
+                    <option value="4" {% if filtros_ativos.vagas == '4' %}selected{% endif %}>4 vagas ou mais</option>
+                </select>
+            </div>
+            
+            <!-- Filtro por Tipo de Veículo -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Veículo</label>
+                <select id="filtroTipoVeiculo" name="tipo_veiculo" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
+                    <option value="">Todos os tipos</option>
+                    {% for tipo, nome in tipos_veiculo %}
+                    <option value="{{ tipo }}" {% if filtros_ativos.tipo_veiculo == tipo %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- Filtro por Campus -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Campus do Motorista</label>
+                <select id="filtroCampus" name="campus" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
+                    <option value="">Todos os campus</option>
+                    {% for valor, nome in campus_choices %}
+                    <option value="{{ valor }}" {% if filtros_ativos.campus == valor %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- Campos ocultos para outros filtros -->
+            <input type="hidden" name="busca" value="{{ filtros_ativos.busca }}">
+            
+            <div class="flex gap-4 pt-4">
+                <button type="button" id="btnLimparFiltros"
+                    class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-colors">
+                    Limpar
+                </button>
+                <button type="submit" id="btnAplicarFiltros"
+                    class="flex-1 bg-primary hover:bg-primary/90 text-white py-3 px-4 rounded-lg font-medium transition-colors">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Funções para o popup de filtros
+document.addEventListener('DOMContentLoaded', function() {
+    const popupFiltros = document.getElementById('popupFiltros');
+    const btnAbrirFiltros = document.getElementById('btnAbrirFiltros');
+    const btnFecharFiltros = document.getElementById('btnFecharFiltros');
+    const btnAplicarFiltros = document.getElementById('btnAplicarFiltros');
+    const btnLimparFiltros = document.getElementById('btnLimparFiltros');
+    const filtrosForm = document.getElementById('filtrosForm');
+    const searchForm = document.getElementById('searchForm');
+    
+    // Abrir popup
+    btnAbrirFiltros.addEventListener('click', function() {
+        if (this.disabled) return;
+        
+        popupFiltros.classList.remove('hidden');
+        popupFiltros.classList.add('popup-entrar');
+        popupFiltros.classList.remove('popup-sair');
+    });
+    
+    // Fechar popup
+    btnFecharFiltros.addEventListener('click', function() {
+        fecharPopup();
+    });
+    
+    // Fechar ao clicar fora
+    popupFiltros.addEventListener('click', function(e) {
+        if (e.target === popupFiltros) {
+            fecharPopup();
+        }
+    });
+    
+    // Aplicar filtros
+    filtrosForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Coletar todos os dados do formulário de filtros
+        const formData = new FormData(filtrosForm);
+        
+        // Adicionar também a busca do formulário principal se existir
+        const buscaInput = searchForm.querySelector('input[name="busca"]');
+        if (buscaInput && buscaInput.value) {
+            formData.set('busca', buscaInput.value);
+        }
+        
+        // Construir query string
+        const params = new URLSearchParams();
+        for (const [key, value] of formData.entries()) {
+            if (value) params.append(key, value);
+        }
+        
+        // Redirecionar com os filtros
+        window.location.href = `{% url 'solicitar_carona' %}?${params.toString()}`;
+    });
+    
+    // Limpar filtros no popup
+    btnLimparFiltros.addEventListener('click', function() {
+        document.getElementById('filtroData').value = '';
+        document.getElementById('filtroVagas').value = '';
+        document.getElementById('filtroTipoVeiculo').value = '';
+        document.getElementById('filtroCampus').value = '';
+    });
+    
+    function fecharPopup() {
+        popupFiltros.classList.add('popup-sair');
+        popupFiltros.classList.remove('popup-entrar');
+        setTimeout(() => {
+            popupFiltros.classList.add('hidden');
+        }, 300);
+    }
+});
+
+// Funções para remover filtros individuais
+function removerFiltro(filtro) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete(filtro);
+    window.location.href = url.toString();
+}
+
+function limparTodosFiltros() {
+    const url = new URL(window.location.href);
+    // Remove todos os parâmetros exceto 'busca' se quiser manter a busca
+    url.searchParams.delete('data');
+    url.searchParams.delete('vagas');
+    url.searchParams.delete('tipo_veiculo');
+    url.searchParams.delete('campus');
+    window.location.href = url.toString();
+}
+
+// Função para atualizar contador de filtros ativos
+function atualizarContadorFiltros() {
+    const params = new URLSearchParams(window.location.search);
+    let count = 0;
+    const filtros = ['data', 'vagas', 'tipo_veiculo', 'campus'];
+    
+    filtros.forEach(filtro => {
+        if (params.has(filtro) && params.get(filtro)) {
+            count++;
+        }
+    });
+    
+    const badge = document.querySelector('#btnAbrirFiltros .bg-primary');
+    if (badge) {
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
+// Executar quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarContadorFiltros();
+    
+    // Adicionar evento de submit ao formulário de busca
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const params = new URLSearchParams();
+        
+        // Adicionar todos os parâmetros atuais
+        const currentParams = new URLSearchParams(window.location.search);
+        for (const [key, value] of currentParams.entries()) {
+            params.append(key, value);
+        }
+        
+        // Atualizar ou adicionar busca
+        params.set('busca', formData.get('busca') || '');
+        
+        window.location.href = `{% url 'solicitar_carona' %}?${params.toString()}`;
+    });
+});
+
+// Função para alternar a exibição dos detalhes
+function toggleDetalhes(caronaId, button) {
+    const detalhesDiv = document.getElementById(`detalhes-${caronaId}`);
+    const icon = button.querySelector('svg');
+    
+    if (detalhesDiv.classList.contains('hidden')) {
+        // Exibir detalhes
+        detalhesDiv.classList.remove('hidden');
+        detalhesDiv.classList.add('detalhes-expandir');
+        detalhesDiv.classList.remove('detalhes-recolher');
+        
+        // Rotacionar ícone e mudar texto
+        icon.style.transform = 'rotate(180deg)';
+        button.querySelector('span').textContent = 'Ocultar detalhes';
+    } else {
+        // Ocultar detalhes
+        detalhesDiv.classList.add('detalhes-recolher');
+        detalhesDiv.classList.remove('detalhes-expandir');
+        
+        // Rotacionar ícone de volta e mudar texto
+        icon.style.transform = 'rotate(0deg)';
+        button.querySelector('span').textContent = 'Exibir detalhes';
+        
+        // Esconder após a animação
+        setTimeout(() => {
+            detalhesDiv.classList.add('hidden');
+            detalhesDiv.classList.remove('detalhes-recolher');
+        }, 300);
+    }
+}
+
+// Função para cancelar a solicitação ativa
+function cancelarSolicitacaoAtiva(solicitacaoId) {
+    if (!confirm('Tem certeza que deseja cancelar sua solicitação ativa? Isso permitirá que você solicite outras caronas.')) {
+        return;
+    }
+    
+    // Mostrar indicador de carregamento
+//    showLoading();
+    
+    fetch(`/solicitacoes/cancelar/${solicitacaoId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        hideLoading();
+        if (data.status === 'success') {
+            // Recarregar a página para atualizar o estado
+            location.reload();
+        } else {
+            // Se já existe showNotification no base.html, use-a
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        hideLoading();
+        console.error('Error:', error);
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao cancelar solicitação', 'error');
+        } else {
+            alert('Erro ao cancelar solicitação');
+        }
+    });
+}
+
+// Função para ver detalhes da solicitação ativa
+function verDetalhesSolicitacao(solicitacaoId) {
+    // Redirecionar para a página de detalhes da solicitação
+    window.location.href = `/solicitacoes/detalhes/${solicitacaoId}/`;
+}
+
+// Função para cancelar uma solicitação específica (não necessariamente a ativa)
+function cancelarSolicitacao(solicitacaoId, button) {
+    if (!confirm('Tem certeza que deseja cancelar esta solicitação?')) {
+        return;
+    }
+    
+    // Mostrar indicador de carregamento no botão
+    const originalText = button.textContent;
+    button.textContent = 'Cancelando...';
+    button.disabled = true;
+    
+    fetch(`/solicitacoes/cancelar/${solicitacaoId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Recarregar a página para atualizar o estado
+            location.reload();
+        } else {
+            // Restaurar o botão
+            button.textContent = originalText;
+            button.disabled = false;
+            
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Restaurar o botão
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao cancelar solicitação', 'error');
+        } else {
+            alert('Erro ao cancelar solicitação');
+        }
+    });
+}
+
+// Função para solicitar carona
+function solicitarCarona(caronaId, button) {
+    // Verificar se o botão está desabilitado (tem solicitação ativa)
+    if (button.disabled) {
+        if (typeof showNotification === 'function') {
+            showNotification('Você já tem uma solicitação ativa. Cancele-a primeiro para solicitar outra carona.', 'warning');
+        } else {
+            alert('Você já tem uma solicitação ativa. Cancele-a primeiro para solicitar outra carona.');
+        }
+        return;
+    }
+    
+    // Mostrar indicador de carregamento no botão
+    // const originalText = button.textContent;
+    // button.textContent = 'Solicitando...';
+    // button.disabled = true;
+    
+    fetch(`/solicitar-carona/${caronaId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Recarregar a página para atualizar o estado
+            location.reload();
+        } else {
+            // Restaurar o botão
+            button.textContent = originalText;
+            button.disabled = false;
+            
+            if (typeof showNotification === 'function') {
+                showNotification(data.message, 'error');
+            } else {
+                alert(data.message);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Restaurar o botão
+        button.textContent = originalText;
+        button.disabled = false;
+        
+        if (typeof showNotification === 'function') {
+            showNotification('Erro ao processar solicitação', 'error');
+        } else {
+            alert('Erro ao processar solicitação');
+        }
+    });
+}
+
+// Funções auxiliares para indicadores de carregamento
+// function showLoading() {
+//     // Criar elemento de carregamento se não existir
+//     if (!document.getElementById('loading-overlay')) {
+//         const overlay = document.createElement('div');
+//         overlay.id = 'loading-overlay';
+//         overlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center';
+//         overlay.innerHTML = `
+//             <div class="bg-white p-4 rounded-lg shadow-lg flex items-center space-x-3">
+//                 <svg class="animate-spin h-5 w-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+//                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//                 </svg>
+//                 <span>Processando...</span>
+//             </div>
+//         `;
+//         document.body.appendChild(overlay);
+//     }
+// }
+
+function hideLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+// Função auxiliar para obter o token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Permitir fechar detalhes ao clicar fora (opcional)
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.toggle-detalhes') && !event.target.closest('[id^="detalhes-"]')) {
+        // Fechar todos os detalhes abertos
+        document.querySelectorAll('[id^="detalhes-"]').forEach(detalhes => {
+            if (!detalhes.classList.contains('hidden')) {
+                const caronaId = detalhes.id.replace('detalhes-', '');
+                const button = document.querySelector(`[onclick*="toggleDetalhes(${caronaId}"]`);
+                if (button) {
+                    toggleDetalhes(caronaId, button);
+                }
+            }
+        });
+    }
+});
+</script>
 {% endblock %}
