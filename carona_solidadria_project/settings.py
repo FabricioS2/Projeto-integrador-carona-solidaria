@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
 
 
-ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' 
+ASGI_APPLICATION = 'carona_solidadria_project.asgi.application' # Substitua 'nome_do_seu_projeto' pelo nome da pasta principal
 
 # Configuração do Redis (Docker ou Local)
 CHANNEL_LAYERS = {
@@ -92,10 +92,22 @@ WSGI_APPLICATION = 'carona_solidadria_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'carona_solidaria',
+        'USER': 'carona_ifrn',
+        'PASSWORD': 'senha_forte123123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
