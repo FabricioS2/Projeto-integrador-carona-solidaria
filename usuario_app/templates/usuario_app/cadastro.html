@@ -109,7 +109,7 @@
                 <!-- Nome -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="full-name">
-                    Nome Completo</label>
+                    Nome Completo*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.nome.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="full-name" name="nome" placeholder="Digite seu nome completo" type="text"
@@ -126,7 +126,7 @@
                 <!-- CPF / Documento -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    for="documento">CPF</label>
+                    for="documento">CPF*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.documento.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="documento" name="documento" placeholder="Digite seu CPF" type="text" maxlength="14"
@@ -143,7 +143,7 @@
                 <!-- Email -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="email-reg">Email
-                    Institucional</label>
+                    Institucional*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.email.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="email-reg" name="email" placeholder="Digite seu email do IFRN" type="email"
@@ -160,7 +160,7 @@
                 <!-- Telefone -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    for="phone">Telefone</label>
+                    for="phone">Telefone*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.telefone.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="phone" name="telefone" placeholder="Digite seu telefone" type="tel"
@@ -176,7 +176,7 @@
 
                 <!-- Campus -->
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="campus">Campus*</label>
                   <select
                     class="w-full h-12 px-4 rounded-lg appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary bg-no-repeat bg-right form-select {% if form.tipo_campus.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="tipo_campus" name="tipo_campus">
@@ -208,7 +208,7 @@
                 <!-- Foto (opcional) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="foto">Foto de
-                    Perfil (Opcional)</label>
+                    Perfil (Opcional)*</label>
                   <input
                     class="w-full h-12 px-4 pt-3 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.foto.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="foto" name="foto" type="file" value="{{ form.foto.value|default_if_none:'' }}"
@@ -261,7 +261,7 @@
               <div class="space-y-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="tipo-veiculo">Tipo
-                    de Veículo</label>
+                    de Veículo*</label>
                   <select
                     class="w-full h-12 px-4 rounded-lg appearance-none text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary bg-no-repeat bg-right form-select {% if form.tipo_veiculo.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="tipo-veiculo" name="tipo_veiculo">
@@ -281,7 +281,7 @@
                 <!-- Modelo -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="modelo">Modelo do
-                    Veículo</label>
+                    Veículo*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.modelo.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="modelo" name="modelo" placeholder="Ex: Fiat Uno" type="text"
@@ -298,7 +298,7 @@
                 <!-- Placa -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-                    for="placa">Placa</label>
+                    for="placa">Placa*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.placa.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="placa" name="placa" placeholder="Ex: ABC1234" type="text"
@@ -314,7 +314,7 @@
 
                 <!-- Cor -->
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="cor">Cor</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="cor">Cor*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.cor.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="cor" name="cor" placeholder="Ex: Vermelho" type="text"
@@ -331,7 +331,7 @@
                 <!-- Assentos -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="assentos">Assentos
-                    Disponíveis</label>
+                    Disponíveis*</label>
                   <input
                     class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.assentos.errors %}error-border border-2{% else %}border-0{% endif %}"
                     id="assentos" name="assentos" placeholder="Ex: 3" type="number" min="1" max="7"
@@ -351,7 +351,7 @@
               <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Senha</h2>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="password-reg">Criar
-                  Senha</label>
+                  Senha*</label>
                 <input
                   class="w-full h-12 px-4 rounded-lg text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-primary focus:border-2 focus:border-primary {% if form.senha.errors %}error-border border-2{% else %}border-0{% endif %}"
                   id="password-reg" name="senha" placeholder="Crie uma senha" type="password"
