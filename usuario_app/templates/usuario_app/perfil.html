@@ -226,11 +226,18 @@
             </div>
 
             <!-- Botão Editar/Salvar -->
-            <div class="flex justify-center">
+            <div class="flex flex-col gap-3 items-center">
                 <button id="editButton"
                     class="w-full max-w-sm h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
                     Editar Perfil
                 </button>
+                
+                <!-- Botão de Logout -->
+                <a href="{% url 'logout' %}" 
+                   class="flex items-center gap-1 text-sm text-red-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-200">
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    <span>Sair</span>
+                </a>
             </div>
         </div>
     </div>

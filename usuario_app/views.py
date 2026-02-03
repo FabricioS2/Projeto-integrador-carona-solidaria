@@ -161,7 +161,6 @@ from .forms import CaronaForm  # Adicione esta importação
 from django.utils import timezone
 from datetime import timedelta
 
-# Adicione a função chat (provavelmente você já tem, mas vamos verificar)
 def chat(request):
     usuario_id = request.session.get("usuario_id")
     if not usuario_id:
@@ -703,11 +702,11 @@ def login(request):
                     return redirect("solicitar_carona")
 
                 # senha errada → erro só no campo password
-                form.add_error("password", "Senha incorreta.")
+                form.add_error("password", "Email ou senha incorretos.")
 
             except Usuario.DoesNotExist:
                 # email não existe → erro só no campo email
-                form.add_error("email", "Email não encontrado.")
+                form.add_error("email", "Email ou senha incorretos.")
 
     else:
         form = LoginForm()
@@ -716,6 +715,11 @@ def login(request):
         "form": form
     })
 
+
+def logout(request):
+    if request.session.get("usuario_id"):
+        request.session.flush()  # Remove todos os dados da sessão
+    return redirect("login")
 
 
 from django.db.models import Q
