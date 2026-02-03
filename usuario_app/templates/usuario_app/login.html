@@ -38,140 +38,134 @@
   </script>
 
   <style>
-    .form-select {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231183d4' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-      background-position: right 0.5rem center;
-      background-repeat: no-repeat;
-      background-size: 1.5em 1.5em;
-      padding-right: 2.5rem;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
     body {
       min-height: 100vh;
+      background: #e5e7eb; /* cinza claro */
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
     }
 
-    main {
-      flex: 1;
-    }
-
-    .notification-item {
-      transition: all 0.2s ease;
-    }
-
-    .notification-item:hover {
-      background-color: rgba(17, 131, 212, 0.05);
-    }
-
-    .action-button {
-      transition: all 0.2s ease;
-    }
-
-    .action-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .status-badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
+    .floating-card {
+      background: #ffffff; /* branco puro para contraste */
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
       border-radius: 1rem;
-      font-weight: 500;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .dark body {
+      background: #111827; /* cinza bem escuro no modo escuro */
+    }
+
+    .dark .floating-card {
+      background: #020617; /* quase preto, mas ainda diferente do fundo */
+      border-color: rgba(55, 65, 81, 0.8);
     }
   </style>
 </head>
 
-<body>
-  <div class="flex flex-col items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-sm mx-auto">
-      <header class="text-center mb-8">
-        <h1 class="text-2xl font-bold text-black dark:text-white">IFRN Carona Solidária</h1>
-      </header>
-      <main class="space-y-6">
-
-          <!-- Mensagens de erro -->
-        <!-- {% if messages %}
-          <div class="space-y-2">
-            {% for message in messages %}
-              {% if 'error' in message.tags %}
-                <div class="px-4 py-3 rounded-lg text-sm bg-red-500/10 border border-red-500/20 text-red-700 dark:bg-red-500/20 dark:border-red-500/30 dark:text-red-400">
-                  {{ message }}
-                </div>
-              {% endif %}
-            {% endfor %}
+<body class="font-display">
+  <div class="w-full max-w-md">
+    <!-- Card Flutuante -->
+    <div class="floating-card p-8 md:p-10 space-y-6">
+      <!-- Header com Logo -->
+      <div class="text-center space-y-4">
+        <div class="flex items-center justify-center gap-3 mb-2">
+          <div class="flex items-center justify-center w-14 h-14 bg-primary rounded-xl shadow-lg">
+            <span class="material-symbols-outlined text-white text-2xl">directions_car</span>
           </div>
-        {% endif %} -->
+          <div class="text-left">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Caronas</h1>
+            <p class="text-sm text-gray-600 dark:text-gray-400 -mt-1">IFRN</p>
+          </div>
+        </div>
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Bem-vindo de volta!</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Entre com suas credenciais para continuar</p>
+      </div>
 
-
-        <form method="POST" action="{% url 'login' %}">
-          {% csrf_token %}
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-black/70 dark:text-white/70" for="email">Email ou ID
-              Institucional</label>
+      <!-- Formulário -->
+      <form method="POST" action="{% url 'login' %}" class="space-y-5">
+        {% csrf_token %}
+        
+        <!-- Email -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="email">
+            Email ou ID Institucional
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+              mail
+            </span>
             <input
-              class="w-full h-12 px-4 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40"
+              class="w-full h-12 pl-12 pr-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all"
               id="email" 
-              placeholder="Seu email ou ID institucional" 
+              placeholder="seu.email@ifrn.edu.br" 
               type="email" 
               name="email" 
               value="{{ form.email.value|default:'' }}" />
-
-              {% if form.email.errors %}
-  {% for error in form.email.errors %}
-    <p class="mt-1 text-sm text-red-600">{{ error }}</p>
-  {% endfor %}
-{% endif %}
-
           </div>
+          {% if form.email.errors %}
+            {% for error in form.email.errors %}
+              <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
 
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-black/70 dark:text-white/70" for="password">Senha</label>
-            <div class="relative">
-              <input
-                class="w-full h-12 px-4 pr-12 bg-white/50 dark:bg-white/10 border border-black/10 dark:border-white/20 rounded-lg focus:ring-primary focus:border-primary text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40"
-                id="password" 
-                placeholder="Sua senha" 
-                type="password" 
-                name="password" />
-              <button type="button"
-                class="absolute inset-y-0 right-0 flex items-center px-4 text-black/60 dark:text-white/60 cursor-pointer"
-                id="toggle-password" onclick="togglePasswordVisibility()">
-                <span class="material-symbols-outlined">visibility</span>
-              </button>
-            </div>
-
-            {% if form.password.errors %}
-  {% for error in form.password.errors %}
-    <p class="mt-1 text-sm text-red-600">{{ error }}</p>
-  {% endfor %}
-{% endif %}
-
-
+        <!-- Senha -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="password">Senha</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+              lock
+            </span>
+            <input
+              class="w-full h-12 pl-12 pr-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all"
+              id="password" 
+              placeholder="Sua senha" 
+              type="password" 
+              name="password" />
+            <button type="button"
+              class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              id="toggle-password" onclick="togglePasswordVisibility()">
+              <span class="material-symbols-outlined">visibility</span>
+            </button>
           </div>
+          {% if form.password.errors %}
+            {% for error in form.password.errors %}
+              <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
 
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input
-                class="h-4 w-4 rounded border-black/20 dark:border-white/30 text-primary focus:ring-primary bg-white/50 dark:bg-white/10"
-                id="remember_me" type="checkbox" name="remember_me" {% if form.remember_me.value %}checked{% endif %}/>
-              <label class="ml-2 block text-sm text-black/80 dark:text-white/80" for="remember_me">Lembrar-me</label>
-            </div>
+        <!-- Lembrar-me -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input
+              class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary focus:ring-2"
+              id="remember_me" type="checkbox" name="remember_me" {% if form.remember_me.value %}checked{% endif %}/>
+            <label class="ml-2 block text-sm text-gray-700 dark:text-gray-300" for="remember_me">Lembrar-me</label>
           </div>
+        </div>
 
-          <button type="submit"
-            class="w-full h-12 flex items-center justify-center bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors duration-200">
-            Entrar
-          </button>
+        <!-- Botão de Login -->
+        <button type="submit"
+          class="w-full h-12 flex items-center justify-center gap-2 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+          <span>Entrar</span>
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </button>
 
-          <p class="text-center text-sm text-black/60 dark:text-white/60">
-            Não tem uma conta? <a class="font-medium text-primary hover:underline"
-              href="{% url 'cadastro' %}">Cadastre-se aqui</a>
+        <!-- Link para Cadastro -->
+        <div class="text-center pt-2">
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Não tem uma conta? 
+            <a class="font-semibold text-primary hover:text-primary/80 hover:underline transition-colors" href="{% url 'cadastro' %}">
+              Cadastre-se aqui
+            </a>
           </p>
-        </form>
-      </main>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -188,14 +182,6 @@
         toggleButton.innerHTML = '<span class="material-symbols-outlined">visibility</span>';
       }
     }
-
-    // Remove a div de erro original que estava escondida
-    document.addEventListener('DOMContentLoaded', function() {
-      const errorDiv = document.getElementById('error-message');
-      if (errorDiv) {
-        errorDiv.remove();
-      }
-    });
   </script>
 </body>
 
